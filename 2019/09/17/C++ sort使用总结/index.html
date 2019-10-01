@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="C++ sort使用总结   函数名 功能描述    sort 对给定区间所有元素进行排序   stable_sort 对给定区间所有元素进行稳定排序   partial_sort 对给定区间所有元素部分排序   partial_sort_copy 对给定区间复制并排序   nth_element 找出给定区间的某个位置对应的元素   is_sorted 判断一个区间是否已经排好序   parti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2019/09/17/C++ sort使用总结/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="C++ sort使用总结   函数名 功能描述    sort 对给定区间所有元素进行排序   stable_sort 对给定区间所有元素进行稳定排序   partial_sort 对给定区间所有元素部分排序   partial_sort_copy 对给定区间复制并排序   nth_element 找出给定区间的某个位置对应的元素   is_sorted 判断一个区间是否已经排好序   parti">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:updated_time" content="2019-08-24T08:27:54.897Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="C++ sort使用总结   函数名 功能描述    sort 对给定区间所有元素进行排序   stable_sort 对给定区间所有元素进行稳定排序   partial_sort 对给定区间所有元素部分排序   partial_sort_copy 对给定区间复制并排序   nth_element 找出给定区间的某个位置对应的元素   is_sorted 判断一个区间是否已经排好序   parti">
+<meta name="twitter:image" content="https://common.cnblogs.com/images/copycode.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-C++ sort使用总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/17/C++ sort使用总结/" class="article-date">
+  <time datetime="2019-09-17T07:06:53.402Z" itemprop="datePublished">2019-09-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="C-sort使用总结"><a href="#C-sort使用总结" class="headerlink" title="C++ sort使用总结"></a>C++ sort使用总结</h3><table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th align="center">功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">sort</td>
+<td align="center">对给定区间所有元素进行排序</td>
+</tr>
+<tr>
+<td align="center">stable_sort</td>
+<td align="center">对给定区间所有元素进行稳定排序</td>
+</tr>
+<tr>
+<td align="center">partial_sort</td>
+<td align="center">对给定区间所有元素部分排序</td>
+</tr>
+<tr>
+<td align="center">partial_sort_copy</td>
+<td align="center">对给定区间复制并排序</td>
+</tr>
+<tr>
+<td align="center">nth_element</td>
+<td align="center">找出给定区间的某个位置对应的元素</td>
+</tr>
+<tr>
+<td align="center">is_sorted</td>
+<td align="center">判断一个区间是否已经排好序</td>
+</tr>
+<tr>
+<td align="center">partition</td>
+<td align="center">使得符合某个条件的元素放在前面</td>
+</tr>
+<tr>
+<td align="center">stable_partition</td>
+<td align="center">相对稳定的使得符合某个条件的元素放在前面</td>
+</tr>
+</tbody></table>
+<p>需要头文件<algorithm></algorithm></p>
+<p>语法描述：sort（begin，end，cmp），cmp参数可以没有，如果没有默认非降序排序。</p>
+<p><strong>以int为例的基本数据类型的sort使用</strong></p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">5</span>]=&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">5</span>&#125;;</span><br><span class="line">    sort(a,a+<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="string">' '</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为没有cmp参数，默认为非降序排序，结果为：</p>
+<p>1 2 3 4 5</p>
+<p>若设计为非升序排序，则cmp函数的编写：</p>
+<p>bool cmp（int a,int b）</p>
+<p>{</p>
+<p>　　return a&gt;b;</p>
+<p>}</p>
+<p>其实对于这么简单的任务（类型支持“&lt;”、“&gt;”等比较运算符），完全没必要自己写一个类出来。标准库里已经有现成的了，就在functional里，include进来就行了。functional提供了一堆基于模板的比较函数对象。它们是（看名字就知道意思了）：equal_to<type>、not_equal_to<type>、greater<type>、greater_equal<type>、less<type>、less_equal<type>。对于这个问题来说，greater和less就足够了，直接拿过来用：</type></type></type></type></type></type></p>
+<ul>
+<li><p>升序：sort(begin,end,less<data-type>());</data-type></p>
+</li>
+<li><p>降序：sort(begin,end,greater<data-type>()).</data-type></p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">main</span> <span class="params">( )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">      <span class="keyword">int</span> a[<span class="number">20</span>]=&#123;<span class="number">2</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">23</span>,<span class="number">5</span>,<span class="number">76</span>,<span class="number">0</span>,<span class="number">43</span>,<span class="number">24</span>,<span class="number">65</span>&#125;,i;</span><br><span class="line">      <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++)</span><br><span class="line">          <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      sort(a,a+<span class="number">20</span>,greater&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">      <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++)</span><br><span class="line">          <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>引用数据类型string的使用</strong></p>
+</li>
+<li><p><strong>一个字符串间的个字符排序：</strong></p>
+</li>
+<li><p>使用迭代器可以完成顺序排序</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    string str(&quot;hello world&quot;);</span><br><span class="line">    sort(str.begin(),str.end());</span><br><span class="line">    cout&lt;&lt;str;</span><br><span class="line">    return 0;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p>结果：空格dehllloorw</p>
+<p><strong>使用反向迭代器可以完成逆序排序</strong></p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">str</span><span class="params">(<span class="string">"hello world"</span>)</span></span>;</span><br><span class="line">    sort(str.rbegin(),str.rend());</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;str;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：wroolllhde空格</p>
+<p><strong>字符串间的比较排序</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstring &gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    string a[4];</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        getline(cin,a[i]);</span><br><span class="line">    sort(a,a+4);</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cout&lt;&lt;a[i]&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p><strong>以结构体为例的二级排序</strong></p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct link</span><br><span class="line">&#123;</span><br><span class="line">    int a,b;</span><br><span class="line">&#125;;</span><br><span class="line">bool cmp(link x,link y)</span><br><span class="line">&#123;</span><br><span class="line">    if(x.a==y.a)</span><br><span class="line">        return x.b&gt;y.b;</span><br><span class="line">    return x.a&gt;y.a;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    link x[4];</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cin&gt;&gt;x[i].a&gt;&gt;x[i].b;</span><br><span class="line">    sort(x,x+4,cmp);</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cout&lt;&lt;x[i].a&lt;&lt;&apos; &apos;&lt;&lt;x[i].b&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/17/C++ sort使用总结/" data-id="ck0niamou00037gvfxxawsx1d" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/09/17/c++ string/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/09/17/C 宏定义基本用法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/09/17/C语言编译过程详解/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/17/cc++ 数据类型取值范围/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/17/c++研发技术栈/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/17/C++基础语法笔记/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/17/c++ string/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

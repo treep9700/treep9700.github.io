@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="常见c++笔试面试整理 c/c++后缀C中： 头文件后缀名：.h 源文件后缀名: .c c++中： 头文件后缀名：.h, .hpp, .hxx 源文件后缀名：.c，.cpp，.cxx .c++ .cc 上面是不同标准下给出的扩展名 只是个名称，我们自己知道哪些是同一个东西，能区别开c和c++就行了。 另外，.h和.hpp的区别是：可以理解为：.hpp = .h + .cpp(.hpp) .h里面只">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2019/09/17/常见c++笔试面试整理/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="常见c++笔试面试整理 c/c++后缀C中： 头文件后缀名：.h 源文件后缀名: .c c++中： 头文件后缀名：.h, .hpp, .hxx 源文件后缀名：.c，.cpp，.cxx .c++ .cc 上面是不同标准下给出的扩展名 只是个名称，我们自己知道哪些是同一个东西，能区别开c和c++就行了。 另外，.h和.hpp的区别是：可以理解为：.hpp = .h + .cpp(.hpp) .h里面只">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-21T13:30:41.142Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="常见c++笔试面试整理 c/c++后缀C中： 头文件后缀名：.h 源文件后缀名: .c c++中： 头文件后缀名：.h, .hpp, .hxx 源文件后缀名：.c，.cpp，.cxx .c++ .cc 上面是不同标准下给出的扩展名 只是个名称，我们自己知道哪些是同一个东西，能区别开c和c++就行了。 另外，.h和.hpp的区别是：可以理解为：.hpp = .h + .cpp(.hpp) .h里面只">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-常见c++笔试面试整理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/17/常见c++笔试面试整理/" class="article-date">
+  <time datetime="2019-09-17T07:06:53.380Z" itemprop="datePublished">2019-09-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>常见c++笔试面试整理</p>
+<h5 id="c-c-后缀"><a href="#c-c-后缀" class="headerlink" title="c/c++后缀"></a>c/c++后缀</h5><p>C中：</p>
+<p>头文件后缀名：.h</p>
+<p>源文件后缀名: .c</p>
+<p>c++中：</p>
+<p>头文件后缀名：.h, .hpp, .hxx</p>
+<p>源文件后缀名：.c，.cpp，.cxx .c++ .cc</p>
+<p>上面是不同标准下给出的扩展名</p>
+<p>只是个名称，我们自己知道哪些是同一个东西，能区别开c和c++就行了。</p>
+<p>另外，.h和.hpp的区别是：可以理解为：.hpp = .h + .cpp(<a href="https://www.sogou.com/" title="Sogou" target="_blank" rel="noopener">.hpp</a>)</p>
+<p><em>.h里面只有声明，没有实现，而</em>.hpp里声明实现都有，后者可以减少.cpp的数量，适合用来编写公用的开源库。</p>
+<h5 id="c-inl文件"><a href="#c-inl文件" class="headerlink" title="c++.inl文件"></a>c++.inl文件</h5><p> 在内联函数较多的情况下，为了避免头文件过长、版面混乱，可以将所有的内联函数定义移到一个单独的文件中去，然后再<strong>用#include指令将它包含到类声明的后面</strong>（类的头文件的底部）。这样的文件称为一个内联函数定义文件。inl文件中也可以包含头文件的，因为内联函数中可能包含其他文件中定义的东西。</p>
+<p>按照惯例，<strong>应该将这个文件命名为“filename.inl”，其中“filename”与相应的头文件和实现文件相同。</strong>  </p>
+<h5 id="gcc和g-的区别"><a href="#gcc和g-的区别" class="headerlink" title="gcc和g++的区别"></a>gcc和g++的区别</h5><p>简单来说，gcc与g++都是GNU(组织)的一个编译器。需要注意以下几点：</p>
+<ol>
+<li>gcc与g++都可以编译c代码与c++代码。但是：后缀为.c的，gcc把它当做C程序，而g++当做是C++程序；后缀为.cpp的，两者都会认为是C++程序。</li>
+<li>编译阶段，g++会调用gcc，对于c++代码，两者是等价的，但是因为gcc命令不能自动和C＋＋程序使用的库联接，所以通常用g++来完成链接。</li>
+<li>编译可以用gcc/g++，而链接可以用g++或者gcc -lstdc++。因为gcc命令不能自动和C＋＋程序使用的库联接（当然可以选择手动链接，使用命令如下），所以通常使用g++来完成联接。但在编译阶段，g++会自动调用gcc，二者等价。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.cpp -lstdc++</span><br></pre></td></tr></table></figure>
+
+<h5 id="gcc编译的四个步骤，以最简单的hello-c为例"><a href="#gcc编译的四个步骤，以最简单的hello-c为例" class="headerlink" title="gcc编译的四个步骤，以最简单的hello.c为例"></a>gcc编译的四个步骤，以最简单的hello.c为例</h5><p>一步到位：gcc hello.c</p>
+<p>这条命令隐含执行了</p>
+<ol>
+<li><p>预处理(hello.i)</p>
+</li>
+<li><p>编译(hello.s)</p>
+</li>
+<li><p>汇编(hello.o)</p>
+</li>
+<li><p>链接(可执行文件hello)</p>
+<p>这里未指定输出文件，默认输出为a.out<br>gcc编译C源码有四个步骤：<br>预处理 —-&gt; 编译 —-&gt; 汇编 —-&gt; 链接<br>现在我们就用gcc的命令选项来逐个剖析gcc过程。<br>1）预处理(Pre-processing)<br>在该阶段，编译器将C源代码中的包含的头文件如stdio.h添加进来<br>参数：”-E”<br>用法：gcc -E hello.c -o hello.i<br>作用：将hello.c预处理输出hello.i文件。<br>2)编译(Compiling)<br>第二步进行的是编译阶段，在这个阶段中，gcc首先要检查代码的规范性、是否有语法错误等，以确定代码的实际要做的工作，在检查无误后，gcc把代码翻译成汇编语言。<br>参数：”-S”<br>用法：gcc –S hello.i –o hello.s<br>作用：将预处理输出文件hello.i汇编成hello.s文件。<br>3)汇编(Assembling)<br>汇编阶段是把编译阶段生成的”.s”文件转成二进制目标代码“.o”文件<br>参数：“-c”<br>用法：gcc –c hello.s –o hello.o<br>作用：将汇编输出文件hello.s编译输出hello.o文件。<br>4）链接(Link)<br>在成功编译之后，就进入了链接阶段。<br>用法：gcc hello.o –o hello<br>作用：将编译输出文件hello.o链接成最终可执行文件hello。<br>运行该可执行文件，出现正确的结果如下。</p>
+<p>./hello</p>
+<p>Hello World!</p>
+</li>
+</ol>
+<h5 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h5><h5 id="c-11新特性"><a href="#c-11新特性" class="headerlink" title="c++11新特性"></a>c++11新特性</h5><p><strong>C和C++的区别</strong></p>
+<p>1）C是面向过程的语言，是一个结构化的语言，考虑如何通过一个过程对输入进行处理得到输出；C++是面向对象的语言，主要特征是“封装、继承和多态”。封装隐藏了实现细节，使得代码模块化；派生类可以继承父类的数据和方法，扩展了已经存在的模块，实现了代码重用；多态则是“一个接口，多种实现”，通过派生类重写父类的虚函数，实现了接口的重用。</p>
+<p>2）C和C++动态管理内存的方法不一样，C是使用malloc/free，而C++除此之外还有new/delete关键字。</p>
+<p>3）C++支持函数重载，C不支持函数重载</p>
+<p>4）C++中有引用，C中不存在引用的概念</p>
+<h5 id="c-引用"><a href="#c-引用" class="headerlink" title="c++引用"></a>c++引用</h5><p> 引用就是某一变量（目标）的一个别名，对引用的操作与对变量直接操作完全一样。</p>
+<p>引用的声明方法：类型标识符 &amp;引用名=目标变量名；</p>
+<p>　　【例1】：int a; int &amp;ra=a; //定义引用ra,它是变量a的引用，即别名</p>
+<p>　　说明：</p>
+<p>　　（1）&amp;在此不是求地址运算，而是起标识作用。</p>
+<p>　　（2）类型标识符是指目标变量的类型。</p>
+<p>　　（3）声明引用时，必须同时对其进行初始化。</p>
+<p>　　（4）引用声明完毕后，相当于目标变量名有两个名称，即该目标原名称和引用名，且不能再把该引用名作为其他变量名的别名。</p>
+<p>　　 ra=1; 等价于 a=1;</p>
+<p>　　（5）声明一个引用，不是新定义了一个变量，它只表示该引用名是目标变量名的一个别名，它本身不是一种数据类型，因此引用本身不占存储单元，系统也不给引用分配存储单元。故：对引用求地址，就是对目标变量求地址。&amp;ra与&amp;a相等。</p>
+<p>　　（6）不能建立数组的引用。因为数组是一个由若干个元素所组成的集合，所以无法建立一个数组的别名。</p>
+<p>常引用：</p>
+<p>目的：不想通过引用来改变原来空间的值</p>
+<p>形式： const int &amp;c = a//相当于  const int * const c = &amp;a</p>
+<h5 id="c-中指针和引用的区别"><a href="#c-中指针和引用的区别" class="headerlink" title="c++中指针和引用的区别"></a>c++中指针和引用的区别</h5><p>1）指针是一个新的变量，存储了另一个变量的地址，我们可以通过访问这个地址来修改另一个变量；</p>
+<p>引用只是一个别名，还是变量本身，对引用的任何操作就是对变量本身进行操作，以达到修改变量的目的</p>
+<p>2）引用只有一级，而指针可以有多级</p>
+<p>3）指针传参的时候，还是值传递，指针本身的值不可以修改，需要通过解引用才能对指向的对象进行操作</p>
+<p>引用传参的时候，传进来的就是变量本身，因此变量可以被修改</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/17/常见c++笔试面试整理/" data-id="ck0niampv000b7gvfuoahtjm3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/09/17/二进制数、八进制数和十六进制的表示/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/09/17/O(Nlog(N)）时间复杂度的主要来源：通常使用二分法使问题达到log(N)的层级，然后在每一个层级用O(N)级别的算法做事。/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/09/17/C语言编译过程详解/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/17/cc++ 数据类型取值范围/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/17/c++研发技术栈/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/17/C++基础语法笔记/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/17/c++ string/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

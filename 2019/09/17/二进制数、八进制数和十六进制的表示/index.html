@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="二进制数、八进制数和十六进制的表示1）二进制二进制由 0 和 1 两个数字组成，使用时必须以0b或0B （不区分大小写）开头，例如： 12345678//合法的二进制int a = 0b101;  //换算成十进制为 5int b = -0b110010;  //换算成十进制为 -50int c = 0B100001;  //换算成十进制为 33//非法的二进制int m = 101010;  /">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2019/09/17/二进制数、八进制数和十六进制的表示/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="二进制数、八进制数和十六进制的表示1）二进制二进制由 0 和 1 两个数字组成，使用时必须以0b或0B （不区分大小写）开头，例如： 12345678//合法的二进制int a = 0b101;  //换算成十进制为 5int b = -0b110010;  //换算成十进制为 -50int c = 0B100001;  //换算成十进制为 33//非法的二进制int m = 101010;  /">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-08-28T08:04:09.211Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="二进制数、八进制数和十六进制的表示1）二进制二进制由 0 和 1 两个数字组成，使用时必须以0b或0B （不区分大小写）开头，例如： 12345678//合法的二进制int a = 0b101;  //换算成十进制为 5int b = -0b110010;  //换算成十进制为 -50int c = 0B100001;  //换算成十进制为 33//非法的二进制int m = 101010;  /">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-二进制数、八进制数和十六进制的表示" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/09/17/二进制数、八进制数和十六进制的表示/" class="article-date">
+  <time datetime="2019-09-17T07:06:53.383Z" itemprop="datePublished">2019-09-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="二进制数、八进制数和十六进制的表示"><a href="#二进制数、八进制数和十六进制的表示" class="headerlink" title="二进制数、八进制数和十六进制的表示"></a>二进制数、八进制数和十六进制的表示</h3><h4 id="1）二进制"><a href="#1）二进制" class="headerlink" title="1）二进制"></a>1）二进制</h4><p>二进制由 0 和 1 两个数字组成，使用时必须以0b或0B</p>
+<p>（不区分大小写）开头，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//合法的二进制</span><br><span class="line">int a = 0b101;  //换算成十进制为 5</span><br><span class="line">int b = -0b110010;  //换算成十进制为 -50</span><br><span class="line">int c = 0B100001;  //换算成十进制为 33</span><br><span class="line"></span><br><span class="line">//非法的二进制</span><br><span class="line">int m = 101010;  //无前缀 0B，相当于十进制</span><br><span class="line">int n = 0B410;  //4不是有效的二进制数字</span><br></pre></td></tr></table></figure>
+
+<p>读者请注意，标准的C语言并不支持上面的二进制写法，只是有些编译器自己进行了扩展，才支持二进制数字。</p>
+<p>换句话说，并不是所有的编译器都支持二进制数字，只有一部分编译器支持，并且跟编译器的版本有关系。</p>
+<h4 id="2-八进制"><a href="#2-八进制" class="headerlink" title="2) 八进制"></a>2) 八进制</h4><p>八进制由 0~7 八个数字组成，使用时必须以数字0开头</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//合法的八进制数</span><br><span class="line">int a = 015;  //换算成十进制为 13</span><br><span class="line">int b = -0101;  //换算成十进制为 -65</span><br><span class="line">int c = 0177777;  //换算成十进制为 65535</span><br><span class="line"></span><br><span class="line">//非法的八进制</span><br><span class="line">int m = 256;  //无前缀 0，相当于十进制</span><br><span class="line">int n = 03A2;  //A不是有效的八进制数字</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-十六进制"><a href="#3-十六进制" class="headerlink" title="3) 十六进制"></a>3) 十六进制</h4><p>十六进制由数字 0<del>9、字母 A</del>F 或 a~f（不区分大小写）组成，使用时必须以0x或0X（不区分大小写）开头，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//合法的十六进制</span><br><span class="line">int a = 0X2A;  //换算成十进制为 42</span><br><span class="line">int b = -0XA0;  //换算成十进制为 -160</span><br><span class="line">int c = 0xffff;  //换算成十进制为 65535</span><br><span class="line">//非法的十六进制</span><br><span class="line">int m = 5A;  //没有前缀 0X，是一个无效数字</span><br><span class="line">int n = 0X3H;  //H不是有效的十六进制数字</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-十进制"><a href="#4-十进制" class="headerlink" title="4) 十进制"></a>4) 十进制</h4><p>十进制由 0~9 十个数字组成，没有任何前缀，和我们平时的书写格式一样，不再赘述。</p>
+<h2 id="二进制数、八进制数和十六进制数的输出"><a href="#二进制数、八进制数和十六进制数的输出" class="headerlink" title="二进制数、八进制数和十六进制数的输出"></a>二进制数、八进制数和十六进制数的输出</h2><h2 id="二进制数、八进制数和十六进制数的输出-1"><a href="#二进制数、八进制数和十六进制数的输出-1" class="headerlink" title="二进制数、八进制数和十六进制数的输出"></a>二进制数、八进制数和十六进制数的输出</h2><p>C语言中常用的整数有 short、int 和 long 三种类型，通过 printf 函数，可以将它们以八进制、十进制和十六进制的形式输出。上节我们讲解了如何以十进制的形式输出，这节我们重点讲解如何以八进制和十六进制的形式输出，下表列出了不同类型的整数、以不同进制的形式输出时对应的格式控制符：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>short</th>
+<th>int</th>
+<th>long</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>八进制</td>
+<td>%ho</td>
+<td>%o</td>
+<td>%lo</td>
+</tr>
+<tr>
+<td>十进制</td>
+<td>%hd</td>
+<td>%d</td>
+<td>%ld</td>
+</tr>
+<tr>
+<td>十六进制</td>
+<td>%hx 或者 %hX</td>
+<td>%x 或者 %X</td>
+<td>%lx 或者 %lX</td>
+</tr>
+</tbody></table>
+<p>十六进制数字的表示用到了英文字母，有大小写之分，要在格式控制符中体现出来：</p>
+<ul>
+<li>%hx、%x 和 %lx 中的<code>x</code>小写，表明以小写字母的形式输出十六进制数；</li>
+<li>%hX、%X 和 %lX 中的<code>X</code>大写，表明以大写字母的形式输出十六进制数。</li>
+</ul>
+<p>八进制数字和十进制数字不区分大小写，所以格式控制符都用小写形式。如果你比较叛逆，想使用大写形式，那么行为是未定义的，请你慎重：</p>
+<ul>
+<li>有些编译器支持大写形式，只不过行为和小写形式一样；</li>
+<li>有些编译器不支持大写形式，可能会报错，也可能会导致奇怪的输出。</li>
+</ul>
+<p>注意，虽然部分编译器支持二进制数字的表示，但是却不能使用 printf 函数输出二进制，这一点比较遗憾。</p>
+<p>当然，通过转换函数可以将其它进制数字转换成二进制数字，并以字符串的形式存储，然后在 printf 函数中使用%s输出即可。考虑到读者的基础还不够，这里就先不讲这种方法了。</p>
+<p>【实例】以不同进制的形式输出整数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> a = <span class="number">0b1010110</span>;  <span class="comment">//二进制数字</span></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">02713</span>;  <span class="comment">//八进制数字</span></span><br><span class="line">    <span class="keyword">long</span> c = <span class="number">0X1DAB83</span>;  <span class="comment">//十六进制数字</span></span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%ho, b=%o, c=%lo\n"</span>, a, b, c);  <span class="comment">//以八进制形似输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hd, b=%d, c=%ld\n"</span>, a, b, c);  <span class="comment">//以十进制形式输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hx, b=%x, c=%lx\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母小写）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hX, b=%X, c=%lX\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母大写）</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p>a=126, b=2713, c=7325603</p>
+<p>a=86, b=1483, c=1944451</p>
+<p>a=56, b=5cb, c=1dab83</p>
+<p>a=56, b=5CB, c=1DAB83</p>
+<p>从这个例子可以发现，一个数字不管以何种进制来表示，都能够以任意进制的形式输出。数字在内存中始终以二进制的形式存储，其它进制的数字在存储前都必须转换为二进制形式；同理，一个数字在输出时要进行逆向的转换，也就是从二进制转换为其他进制。</p>
+<h4 id="输出时加上前缀"><a href="#输出时加上前缀" class="headerlink" title="输出时加上前缀"></a>输出时加上前缀</h4><p>请读者注意观察上面的例子，会发现有一点不完美，如果只看输出结果：</p>
+<ul>
+<li>对于八进制数字，它没法和十进制、十六进制区分，因为八进制、十进制和十六进制都包含 0~7 这几个数字。</li>
+<li>对于十进制数字，它没法和十六进制区分，因为十六进制也包含 0~9 这几个数字。如果十进制数字中还不包含 8 和 9，那么也不能和八进制区分了。</li>
+<li>对于十六进制数字，如果没有包含 a<del>f 或者 A</del>F，那么就无法和十进制区分，如果还不包含 8 和 9，那么也不能和八进制区分了。</li>
+</ul>
+<p>区分不同进制数字的一个简单办法就是，在输出时带上特定的前缀。在格式控制符中加上#</p>
+<p>即可输出前缀，例如 %#x、%#o、%#lX、%#ho 等，请看下面的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> a = <span class="number">0b1010110</span>;  <span class="comment">//二进制数字</span></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">02713</span>;  <span class="comment">//八进制数字</span></span><br><span class="line">    <span class="keyword">long</span> c = <span class="number">0X1DAB83</span>;  <span class="comment">//十六进制数字</span></span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#ho, b=%#o, c=%#lo\n"</span>, a, b, c);  <span class="comment">//以八进制形似输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hd, b=%d, c=%ld\n"</span>, a, b, c);  <span class="comment">//以十进制形式输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#hx, b=%#x, c=%#lx\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母小写）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#hX, b=%#X, c=%#lX\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母大写）</span></span><br><span class="line">   </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p>a=0126, b=02713, c=07325603</p>
+<p>a=86, b=1483, c=1944451</p>
+<p>a=0x56, b=0x5cb, c=0x1dab83</p>
+<p>a=0X56, b=0X5CB, c=0X1DAB83</p>
+<p>十进制数字没有前缀，所以不用加#。如果你加上了，那么它的行为是未定义的，有的编译器支持十进制加#，只不过输出结果和没有加#一样，有的编译器不支持加#，可能会报错，也可能会导致奇怪的输出；但是，大部分编译器都能正常输出，不至于当成一种错误。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/17/二进制数、八进制数和十六进制的表示/" data-id="ck0niampf00077gvf9tz85ebv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/09/17/日期类问题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/09/17/常见c++笔试面试整理/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/09/17/C语言编译过程详解/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/17/cc++ 数据类型取值范围/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/17/c++研发技术栈/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/17/C++基础语法笔记/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/17/c++ string/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
