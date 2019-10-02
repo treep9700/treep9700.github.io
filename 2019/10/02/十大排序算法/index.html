@@ -19,10 +19,10 @@
     <link rel="dns-prefetch" href="http://yoursite.com">
     <!--SEO-->
 
-<meta name="keywords" content>
+<meta name="keywords" content="算法">
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any ...">
+<meta name="description" content="重要的排序算法1.快排通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分小，则分别对这两部分记录继续进行排序，以达到整个序列有序。快排效率高，是处理大数据最快的排序算法...">
 
 
 <meta name="robots" content="all">
@@ -33,7 +33,7 @@
 
 <title>
     
-    Hello World |
+    “重要的排序算法” |
     
     Hexo
 </title>
@@ -138,9 +138,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="Hello World">
+        <h1 id="“重要的排序算法”">
             
-            Hello World
+            “重要的排序算法”
             
         </h1>
         <div class="post-meta">
@@ -155,6 +155,8 @@
         <i class="fa fa-tags"></i>
         <span class="tags-meta">
             
+            <a class="tag-link" href="/tags/算法/">算法</a>
+            
         </span>
     </span>
     
@@ -163,7 +165,7 @@
     <span class="fa-wrap">
         <i class="fa fa-clock-o"></i>
         <span class="date-meta">
-            2019/09/13</span>
+            2019/10/02</span>
     </span>
     
     
@@ -173,19 +175,35 @@
     </div>
     
     <div class="post-body post-content">
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <h3 id="重要的排序算法"><a href="#重要的排序算法" class="headerlink" title="重要的排序算法"></a>重要的排序算法</h3><h5 id="1-快排"><a href="#1-快排" class="headerlink" title="1.快排"></a>1.快排</h5><p>通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分小，则分别对这两部分记录继续进行排序，以达到整个序列有序。快排效率高，是处理大数据最快的排序算法之一。</p>
+<p><strong>快排采用了分治法，最好的情况是每次正好中分</strong></p>
+<p><strong>(1)具体算法实现</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,j,temp;</span><br><span class="line">	<span class="keyword">if</span>(left &gt; right)     <span class="comment">//递归终止条件</span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">		</span><br><span class="line">    temp = a[left];</span><br><span class="line">    i = left;</span><br><span class="line">    j = right;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(i!=j)&#123;</span><br><span class="line">        <span class="comment">/*顺序很重要，要先从右往左找 */</span> </span><br><span class="line">    	<span class="keyword">while</span>(a[j]&gt;=temp &amp;&amp; i&lt;j)   <span class="comment">//循环终止条件：1：找到了比temp小的数，且i&lt;j 2:没有找到，但是两个哨兵相遇 </span></span><br><span class="line">    		j--;</span><br><span class="line">        <span class="comment">//再从左往右找 </span></span><br><span class="line">    	<span class="keyword">while</span>(a[i]&lt;=temp &amp;&amp; i&lt;j)   <span class="comment">//循环终止条件：1：找到了比temp大的数，且i&lt;j 2:没有找到，但 是两个哨兵相遇 </span></span><br><span class="line">    	    i++;</span><br><span class="line">    	<span class="keyword">if</span>(i&lt;j)              <span class="comment">//排除i=j的情况 </span></span><br><span class="line">    		swap(a[i], a[j]);</span><br><span class="line">	&#125;</span><br><span class="line">	swap(a[left],a[i]);     <span class="comment">//将基准数与 i和j 相遇位置的数交换    bug:swap(temp,a[i]);  </span></span><br><span class="line">	</span><br><span class="line">	quickSort(a, letf, i<span class="number">-1</span>);</span><br><span class="line">	quickSort(a, i+<span class="number">1</span>, right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p>思考：为什么右边的哨兵先行 j先动相遇时一定可以找到小于等于基准元素的值；i先动的化不能保证  </p>
+<p>参见：<a href="https://blog.csdn.net/csdnqixiaoxin/article/details/89429528" target="_blank" rel="noopener">快排</a></p>
+<p><strong>(2)性能分析</strong></p>
+<ul>
+<li>最佳情况：T(n) = O(nlogn)</li>
+<li>最差情况：T(n) = O(n^2)</li>
+<li>平均情况：T(n) = O(nlogn)</li>
+</ul>
+<p><strong>(3)问题分析</strong></p>
+<p>如何选主元？</p>
+<ul>
+<li>若数据一开始就是顺序，选主元为第一个数据的话，为最坏情况，时间复杂度为(nlogn)</li>
+<li>一个比较好的解决办法：取头、中、尾的中位数</li>
+</ul>
+<p>子集划分，如果有元素正好等于pivot怎么办</p>
+<ul>
+<li>停下来交换（根据所有元素都相等的极端情况来考虑是否要交换）</li>
+</ul>
+<p>小规模数据的处理</p>
+<ul>
+<li>对小规模的数据（假如N不到100）可能还不如插入排序快。</li>
+<li>当递归的数据规模充分小的时候，则停止递归，直接调用简单排序（如插入排序）</li>
+</ul>
+<p>后面再继续补充。。</p>
 
     </div>
     
@@ -204,12 +222,18 @@
 </article>
 <div class="article-nav prev-next-wrap clearfix">
     
-    <a href="/2019/09/16/“我的第一篇博客文章”/" class="pre-post btn btn-default" title='“我的第一篇博客文章”'>
+    <a href="/2019/10/02/容器：顺序容器和关联容器/" class="pre-post btn btn-default" title='“顺序容器和关联容器”'>
         <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
         <span class="hidden-xs">
-            “我的第一篇博客文章”</span>
+            “顺序容器和关联容器”</span>
     </a>
     
+    
+    <a href="/2019/10/02/C++基础语法笔记/" class="next-post btn btn-default" title='“C++基础语法笔记”'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            “C++基础语法笔记”</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
     
 </div>
 
@@ -247,7 +271,7 @@ new Valine({
             Table of Contents
         </h3>
         
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#重要的排序算法"><span class="toc-text">重要的排序算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-快排"><span class="toc-text">1.快排</span></a></li></ol></li></ol></li></ol>
         
     </div>
 </aside>
