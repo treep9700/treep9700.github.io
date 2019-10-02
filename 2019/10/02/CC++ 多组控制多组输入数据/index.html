@@ -19,12 +19,13 @@
     <link rel="dns-prefetch" href="http://yoursite.com">
     <!--SEO-->
 
-<meta name="keywords" content>
+<meta name="keywords" content="C/C++">
 
 
-<meta name="description" content="123title: &quot;关于O(Nlog(N))时间复杂度&quot;data: 2019-10-02 09:58:04tags: 算法
+<meta name="description" content="C/C++ 多组控制多组输入数据
+c++实现
 
-O(Nlog(N)）时间复杂度的主要来源：通常...">
+12345678#include &lt;iostream&gt;using namespce std;int main()&#123;    i...">
 
 
 <meta name="robots" content="all">
@@ -34,6 +35,8 @@ O(Nlog(N)）时间复杂度的主要来源：通常...">
     <!--Title-->
 
 <title>
+    
+    “C/C++ 多组控制多组输入数据” |
     
     Hexo
 </title>
@@ -138,9 +141,9 @@ O(Nlog(N)）时间复杂度的主要来源：通常...">
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="">
+        <h1 id="“C/C++ 多组控制多组输入数据”">
             
-            NO Title!
+            “C/C++ 多组控制多组输入数据”
             
         </h1>
         <div class="post-meta">
@@ -155,6 +158,8 @@ O(Nlog(N)）时间复杂度的主要来源：通常...">
         <i class="fa fa-tags"></i>
         <span class="tags-meta">
             
+            <a class="tag-link" href="/tags/C-C/">C/C++</a>
+            
         </span>
     </span>
     
@@ -163,7 +168,7 @@ O(Nlog(N)）时间复杂度的主要来源：通常...">
     <span class="fa-wrap">
         <i class="fa fa-clock-o"></i>
         <span class="date-meta">
-            2019/09/17</span>
+            2019/10/02</span>
     </span>
     
     
@@ -173,13 +178,24 @@ O(Nlog(N)）时间复杂度的主要来源：通常...">
     </div>
     
     <div class="post-body post-content">
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: &quot;关于O(Nlog(N))时间复杂度&quot;</span><br><span class="line">data: 2019-10-02 09:58:04</span><br><span class="line">tags: 算法</span><br></pre></td></tr></table></figure>
+        <h3 id="C-C-多组控制多组输入数据"><a href="#C-C-多组控制多组输入数据" class="headerlink" title="C/C++ 多组控制多组输入数据"></a>C/C++ 多组控制多组输入数据</h3><blockquote>
+<p><strong>c++实现</strong></p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> namespce <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">cin</span> &lt;&lt; a &lt;&lt;b)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; a+b &lt;&lt; end;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>O(Nlog(N)）时间复杂度的主要来源：通常使用二分法使问题达到log(N)的层级，然后在每一个层级用O(N)级别的算法做事。</p>
-<p>算法中的边界情况理解的技巧：从反面理解或是等价转换边界条件，使其实例化。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">j = <span class="number">1000</span>； </span><br><span class="line"><span class="keyword">while</span>(j &gt; <span class="number">0</span> &amp;&amp; tmp &lt; a[j])&#123;        <span class="comment">//寻找插入的位置 </span></span><br><span class="line">            a[j + <span class="number">1</span>] = a[j];                <span class="comment">//比tmp大的元素都往后移动 </span></span><br><span class="line">            --j;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>cin是C++的<a href="https://www.baidu.com/s?wd=%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E6%B5%81&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">标准输入流</a>，其本身是一个对象，并不存在返回值的概念。<br>不过经常会有类似于<br>while(cin&gt;&gt;a)<br>的调用，这里并不是cin的返回值，而是&gt;&gt;操作重载函数<br>istream&amp; operator&gt;&gt;(istream&amp;, T &amp;);的返回值，其中第二个参数由cin&gt;&gt;后续参数类型决定。<br>其返回值类型为istream&amp;类型，大多数情况下其返回值为cin本身（非0值），只有当遇到EOF输入时，返回值为0。<br>输入EOF的方法，windows下输入ctrl+z, Linux下输入ctrl+d。<br>于是，当输入所有数据后，通过输入EOF的方法，可以退出while(cin&gt;&gt;a)这样的循环。</p>
+<hr>
+<blockquote>
+<p><strong>c实现</strong></p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d,%d"</span>, &amp;a,&amp;b) != EOF)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d"</span>,a+b);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>例如理解以上代码的时候，j&gt;0就相当于j==1 的边界条件，然后分析后者时的情况，可能会更好理解一点。</p>
+<p>scanf函数返回成功读入的数据项数，读入数据时遇到了“文件结束”则返回<a href="https://www.baidu.com/s?wd=EOF&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">EOF</a>。</p>
+<p>如：scanf(“%d %d”,&amp;a,&amp;b);</p>
+<p>函数返回值为int型。如果a和b都被成功读入，那么scanf的返回值就是2；</p>
+<p>如果只有a被成功读入，返回值为1；</p>
+<p>如果a和b都未被成功读入，返回值为0；</p>
+<p>如果遇到错误或遇到end of file，返回值为<a href="https://www.baidu.com/s?wd=EOF&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">EOF</a>。end of file为Ctrl+z 或者Ctrl+d。</p>
 
     </div>
     
@@ -198,17 +214,11 @@ O(Nlog(N)）时间复杂度的主要来源：通常...">
 </article>
 <div class="article-nav prev-next-wrap clearfix">
     
-    <a href="/2019/09/17/常见c++笔试面试整理/" class="pre-post btn btn-default" title=''>
-        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-        <span class="hidden-xs">
-            </span>
-    </a>
     
-    
-    <a href="/2019/09/16/“我的第一篇博客文章”/" class="next-post btn btn-default" title='“我的第一篇博客文章”'>
+    <a href="/2019/10/02/C语言编译过程详解/" class="next-post btn btn-default" title='“C语言编译过程详解”'>
         <span class="hidden-lg">下一篇</span>
         <span class="hidden-xs">
-            “我的第一篇博客文章”</span><i class="fa fa-angle-right fa-fw"></i>
+            “C语言编译过程详解”</span><i class="fa fa-angle-right fa-fw"></i>
     </a>
     
 </div>
@@ -247,7 +257,7 @@ new Valine({
             Table of Contents
         </h3>
         
-        <p>暂无目录</p>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#C-C-多组控制多组输入数据"><span class="toc-text">C/C++ 多组控制多组输入数据</span></a></li></ol>
         
     </div>
 </aside>

@@ -19,12 +19,11 @@
     <link rel="dns-prefetch" href="http://yoursite.com">
     <!--SEO-->
 
-<meta name="keywords" content>
+<meta name="keywords" content="C/C++">
 
 
-<meta name="description" content="123title: &quot;关于O(Nlog(N))时间复杂度&quot;data: 2019-10-02 09:58:04tags: 算法
-
-O(Nlog(N)）时间复杂度的主要来源：通常...">
+<meta name="description" content="C/C++中变量的作用域和存储类型区分作用域和存储类型
+12345671 /*例1*/2 #include&lt;stdio.h&gt;3 int main()4 &#123;5     sta...">
 
 
 <meta name="robots" content="all">
@@ -34,6 +33,8 @@ O(Nlog(N)）时间复杂度的主要来源：通常...">
     <!--Title-->
 
 <title>
+    
+    “C/C++中变量的作用域和存储类型” |
     
     Hexo
 </title>
@@ -138,9 +139,9 @@ O(Nlog(N)）时间复杂度的主要来源：通常...">
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="">
+        <h1 id="“C/C++中变量的作用域和存储类型”">
             
-            NO Title!
+            “C/C++中变量的作用域和存储类型”
             
         </h1>
         <div class="post-meta">
@@ -155,6 +156,8 @@ O(Nlog(N)）时间复杂度的主要来源：通常...">
         <i class="fa fa-tags"></i>
         <span class="tags-meta">
             
+            <a class="tag-link" href="/tags/C-C/">C/C++</a>
+            
         </span>
     </span>
     
@@ -163,7 +166,7 @@ O(Nlog(N)）时间复杂度的主要来源：通常...">
     <span class="fa-wrap">
         <i class="fa fa-clock-o"></i>
         <span class="date-meta">
-            2019/09/17</span>
+            2019/10/02</span>
     </span>
     
     
@@ -173,13 +176,36 @@ O(Nlog(N)）时间复杂度的主要来源：通常...">
     </div>
     
     <div class="post-body post-content">
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">title: &quot;关于O(Nlog(N))时间复杂度&quot;</span><br><span class="line">data: 2019-10-02 09:58:04</span><br><span class="line">tags: 算法</span><br></pre></td></tr></table></figure>
+        <h2 id="C-C-中变量的作用域和存储类型"><a href="#C-C-中变量的作用域和存储类型" class="headerlink" title="C/C++中变量的作用域和存储类型"></a>C/C++中变量的作用域和存储类型</h2><h5 id="区分作用域和存储类型"><a href="#区分作用域和存储类型" class="headerlink" title="区分作用域和存储类型"></a>区分作用域和存储类型</h5><p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/*例1*/</span></span><br><span class="line"><span class="number">2</span> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="number">3</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">4 </span>&#123;</span><br><span class="line"><span class="number">5</span>     <span class="keyword">static</span> <span class="keyword">int</span> a=<span class="number">1</span>;<span class="comment">//定义了一个静态存储的局部变量</span></span><br><span class="line"><span class="number">6</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">7</span> &#125;</span><br></pre></td></tr></table></figure>
 
-<p>O(Nlog(N)）时间复杂度的主要来源：通常使用二分法使问题达到log(N)的层级，然后在每一个层级用O(N)级别的算法做事。</p>
-<p>算法中的边界情况理解的技巧：从反面理解或是等价转换边界条件，使其实例化。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">j = <span class="number">1000</span>； </span><br><span class="line"><span class="keyword">while</span>(j &gt; <span class="number">0</span> &amp;&amp; tmp &lt; a[j])&#123;        <span class="comment">//寻找插入的位置 </span></span><br><span class="line">            a[j + <span class="number">1</span>] = a[j];                <span class="comment">//比tmp大的元素都往后移动 </span></span><br><span class="line">            --j;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>a是一个采用静态存储的局部变量，像这样的变量在整个文件中都不会消失，但是只能在main()函数内被使用。</p>
+<hr>
+<p>作用域：一个变量能够被使用的范围，在C语言中有包括<strong>块作用域、函数作用域、函数原型作用域、文件作用域</strong>，在C++中还有<strong>类作用域</strong>和<strong>命名空间作用域。</strong></p>
+<p>存储类型：存储类型分为<strong>静态存储</strong>和<strong>动态存储</strong>，采用静态存储方式的变量一旦创建，其存储空间在整个程序的运行过程中都不会被释放。对于采用动态存储的变量来说，当进入该程序块（函数或复合语句等）时，建立该变量，分配存储空间，当退出该程序块时，撤销该变量，释放其存储空间。</p>
+<p>不用限定词的情况</p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/*例2，不用限定词的情况*/</span></span><br><span class="line"><span class="number">2</span> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="number">3</span> <span class="keyword">int</span> a=<span class="number">1</span>;<span class="comment">//a为全局变量，采用静态存储</span></span><br><span class="line"><span class="number">4</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">5 </span>&#123;</span><br><span class="line"><span class="number">6</span>     <span class="keyword">int</span> b=<span class="number">1</span>;<span class="comment">//b为局部变量，默认采用动态存储</span></span><br><span class="line"><span class="number">7</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">8</span> &#125;</span><br></pre></td></tr></table></figure>
 
-<p>例如理解以上代码的时候，j&gt;0就相当于j==1 的边界条件，然后分析后者时的情况，可能会更好理解一点。</p>
+<p>全局变量a采用静态方式存储，具有文件作用域，b采用动态方式存储，具有的是块作用域。</p>
+<p><strong>static变量类型</strong></p>
+<ul>
+<li>对于全局变量来说，加不加static，该变量都采取静态方式来存储。不加static的全局变量默认为“外部变量”，可以被其他文件在进行了引用申明<em>（用extern,稍后介绍）</em>后使用。但是加了static之后，该变量便变成了“内部变量”，即该变量只能在该文件内被使用。</li>
+<li>对于局部变量来说，定义的时候默认为自动变量，采用动态方式来存储。使用static修饰后，将采取静态方式进行存储。初始化在编译时进行，只会进行一次。</li>
+</ul>
+<p><strong>extern关键字</strong>（声明而非定义，也不分配存储空间）</p>
+<p>​    仅用于对全局变量进行引用声明，包括</p>
+<ul>
+<li>对定义在使用处后面的全局变量提前引用声明</li>
+<li>在一个文件中对另一个文件定义的全局外部变量做引用声明（若全局变量使用了static，则不可引用）</li>
+</ul>
+<p><strong>使用auto、register</strong></p>
+<ul>
+<li><p>使用auto可显示地声明自动变量，由于在程序块内声明的变量默认是auto的，所以auto更多地也就   只是起到一个标记的作用了。</p>
+</li>
+<li><p>使用register可以将一些将被频繁使用的局部变量放到寄存器中，这样可以提高程序执行的效率。</p>
+</li>
+</ul>
 
     </div>
     
@@ -198,17 +224,17 @@ O(Nlog(N)）时间复杂度的主要来源：通常...">
 </article>
 <div class="article-nav prev-next-wrap clearfix">
     
-    <a href="/2019/09/17/常见c++笔试面试整理/" class="pre-post btn btn-default" title=''>
+    <a href="/2019/10/02/C语言编译过程详解/" class="pre-post btn btn-default" title='“C语言编译过程详解”'>
         <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
         <span class="hidden-xs">
-            </span>
+            “C语言编译过程详解”</span>
     </a>
     
     
-    <a href="/2019/09/16/“我的第一篇博客文章”/" class="next-post btn btn-default" title='“我的第一篇博客文章”'>
+    <a href="/2019/10/02/c++研发技术栈/" class="next-post btn btn-default" title='“C++研发技术岗”'>
         <span class="hidden-lg">下一篇</span>
         <span class="hidden-xs">
-            “我的第一篇博客文章”</span><i class="fa fa-angle-right fa-fw"></i>
+            “C++研发技术岗”</span><i class="fa fa-angle-right fa-fw"></i>
     </a>
     
 </div>
@@ -247,7 +273,7 @@ new Valine({
             Table of Contents
         </h3>
         
-        <p>暂无目录</p>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#C-C-中变量的作用域和存储类型"><span class="toc-text">C/C++中变量的作用域和存储类型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#区分作用域和存储类型"><span class="toc-text">区分作用域和存储类型</span></a></li></ol></li></ol></li></ol></li></ol>
         
     </div>
 </aside>
