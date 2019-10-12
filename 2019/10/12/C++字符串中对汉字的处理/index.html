@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>C++字符串中对汉字的处理 | Hexo</title>
+  <meta name="author" content="John Doe">
+
+  
+  <meta name="description" content="刷C++prime顺序容器那一章的时候，习题9.51需要涉及对字符串中汉字的处理，网上大概查了一下，需要注意的事项大概就三个方面：
+
+汉字字符在字符串或者字符数组中是如何存储的
+如何判断该字符是汉字(全角字符)还是其他字符(非全角字符)
+对汉字字符进行读取
+
+汉字字符在string类中的存储1234">
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="C++字符串中对汉字的处理">
+  <meta property="og:site_name" content="Hexo">
+
+  
+  
+
+  
+    <meta property="og:image" content>
+  
+
+  
+  <link href="/css/images/favicon.ico" rel="icon">
+  
+
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-12T11:27:37.000Z"><a href="/2019/10/12/C++字符串中对汉字的处理/">2019-10-12</a></time>
+      
+      
+  
+    <h1 class="title">C++字符串中对汉字的处理</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h4 id="刷C-prime顺序容器那一章的时候，习题9-51需要涉及对字符串中汉字的处理，网上大概查了一下，"><a href="#刷C-prime顺序容器那一章的时候，习题9-51需要涉及对字符串中汉字的处理，网上大概查了一下，" class="headerlink" title="刷C++prime顺序容器那一章的时候，习题9.51需要涉及对字符串中汉字的处理，网上大概查了一下，"></a>刷C++prime顺序容器那一章的时候，习题9.51需要涉及对字符串中汉字的处理，网上大概查了一下，</h4><p><strong>需要注意的事项大概就三个方面：</strong></p>
+<ul>
+<li><strong>汉字字符在字符串或者字符数组中是如何存储的</strong></li>
+<li><strong>如何判断该字符是汉字(全角字符)还是其他字符(非全角字符)</strong></li>
+<li><strong>对汉字字符进行读取</strong></li>
+</ul>
+<h3 id="汉字字符在string类中的存储"><a href="#汉字字符在string类中的存储" class="headerlink" title="汉字字符在string类中的存储"></a>汉字字符在string<strong>类中的存储</strong></h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s = <span class="string">"2004年4月29号"</span>;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">size_t</span> q;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(; p &lt; s.size(); p++) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; p &lt;&lt; <span class="string">": "</span> &lt;&lt; s[p] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="//yoursite.com/2019/10/12/C++字符串中对汉字的处理/C:C++%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%AF%B9%E6%B1%89%E5%AD%97%E7%9A%84%E5%A4%84%E7%90%86%5C1.png" alt="1570881007754"></p>
+<p><strong>我看网上的说法都是汉字在字符数组中为一个汉字占据两个字节，但是在实现9.51的时候，我用的是string类，按照两个字节实现出现了错误。于是亲自实现了一下，从输出结果来看，一个汉字是按照三个字节位存储的，有图有真相。”<em>2004年4月29号</em>“利用<em>length（）</em>函数输出的长度是16。</strong></p>
+<h4 id="C-中汉字字符的输出"><a href="#C-中汉字字符的输出" class="headerlink" title="C++中汉字字符的输出"></a>C++中汉字字符的输出</h4><p><strong>看了下网上的主流做法，都是用C语言中的字符数组来存储汉字的，每个汉字占两个字节</strong></p>
+<p><strong>判断该字符是不是汉字字符</strong></p>
+<ul>
+<li><strong>str[n] &amp; 0x80)!=0</strong></li>
+<li><strong>str[n] &lt; 0 || str[n] &gt; 127</strong></li>
+</ul>
+<p><strong>下面的代码提供了输出汉字字符的写法：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span> str[<span class="number">20</span>] = <span class="string">"2015年5月4日"</span>;</span><br><span class="line">    <span class="comment">//std::cin &gt;&gt; str;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> cstr[<span class="number">20</span>];</span><br><span class="line">    <span class="keyword">int</span> n, cn;</span><br><span class="line">    n = <span class="number">0</span>; cn = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (str[n] != <span class="string">'\0'</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((str[n] &amp; <span class="number">0x80</span>)!=<span class="number">0</span>) &#123;         <span class="comment">//如果是全角字符</span></span><br><span class="line">        <span class="comment">//if (str[n] &lt; 0 || str[n] &gt; 127) &#123;    另一种写法</span></span><br><span class="line">            cstr[cn] = str[n];</span><br><span class="line">            cstr[cn + <span class="number">1</span>] = str[n + <span class="number">1</span>];</span><br><span class="line">            cn += <span class="number">2</span>; n += <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            n++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cstr[cn] = <span class="string">'\0'</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; cstr &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cin</span>.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="//yoursite.com/2019/10/12/C++字符串中对汉字的处理/C++%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%AF%B9%E6%B1%89%E5%AD%97%E7%9A%84%E5%A4%84%E7%90%86%5C2.png" alt="1570879560578"></p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/C-C/">C/C++</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2019/10/12/C++字符串中对汉字的处理/">C++字符串中对汉字的处理</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/04/vector迭代器失效解决方法及其其内存原理/">C++vector迭代器失效解决方法及其其内存原理</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/02/c++研发技术栈/">C++研发技术岗</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/02/CC++ 多组控制多组输入数据/">C/C++ 多组控制多组输入数据</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/02/CC++中变量的作用域和存储类型/">C/C++中变量的作用域和存储类型</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>7</small></li>
+  
+    <li><a href="/tags/C-C/">C/C++</a><small>5</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/算法/">算法</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-C/" style="font-size: 16.67px;">C/C++</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  <p>
+  
+  &copy; 2019 John Doe
+  
+  All rights reserved.</p>
+  <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</div>
+<div class="clearfix"></div>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id='bg'></div>
+</body>
+</html>

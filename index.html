@@ -62,6 +62,68 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2019-10-12T11:27:37.000Z"><a href="/2019/10/12/C++字符串中对汉字的处理/">2019-10-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/12/C++字符串中对汉字的处理/">C++字符串中对汉字的处理</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h4 id="刷C-prime顺序容器那一章的时候，习题9-51需要涉及对字符串中汉字的处理，网上大概查了一下，"><a href="#刷C-prime顺序容器那一章的时候，习题9-51需要涉及对字符串中汉字的处理，网上大概查了一下，" class="headerlink" title="刷C++prime顺序容器那一章的时候，习题9.51需要涉及对字符串中汉字的处理，网上大概查了一下，"></a>刷C++prime顺序容器那一章的时候，习题9.51需要涉及对字符串中汉字的处理，网上大概查了一下，</h4><p><strong>需要注意的事项大概就三个方面：</strong></p>
+<ul>
+<li><strong>汉字字符在字符串或者字符数组中是如何存储的</strong></li>
+<li><strong>如何判断该字符是汉字(全角字符)还是其他字符(非全角字符)</strong></li>
+<li><strong>对汉字字符进行读取</strong></li>
+</ul>
+<h3 id="汉字字符在string类中的存储"><a href="#汉字字符在string类中的存储" class="headerlink" title="汉字字符在string类中的存储"></a>汉字字符在string<strong>类中的存储</strong></h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s = <span class="string">"2004年4月29号"</span>;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">size_t</span> q;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(; p &lt; s.size(); p++) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; p &lt;&lt; <span class="string">": "</span> &lt;&lt; s[p] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="//yoursite.com/2019/10/12/C++字符串中对汉字的处理/C:C++%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%AF%B9%E6%B1%89%E5%AD%97%E7%9A%84%E5%A4%84%E7%90%86%5C1.png" alt="1570881007754"></p>
+<p><strong>我看网上的说法都是汉字在字符数组中为一个汉字占据两个字节，但是在实现9.51的时候，我用的是string类，按照两个字节实现出现了错误。于是亲自实现了一下，从输出结果来看，一个汉字是按照三个字节位存储的，有图有真相。”<em>2004年4月29号</em>“利用<em>length（）</em>函数输出的长度是16。</strong></p>
+<h4 id="C-中汉字字符的输出"><a href="#C-中汉字字符的输出" class="headerlink" title="C++中汉字字符的输出"></a>C++中汉字字符的输出</h4><p><strong>看了下网上的主流做法，都是用C语言中的字符数组来存储汉字的，每个汉字占两个字节</strong></p>
+<p><strong>判断该字符是不是汉字字符</strong></p>
+<ul>
+<li><strong>str[n] &amp; 0x80)!=0</strong></li>
+<li><strong>str[n] &lt; 0 || str[n] &gt; 127</strong></li>
+</ul>
+<p><strong>下面的代码提供了输出汉字字符的写法：</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span> str[<span class="number">20</span>] = <span class="string">"2015年5月4日"</span>;</span><br><span class="line">    <span class="comment">//std::cin &gt;&gt; str;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> cstr[<span class="number">20</span>];</span><br><span class="line">    <span class="keyword">int</span> n, cn;</span><br><span class="line">    n = <span class="number">0</span>; cn = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (str[n] != <span class="string">'\0'</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((str[n] &amp; <span class="number">0x80</span>)!=<span class="number">0</span>) &#123;         <span class="comment">//如果是全角字符</span></span><br><span class="line">        <span class="comment">//if (str[n] &lt; 0 || str[n] &gt; 127) &#123;    另一种写法</span></span><br><span class="line">            cstr[cn] = str[n];</span><br><span class="line">            cstr[cn + <span class="number">1</span>] = str[n + <span class="number">1</span>];</span><br><span class="line">            cn += <span class="number">2</span>; n += <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            n++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cstr[cn] = <span class="string">'\0'</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; cstr &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cin</span>.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="//yoursite.com/2019/10/12/C++字符串中对汉字的处理/C++%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%AF%B9%E6%B1%89%E5%AD%97%E7%9A%84%E5%A4%84%E7%90%86%5C2.png" alt="1570879560578"></p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/C-C/">C/C++</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2019-10-04T11:47:56.000Z"><a href="/2019/10/04/vector迭代器失效解决方法及其其内存原理/">2019-10-04</a></time>
       
       
@@ -121,171 +183,20 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C++基础语法笔记/">2019-10-02</a></time>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/c++研发技术栈/">2019-10-02</a></time>
       
       
   
-    <h1 class="title"><a href="/2019/10/02/C++基础语法笔记/">C++基础语法笔记</a></h1>
+    <h1 class="title"><a href="/2019/10/02/c++研发技术栈/">C++研发技术岗</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>[TOC]</p>
-<h3 id="C-新特性"><a href="#C-新特性" class="headerlink" title="C++新特性"></a>C++新特性</h3><p>bool是C++中的新类型，C语言中使用if语句</p>
-<p>C++支持C语言的复制初始化，同时新增了直接初始化，如：int x（1024）</p>
-<p>C++ 的变量不用定义在函数体最前面，可以随用随定义</p>
-<p>C++输入输出</p>
-<p>输入8进制，10进制，16进制分别为</p>
-<p>cout &lt;&lt; oct &lt;&lt; x &lt;&lt; endl;</p>
-<p>cout &lt;&lt; dec &lt;&lt; x &lt;&lt; endl;</p>
-<p>cout &lt;&lt; hex &lt;&lt; x &lt;&lt; endl;</p>
-<p>命名空间namespace</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567057130429.png" alt="1567057130429"></p>
-<p>要使用命名空间内的变量或者函数，需要在使用前声明</p>
-<p>如要使用cout需要using namespace std 声明或者 std::cout；</p>
-<p><strong>防止类名冲突，可以在定义类时使用命名空间限制</strong></p>
-<h3 id="C-封装篇"><a href="#C-封装篇" class="headerlink" title="C++ 封装篇"></a>C++ 封装篇</h3><ul>
-<li><p>类（虚拟）和对象（实体）</p>
-</li>
-<li><p>数据成员和成员函数，构成完整的类</p>
-</li>
-<li><p>构造函数和虚构函数，描述对象的生生死死</p>
-</li>
-<li><p>对象复制与对象赋值</p>
-</li>
-<li><p>对象数组和对象指针，对象的应用形态</p>
-</li>
-<li><p>this指针</p>
-</li>
-</ul>
-<p>类的访问限定符：public、private、protect</p>
-<p>对象实例化：从栈实例化、从堆实例化</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059216028.png" alt="1567059216028"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059243958.png" alt="1567059243958"></p>
-<p>从栈中实例化的对象，对象生命周期结束后会自动回收</p>
-<p>从堆中实例化出的对象，需要手动释放内存。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Tv *p = <span class="keyword">new</span> TV();</span><br><span class="line">Tv *p = <span class="keyword">new</span> TV[<span class="number">20</span>];  </span><br><span class="line"><span class="keyword">delete</span> p;  <span class="comment">//释放对象内存</span></span><br><span class="line"><span class="keyword">delete</span> []p; <span class="comment">//释放对象数组内存</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="对象成员访问"><a href="#对象成员访问" class="headerlink" title="对象成员访问"></a>对象成员访问</h3><p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059583881.png" alt="1567059583881"></p>
-<p>c++string</p>
-<p>字符数组char[]使用比较的复杂，而string被设计出来更加的方便</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060303688.png" alt="1567060303688"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060423517.png" alt="1567060423517"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060357425.png" alt="1567060357425"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060380451.png" alt="1567060380451"></p>
-<p>内联函数：inline关键字</p>
-<ul>
-<li>编译时省去步骤2和步骤4，速度更快，效率跟高</li>
-<li>但必须时短小，逻辑简单的函数。如果复杂函数使用了inline关键字，也会被编译器拒绝</li>
-</ul>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060836710.png" alt="1567060836710"></p>
-<p>类内定义和内联函数</p>
-<ul>
-<li>类内定义即将成员函数的函数体写在类内</li>
-<li>类内定义的函数，编译器在编译时会优先编译为内联函数</li>
-</ul>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567061108861.png" alt="1567061108861"></p>
-<p>类外定义：同文件类外定义/分文件类外定义  </p>
-<p>c++构造函数</p>
-<p>思考：</p>
-<ul>
-<li><p>实例化的对象如何在内存中存储</p>
-</li>
-<li><p>类中的代码如何在内存中存储</p>
-</li>
-<li><p>代码和数据之间有怎样的关系</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">        内存分区</span><br><span class="line">栈区：<span class="keyword">int</span> = <span class="number">0</span>；<span class="keyword">int</span> *p = <span class="literal">NULL</span>;  <span class="comment">//内存分配和回收由系统进行</span></span><br><span class="line">堆区：<span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">20</span>];   <span class="comment">//堆区内存需要手动回收</span></span><br><span class="line">全局区：存储全局变量及静态常量</span><br><span class="line">常量区：<span class="built_in">string</span> str = <span class="string">"hello"</span>;</span><br><span class="line">代码区：存储逻辑代码的二进制 ![<span class="number">1567062496284</span>](C:\Users\hhe97\AppData\Roaming\Typora\typora-user-images\<span class="number">1567062496284.</span>png)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567062521631.png" alt="1567062521631"></p>
-<p> 对象初始化</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567062779622.png" alt="1567062779622"></p>
-<p>构造函数的规则和特点（无参构造、有参构造、重载构造）</p>
-<ul>
-<li><p>构造函数在对象实例化时被自动调用</p>
-</li>
-<li><p>构造函数与类同名</p>
-</li>
-<li><p>构造函数没有返回值</p>
-</li>
-<li><p>构造函数可以有多个重载形式</p>
-</li>
-<li><p>实例化对象时仅用到一个构造函数</p>
-</li>
-<li><p>当用户没有定义构造函数时，编译器自动生成一个构造函数</p>
-</li>
-<li><p>默认构造函数：初始化对象时不需要传参的构造函数</p>
-</li>
-</ul>
-<h4 id="C-构造函数初始化列表"><a href="#C-构造函数初始化列表" class="headerlink" title="C++构造函数初始化列表"></a>C++构造函数初始化列表</h4><p>与其他函数不同，构造函数除了有名字，参数列表和函数体之外，还可以有初始化列表，初始化列表以冒号开头，后跟一系列以逗号分隔的初始化字段。<br>从概念上来讲，构造函数的执行可以分成两个阶段，初始化阶段和计算阶段，初始化阶段先于计算阶段.</p>
-<p>初始化阶段 ：所有类类型（class type）的成员都会在初始化阶段初始化，即使该成员没有出现在构造函数的初始化列表中。</p>
-<p>计算阶段 ：一般用于执行构造函数体内的赋值操作。</p>
-<ul>
-<li>初始化列表先于构造函数执行</li>
-<li>初始化列表只能用于构造函数</li>
-<li>初始化列表同时初始化多个数据成员</li>
-</ul>
-<p><strong>思考：c++为什么需要初始化列表，作用是什么</strong></p>
-<p><em>tips：搞清初始化和赋值的区别是非常重要的一点</em></p>
-<p>使用初始化列表的原因<br>初始化类的成员有两种方式，一是使用初始化列表，二是在构造函数体内进行赋值操作。 主要是性能问题，对于内置类型，如int, float等，使用初始化类表和在构造函数体内初始化差别不是很大，但是对于类类型来说，最好使用初始化列表，为什么呢？由下面的测试可知，使用初始化列表少了一次调用默认构造函数的过程，这对于数据密集型的类来说，是非常高效的。<br><strong><em>一个好的原则是，能使用初始化列表的时候尽量使用初始化列表.</em></strong></p>
-<p>必须使用初始化列表的时候<br>除了性能问题之外，有些时候合初始化列表是不可或缺的，以下几种情况时必须使用初始化列表 </p>
-<ul>
-<li><p>常量成员，因为<strong>常量只能初始化不能赋值</strong>，所以必须放在初始化列表里面</p>
-</li>
-<li><p>引用类型，<strong>引用必须在定义的时候初始化，并且不能重新赋值</strong>，所以也要写在初始化列表里面 </p>
-</li>
-<li><p>没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化，而是直接调用拷贝构造函数初始化</p>
-</li>
-<li><p>如果类存在继承关系，派生类必须在其初始化列表中调用基类的构造函数</p>
-</li>
-</ul>
-<p><strong>成员变量的顺序是按照他们在类中出现的顺序进行初始化的，而不是按照他们在初始化列表出现的顺序初始化的</strong></p>
-<h4 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h4><p>定义格式：类名（const 类名&amp; 变量名）如: Student（const Student&amp; stu）</p>
-<ul>
-<li>如果没有自定义的拷贝构造函数则系统自动生成一个默认的拷贝构造函数</li>
-<li>当采用直接初始化或者复制初始化实例化对象时系统自动调用拷贝构造函数</li>
-</ul>
-<h4 id="构造函数总结"><a href="#构造函数总结" class="headerlink" title="构造函数总结"></a>构造函数总结</h4><p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567066730363.png" alt="1567066730363"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567066786810.png" alt="1567066786810"></p>
-<p>c++析构函数</p>
-<ul>
-<li>如果没有自定义的析构函数则系统自动生成</li>
-<li>析构函数在对象销毁时自动调用</li>
-<li>析构函数没有返回值、没有参数也不能重载</li>
-</ul>
-<p>对象的生命历程</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567130868427.png" alt="1567130868427"></p>
-<p>对象数组</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567133398112.png" alt="1567133398112"></p>
-<p>对象成员</p>
-<p><strong>当一个类的成员是另一个类的对象时，这个对象就叫成员对象。概括的说，就是一个类的成员是一个对象，即成员对象。</strong></p>
-<ul>
-<li><p>出现成员对象时，该类的构造函数要包括对成员的初始化。如果构造函数的成员初始化列表没有对成员对象初始化，则使用成员对象的缺省构造函数。   构造函数对成员对象初始化列表的格式为：</p>
-<p>&lt;类名&gt;::&lt;类名&gt;(&lt;总参数表&gt;):&lt;成员对象1&gt;(&lt;形参表1&gt;), &lt;成员对象2&gt;(&lt;形参表2&gt;)，……</p>
-<p>{ //函数体 }   </p>
-</li>
-<li><p>建立一个类的对象时，应先调用其构造函数。但是如果这个类有成员对象，则要先执行成员对象自己所属类的构造函数，当全部成员对象都执行了自身类的构造函数后，再执行当前类的构造函数。析构函数的调用次序正好相反。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Coordinate</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    Coordinate(<span class="keyword">int</span> x,<span class="keyword">int</span> y);</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> m_iX;</span><br><span class="line">    <span class="keyword">int</span> m_iY;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Line</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    line(<span class="keyword">int</span> x1,<span class="keyword">int</span> y1,<span class="keyword">int</span> x2,<span class="keyword">int</span> y2);</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    Coordinate m_coorA;</span><br><span class="line">    Coordinare m_coorB;</span><br><span class="line">&#125;</span><br><span class="line">Line::Line(<span class="keyword">int</span> x1,<span class="keyword">int</span> y1,<span class="keyword">int</span> x2,<span class="keyword">int</span> y2):</span><br><span class="line">m_coorA(x1,y1),m_coorB(x2,y2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"line"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    Line *p = <span class="keyword">new</span> Line(<span class="number">2</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">delete</span> p;</span><br><span class="line">    p = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-<h3 id="浅拷贝和深拷贝"><a href="#浅拷贝和深拷贝" class="headerlink" title="浅拷贝和深拷贝"></a>浅拷贝和深拷贝</h3><p> 一、浅赋值问题<br>（1）如果类中叧包含简单数据成员，没有指向堆的指针， 可以使用编译器提供的默认复制构造函数</p>
-<p>（2）如果类中包含指向堆中数据的指针，浅复制将出现 严重问题</p>
-<p><img src="https://img-blog.csdn.net/20180725172907718?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhb2Fvd2VpdHQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
-<p>①浅复制直接复制两个对象间的指针成员，导致两个指针 指向堆中同一坑内存区域</p>
-<p>② 一个对象的修改将导致另一个对象的修改</p>
-<p>③ 一个对象超出作用域，将导致内存释放，使得另一个对 象的指针无效，对其访问将导致程序异常。</p>
-<p>二、编写自己的赋值构造函数（完成深复制的内容）：实现了资源的重新分配<br>（1）含有指针成员的类，通常需要编写构造函数和复制 构造函数，同时需要实现相应的复制构造函数，以 及运算符重载</p>
-<p>（2）实现“深复制”，创建对象备仹时，为新对象在堆 中分配自己的内存，并将现有值复制到新内存中。</p>
-<p><img src="https://img-blog.csdn.net/20180725173146940?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhb2Fvd2VpdHQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
-<p>对象成员和对象成员指针</p>
-<p>this指针（解决参数和数据成员同名冲突）</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567151506007.png" alt="1567151506007"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567151549356.png" alt="1567151549356"></p>
+        <p>计算机网络：osi模型，三次握手，TCP状态转换图</p>
+<p>操作系统：死锁的条件与算法，进程的状态，进程和线程的区别，内存换页算法，同步与互斥</p>
+<p>数据库：SQL语句的基本写法，如Select，Gorupby having，数据库的范式，数据库的索引（实现是那种数据结构）和存储过程等</p>
+<p>数据结构与算法：各种排序算法的实现，时间与空间复杂度，稳定性等，二叉树的前中后序遍历的非递归与递归实现，树的基本概念，二分查找及其实现，图论算法 </p>
 
       
     </div>
@@ -450,53 +361,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C语言编译过程详解/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/C语言编译过程详解/">C语言编译过程详解</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h4 id="C语言编译过程详解"><a href="#C语言编译过程详解" class="headerlink" title="C语言编译过程详解"></a>C语言编译过程详解</h4><p>预处理，展开头文件/宏替换/去掉注释/条件编译</p>
-<p>编译，检查语法</p>
-<p>汇编，汇编代码转成机器码</p>
-<p>链接 链接到一起生成可执行程序</p>
-<p>参考<a href="https://blog.csdn.net/weixin_41143631/article/details/81221777" target="_blank" rel="noopener">https://blog.csdn.net/weixin_41143631/article/details/81221777</a></p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C-C/">C/C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/日期类问题/">2019-10-02</a></time>
       
       
@@ -546,20 +410,21 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/c++研发技术栈/">2019-10-02</a></time>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C语言编译过程详解/">2019-10-02</a></time>
       
       
   
-    <h1 class="title"><a href="/2019/10/02/c++研发技术栈/">C++研发技术岗</a></h1>
+    <h1 class="title"><a href="/2019/10/02/C语言编译过程详解/">C语言编译过程详解</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>计算机网络：osi模型，三次握手，TCP状态转换图</p>
-<p>操作系统：死锁的条件与算法，进程的状态，进程和线程的区别，内存换页算法，同步与互斥</p>
-<p>数据库：SQL语句的基本写法，如Select，Gorupby having，数据库的范式，数据库的索引（实现是那种数据结构）和存储过程等</p>
-<p>数据结构与算法：各种排序算法的实现，时间与空间复杂度，稳定性等，二叉树的前中后序遍历的非递归与递归实现，树的基本概念，二分查找及其实现，图论算法 </p>
+        <h4 id="C语言编译过程详解"><a href="#C语言编译过程详解" class="headerlink" title="C语言编译过程详解"></a>C语言编译过程详解</h4><p>预处理，展开头文件/宏替换/去掉注释/条件编译</p>
+<p>编译，检查语法</p>
+<p>汇编，汇编代码转成机器码</p>
+<p>链接 链接到一起生成可执行程序</p>
+<p>参考<a href="https://blog.csdn.net/weixin_41143631/article/details/81221777" target="_blank" rel="noopener">https://blog.csdn.net/weixin_41143631/article/details/81221777</a></p>
 
       
     </div>
@@ -573,7 +438,7 @@
         
   
   <div class="tags">
-    <a href="/tags/C/">C++</a>
+    <a href="/tags/C-C/">C/C++</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -821,96 +686,171 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/二进制数、八进制数和十六进制的表示/">2019-10-02</a></time>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C++基础语法笔记/">2019-10-02</a></time>
       
       
   
-    <h1 class="title"><a href="/2019/10/02/二进制数、八进制数和十六进制的表示/">二进制数、八进制数和十六进制的表示</a></h1>
+    <h1 class="title"><a href="/2019/10/02/C++基础语法笔记/">C++基础语法笔记</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="二进制数、八进制数和十六进制的表示"><a href="#二进制数、八进制数和十六进制的表示" class="headerlink" title="二进制数、八进制数和十六进制的表示"></a>二进制数、八进制数和十六进制的表示</h2><h4 id="1）二进制"><a href="#1）二进制" class="headerlink" title="1）二进制"></a>1）二进制</h4><p>二进制由 0 和 1 两个数字组成，使用时必须以0b或0B</p>
-<p>（不区分大小写）开头，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//合法的二进制</span><br><span class="line">int a = 0b101;  //换算成十进制为 5</span><br><span class="line">int b = -0b110010;  //换算成十进制为 -50</span><br><span class="line">int c = 0B100001;  //换算成十进制为 33</span><br><span class="line"></span><br><span class="line">//非法的二进制</span><br><span class="line">int m = 101010;  //无前缀 0B，相当于十进制</span><br><span class="line">int n = 0B410;  //4不是有效的二进制数字</span><br></pre></td></tr></table></figure>
-
-<p>读者请注意，标准的C语言并不支持上面的二进制写法，只是有些编译器自己进行了扩展，才支持二进制数字。</p>
-<p>换句话说，并不是所有的编译器都支持二进制数字，只有一部分编译器支持，并且跟编译器的版本有关系。</p>
-<h4 id="2-八进制"><a href="#2-八进制" class="headerlink" title="2) 八进制"></a>2) 八进制</h4><p>八进制由 0~7 八个数字组成，使用时必须以数字0开头</p>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//合法的八进制数</span><br><span class="line">int a = 015;  //换算成十进制为 13</span><br><span class="line">int b = -0101;  //换算成十进制为 -65</span><br><span class="line">int c = 0177777;  //换算成十进制为 65535</span><br><span class="line"></span><br><span class="line">//非法的八进制</span><br><span class="line">int m = 256;  //无前缀 0，相当于十进制</span><br><span class="line">int n = 03A2;  //A不是有效的八进制数字</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-十六进制"><a href="#3-十六进制" class="headerlink" title="3) 十六进制"></a>3) 十六进制</h4><p>十六进制由数字 0<del>9、字母 A</del>F 或 a~f（不区分大小写）组成，使用时必须以0x或0X（不区分大小写）开头，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//合法的十六进制</span><br><span class="line">int a = 0X2A;  //换算成十进制为 42</span><br><span class="line">int b = -0XA0;  //换算成十进制为 -160</span><br><span class="line">int c = 0xffff;  //换算成十进制为 65535</span><br><span class="line">//非法的十六进制</span><br><span class="line">int m = 5A;  //没有前缀 0X，是一个无效数字</span><br><span class="line">int n = 0X3H;  //H不是有效的十六进制数字</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-十进制"><a href="#4-十进制" class="headerlink" title="4) 十进制"></a>4) 十进制</h4><p>十进制由 0~9 十个数字组成，没有任何前缀，和我们平时的书写格式一样，不再赘述。</p>
-<h2 id="二进制数、八进制数和十六进制数的输出"><a href="#二进制数、八进制数和十六进制数的输出" class="headerlink" title="二进制数、八进制数和十六进制数的输出"></a>二进制数、八进制数和十六进制数的输出</h2><h2 id="二进制数、八进制数和十六进制数的输出-1"><a href="#二进制数、八进制数和十六进制数的输出-1" class="headerlink" title="二进制数、八进制数和十六进制数的输出"></a>二进制数、八进制数和十六进制数的输出</h2><p>C语言中常用的整数有 short、int 和 long 三种类型，通过 printf 函数，可以将它们以八进制、十进制和十六进制的形式输出。上节我们讲解了如何以十进制的形式输出，这节我们重点讲解如何以八进制和十六进制的形式输出，下表列出了不同类型的整数、以不同进制的形式输出时对应的格式控制符：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>short</th>
-<th>int</th>
-<th>long</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>八进制</td>
-<td>%ho</td>
-<td>%o</td>
-<td>%lo</td>
-</tr>
-<tr>
-<td>十进制</td>
-<td>%hd</td>
-<td>%d</td>
-<td>%ld</td>
-</tr>
-<tr>
-<td>十六进制</td>
-<td>%hx 或者 %hX</td>
-<td>%x 或者 %X</td>
-<td>%lx 或者 %lX</td>
-</tr>
-</tbody></table>
-<p>十六进制数字的表示用到了英文字母，有大小写之分，要在格式控制符中体现出来：</p>
-<ul>
-<li>%hx、%x 和 %lx 中的<code>x</code>小写，表明以小写字母的形式输出十六进制数；</li>
-<li>%hX、%X 和 %lX 中的<code>X</code>大写，表明以大写字母的形式输出十六进制数。</li>
+        <p>[TOC]</p>
+<h3 id="C-新特性"><a href="#C-新特性" class="headerlink" title="C++新特性"></a>C++新特性</h3><p>bool是C++中的新类型，C语言中使用if语句</p>
+<p>C++支持C语言的复制初始化，同时新增了直接初始化，如：int x（1024）</p>
+<p>C++ 的变量不用定义在函数体最前面，可以随用随定义</p>
+<p>C++输入输出</p>
+<p>输入8进制，10进制，16进制分别为</p>
+<p>cout &lt;&lt; oct &lt;&lt; x &lt;&lt; endl;</p>
+<p>cout &lt;&lt; dec &lt;&lt; x &lt;&lt; endl;</p>
+<p>cout &lt;&lt; hex &lt;&lt; x &lt;&lt; endl;</p>
+<p>命名空间namespace</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567057130429.png" alt="1567057130429"></p>
+<p>要使用命名空间内的变量或者函数，需要在使用前声明</p>
+<p>如要使用cout需要using namespace std 声明或者 std::cout；</p>
+<p><strong>防止类名冲突，可以在定义类时使用命名空间限制</strong></p>
+<h3 id="C-封装篇"><a href="#C-封装篇" class="headerlink" title="C++ 封装篇"></a>C++ 封装篇</h3><ul>
+<li><p>类（虚拟）和对象（实体）</p>
+</li>
+<li><p>数据成员和成员函数，构成完整的类</p>
+</li>
+<li><p>构造函数和虚构函数，描述对象的生生死死</p>
+</li>
+<li><p>对象复制与对象赋值</p>
+</li>
+<li><p>对象数组和对象指针，对象的应用形态</p>
+</li>
+<li><p>this指针</p>
+</li>
 </ul>
-<p>八进制数字和十进制数字不区分大小写，所以格式控制符都用小写形式。如果你比较叛逆，想使用大写形式，那么行为是未定义的，请你慎重：</p>
-<ul>
-<li>有些编译器支持大写形式，只不过行为和小写形式一样；</li>
-<li>有些编译器不支持大写形式，可能会报错，也可能会导致奇怪的输出。</li>
-</ul>
-<p>注意，虽然部分编译器支持二进制数字的表示，但是却不能使用 printf 函数输出二进制，这一点比较遗憾。</p>
-<p>当然，通过转换函数可以将其它进制数字转换成二进制数字，并以字符串的形式存储，然后在 printf 函数中使用%s输出即可。考虑到读者的基础还不够，这里就先不讲这种方法了。</p>
-<p>【实例】以不同进制的形式输出整数：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> a = <span class="number">0b1010110</span>;  <span class="comment">//二进制数字</span></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">02713</span>;  <span class="comment">//八进制数字</span></span><br><span class="line">    <span class="keyword">long</span> c = <span class="number">0X1DAB83</span>;  <span class="comment">//十六进制数字</span></span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%ho, b=%o, c=%lo\n"</span>, a, b, c);  <span class="comment">//以八进制形似输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hd, b=%d, c=%ld\n"</span>, a, b, c);  <span class="comment">//以十进制形式输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hx, b=%x, c=%lx\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母小写）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hX, b=%X, c=%lX\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母大写）</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类的访问限定符：public、private、protect</p>
+<p>对象实例化：从栈实例化、从堆实例化</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059216028.png" alt="1567059216028"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059243958.png" alt="1567059243958"></p>
+<p>从栈中实例化的对象，对象生命周期结束后会自动回收</p>
+<p>从堆中实例化出的对象，需要手动释放内存。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Tv *p = <span class="keyword">new</span> TV();</span><br><span class="line">Tv *p = <span class="keyword">new</span> TV[<span class="number">20</span>];  </span><br><span class="line"><span class="keyword">delete</span> p;  <span class="comment">//释放对象内存</span></span><br><span class="line"><span class="keyword">delete</span> []p; <span class="comment">//释放对象数组内存</span></span><br></pre></td></tr></table></figure>
 
-<p>运行结果：</p>
-<p>a=126, b=2713, c=7325603</p>
-<p>a=86, b=1483, c=1944451</p>
-<p>a=56, b=5cb, c=1dab83</p>
-<p>a=56, b=5CB, c=1DAB83</p>
-<p>从这个例子可以发现，一个数字不管以何种进制来表示，都能够以任意进制的形式输出。数字在内存中始终以二进制的形式存储，其它进制的数字在存储前都必须转换为二进制形式；同理，一个数字在输出时要进行逆向的转换，也就是从二进制转换为其他进制。</p>
-<h4 id="输出时加上前缀"><a href="#输出时加上前缀" class="headerlink" title="输出时加上前缀"></a>输出时加上前缀</h4><p>请读者注意观察上面的例子，会发现有一点不完美，如果只看输出结果：</p>
+<h3 id="对象成员访问"><a href="#对象成员访问" class="headerlink" title="对象成员访问"></a>对象成员访问</h3><p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059583881.png" alt="1567059583881"></p>
+<p>c++string</p>
+<p>字符数组char[]使用比较的复杂，而string被设计出来更加的方便</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060303688.png" alt="1567060303688"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060423517.png" alt="1567060423517"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060357425.png" alt="1567060357425"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060380451.png" alt="1567060380451"></p>
+<p>内联函数：inline关键字</p>
 <ul>
-<li>对于八进制数字，它没法和十进制、十六进制区分，因为八进制、十进制和十六进制都包含 0~7 这几个数字。</li>
-<li>对于十进制数字，它没法和十六进制区分，因为十六进制也包含 0~9 这几个数字。如果十进制数字中还不包含 8 和 9，那么也不能和八进制区分了。</li>
-<li>对于十六进制数字，如果没有包含 a<del>f 或者 A</del>F，那么就无法和十进制区分，如果还不包含 8 和 9，那么也不能和八进制区分了。</li>
+<li>编译时省去步骤2和步骤4，速度更快，效率跟高</li>
+<li>但必须时短小，逻辑简单的函数。如果复杂函数使用了inline关键字，也会被编译器拒绝</li>
 </ul>
-<p>区分不同进制数字的一个简单办法就是，在输出时带上特定的前缀。在格式控制符中加上#</p>
-<p>即可输出前缀，例如 %#x、%#o、%#lX、%#ho 等，请看下面的代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> a = <span class="number">0b1010110</span>;  <span class="comment">//二进制数字</span></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">02713</span>;  <span class="comment">//八进制数字</span></span><br><span class="line">    <span class="keyword">long</span> c = <span class="number">0X1DAB83</span>;  <span class="comment">//十六进制数字</span></span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#ho, b=%#o, c=%#lo\n"</span>, a, b, c);  <span class="comment">//以八进制形似输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hd, b=%d, c=%ld\n"</span>, a, b, c);  <span class="comment">//以十进制形式输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#hx, b=%#x, c=%#lx\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母小写）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#hX, b=%#X, c=%#lX\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母大写）</span></span><br><span class="line">   </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060836710.png" alt="1567060836710"></p>
+<p>类内定义和内联函数</p>
+<ul>
+<li>类内定义即将成员函数的函数体写在类内</li>
+<li>类内定义的函数，编译器在编译时会优先编译为内联函数</li>
+</ul>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567061108861.png" alt="1567061108861"></p>
+<p>类外定义：同文件类外定义/分文件类外定义  </p>
+<p>c++构造函数</p>
+<p>思考：</p>
+<ul>
+<li><p>实例化的对象如何在内存中存储</p>
+</li>
+<li><p>类中的代码如何在内存中存储</p>
+</li>
+<li><p>代码和数据之间有怎样的关系</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">        内存分区</span><br><span class="line">栈区：<span class="keyword">int</span> = <span class="number">0</span>；<span class="keyword">int</span> *p = <span class="literal">NULL</span>;  <span class="comment">//内存分配和回收由系统进行</span></span><br><span class="line">堆区：<span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">20</span>];   <span class="comment">//堆区内存需要手动回收</span></span><br><span class="line">全局区：存储全局变量及静态常量</span><br><span class="line">常量区：<span class="built_in">string</span> str = <span class="string">"hello"</span>;</span><br><span class="line">代码区：存储逻辑代码的二进制 ![<span class="number">1567062496284</span>](C:\Users\hhe97\AppData\Roaming\Typora\typora-user-images\<span class="number">1567062496284.</span>png)</span><br></pre></td></tr></table></figure>
 
-<p>运行结果：</p>
-<p>a=0126, b=02713, c=07325603</p>
-<p>a=86, b=1483, c=1944451</p>
-<p>a=0x56, b=0x5cb, c=0x1dab83</p>
-<p>a=0X56, b=0X5CB, c=0X1DAB83</p>
-<p>十进制数字没有前缀，所以不用加#。如果你加上了，那么它的行为是未定义的，有的编译器支持十进制加#，只不过输出结果和没有加#一样，有的编译器不支持加#，可能会报错，也可能会导致奇怪的输出；但是，大部分编译器都能正常输出，不至于当成一种错误。</p>
+</li>
+</ul>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567062521631.png" alt="1567062521631"></p>
+<p> 对象初始化</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567062779622.png" alt="1567062779622"></p>
+<p>构造函数的规则和特点（无参构造、有参构造、重载构造）</p>
+<ul>
+<li><p>构造函数在对象实例化时被自动调用</p>
+</li>
+<li><p>构造函数与类同名</p>
+</li>
+<li><p>构造函数没有返回值</p>
+</li>
+<li><p>构造函数可以有多个重载形式</p>
+</li>
+<li><p>实例化对象时仅用到一个构造函数</p>
+</li>
+<li><p>当用户没有定义构造函数时，编译器自动生成一个构造函数</p>
+</li>
+<li><p>默认构造函数：初始化对象时不需要传参的构造函数</p>
+</li>
+</ul>
+<h4 id="C-构造函数初始化列表"><a href="#C-构造函数初始化列表" class="headerlink" title="C++构造函数初始化列表"></a>C++构造函数初始化列表</h4><p>与其他函数不同，构造函数除了有名字，参数列表和函数体之外，还可以有初始化列表，初始化列表以冒号开头，后跟一系列以逗号分隔的初始化字段。<br>从概念上来讲，构造函数的执行可以分成两个阶段，初始化阶段和计算阶段，初始化阶段先于计算阶段.</p>
+<p>初始化阶段 ：所有类类型（class type）的成员都会在初始化阶段初始化，即使该成员没有出现在构造函数的初始化列表中。</p>
+<p>计算阶段 ：一般用于执行构造函数体内的赋值操作。</p>
+<ul>
+<li>初始化列表先于构造函数执行</li>
+<li>初始化列表只能用于构造函数</li>
+<li>初始化列表同时初始化多个数据成员</li>
+</ul>
+<p><strong>思考：c++为什么需要初始化列表，作用是什么</strong></p>
+<p><em>tips：搞清初始化和赋值的区别是非常重要的一点</em></p>
+<p>使用初始化列表的原因<br>初始化类的成员有两种方式，一是使用初始化列表，二是在构造函数体内进行赋值操作。 主要是性能问题，对于内置类型，如int, float等，使用初始化类表和在构造函数体内初始化差别不是很大，但是对于类类型来说，最好使用初始化列表，为什么呢？由下面的测试可知，使用初始化列表少了一次调用默认构造函数的过程，这对于数据密集型的类来说，是非常高效的。<br><strong><em>一个好的原则是，能使用初始化列表的时候尽量使用初始化列表.</em></strong></p>
+<p>必须使用初始化列表的时候<br>除了性能问题之外，有些时候合初始化列表是不可或缺的，以下几种情况时必须使用初始化列表 </p>
+<ul>
+<li><p>常量成员，因为<strong>常量只能初始化不能赋值</strong>，所以必须放在初始化列表里面</p>
+</li>
+<li><p>引用类型，<strong>引用必须在定义的时候初始化，并且不能重新赋值</strong>，所以也要写在初始化列表里面 </p>
+</li>
+<li><p>没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化，而是直接调用拷贝构造函数初始化</p>
+</li>
+<li><p>如果类存在继承关系，派生类必须在其初始化列表中调用基类的构造函数</p>
+</li>
+</ul>
+<p><strong>成员变量的顺序是按照他们在类中出现的顺序进行初始化的，而不是按照他们在初始化列表出现的顺序初始化的</strong></p>
+<h4 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h4><p>定义格式：类名（const 类名&amp; 变量名）如: Student（const Student&amp; stu）</p>
+<ul>
+<li>如果没有自定义的拷贝构造函数则系统自动生成一个默认的拷贝构造函数</li>
+<li>当采用直接初始化或者复制初始化实例化对象时系统自动调用拷贝构造函数</li>
+</ul>
+<h4 id="构造函数总结"><a href="#构造函数总结" class="headerlink" title="构造函数总结"></a>构造函数总结</h4><p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567066730363.png" alt="1567066730363"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567066786810.png" alt="1567066786810"></p>
+<p>c++析构函数</p>
+<ul>
+<li>如果没有自定义的析构函数则系统自动生成</li>
+<li>析构函数在对象销毁时自动调用</li>
+<li>析构函数没有返回值、没有参数也不能重载</li>
+</ul>
+<p>对象的生命历程</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567130868427.png" alt="1567130868427"></p>
+<p>对象数组</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567133398112.png" alt="1567133398112"></p>
+<p>对象成员</p>
+<p><strong>当一个类的成员是另一个类的对象时，这个对象就叫成员对象。概括的说，就是一个类的成员是一个对象，即成员对象。</strong></p>
+<ul>
+<li><p>出现成员对象时，该类的构造函数要包括对成员的初始化。如果构造函数的成员初始化列表没有对成员对象初始化，则使用成员对象的缺省构造函数。   构造函数对成员对象初始化列表的格式为：</p>
+<p>&lt;类名&gt;::&lt;类名&gt;(&lt;总参数表&gt;):&lt;成员对象1&gt;(&lt;形参表1&gt;), &lt;成员对象2&gt;(&lt;形参表2&gt;)，……</p>
+<p>{ //函数体 }   </p>
+</li>
+<li><p>建立一个类的对象时，应先调用其构造函数。但是如果这个类有成员对象，则要先执行成员对象自己所属类的构造函数，当全部成员对象都执行了自身类的构造函数后，再执行当前类的构造函数。析构函数的调用次序正好相反。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Coordinate</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    Coordinate(<span class="keyword">int</span> x,<span class="keyword">int</span> y);</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> m_iX;</span><br><span class="line">    <span class="keyword">int</span> m_iY;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Line</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    line(<span class="keyword">int</span> x1,<span class="keyword">int</span> y1,<span class="keyword">int</span> x2,<span class="keyword">int</span> y2);</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    Coordinate m_coorA;</span><br><span class="line">    Coordinare m_coorB;</span><br><span class="line">&#125;</span><br><span class="line">Line::Line(<span class="keyword">int</span> x1,<span class="keyword">int</span> y1,<span class="keyword">int</span> x2,<span class="keyword">int</span> y2):</span><br><span class="line">m_coorA(x1,y1),m_coorB(x2,y2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"line"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    Line *p = <span class="keyword">new</span> Line(<span class="number">2</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">delete</span> p;</span><br><span class="line">    p = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="浅拷贝和深拷贝"><a href="#浅拷贝和深拷贝" class="headerlink" title="浅拷贝和深拷贝"></a>浅拷贝和深拷贝</h3><p> 一、浅赋值问题<br>（1）如果类中叧包含简单数据成员，没有指向堆的指针， 可以使用编译器提供的默认复制构造函数</p>
+<p>（2）如果类中包含指向堆中数据的指针，浅复制将出现 严重问题</p>
+<p><img src="https://img-blog.csdn.net/20180725172907718?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhb2Fvd2VpdHQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+<p>①浅复制直接复制两个对象间的指针成员，导致两个指针 指向堆中同一坑内存区域</p>
+<p>② 一个对象的修改将导致另一个对象的修改</p>
+<p>③ 一个对象超出作用域，将导致内存释放，使得另一个对 象的指针无效，对其访问将导致程序异常。</p>
+<p>二、编写自己的赋值构造函数（完成深复制的内容）：实现了资源的重新分配<br>（1）含有指针成员的类，通常需要编写构造函数和复制 构造函数，同时需要实现相应的复制构造函数，以 及运算符重载</p>
+<p>（2）实现“深复制”，创建对象备仹时，为新对象在堆 中分配自己的内存，并将现有值复制到新内存中。</p>
+<p><img src="https://img-blog.csdn.net/20180725173146940?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhb2Fvd2VpdHQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+<p>对象成员和对象成员指针</p>
+<p>this指针（解决参数和数据成员同名冲突）</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567151506007.png" alt="1567151506007"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567151549356.png" alt="1567151549356"></p>
 
       
     </div>
@@ -962,11 +902,15 @@
   <ul class="entry">
     
       <li>
+        <a href="/2019/10/12/C++字符串中对汉字的处理/">C++字符串中对汉字的处理</a>
+      </li>
+    
+      <li>
         <a href="/2019/10/04/vector迭代器失效解决方法及其其内存原理/">C++vector迭代器失效解决方法及其其内存原理</a>
       </li>
     
       <li>
-        <a href="/2019/10/02/C++基础语法笔记/">C++基础语法笔记</a>
+        <a href="/2019/10/02/c++研发技术栈/">C++研发技术岗</a>
       </li>
     
       <li>
@@ -975,10 +919,6 @@
     
       <li>
         <a href="/2019/10/02/CC++中变量的作用域和存储类型/">C/C++中变量的作用域和存储类型</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/02/C语言编译过程详解/">C语言编译过程详解</a>
       </li>
     
   </ul>
@@ -992,7 +932,7 @@
   
     <li><a href="/tags/C/">C++</a><small>7</small></li>
   
-    <li><a href="/tags/C-C/">C/C++</a><small>4</small></li>
+    <li><a href="/tags/C-C/">C/C++</a><small>5</small></li>
   
     <li><a href="/tags/blog/">blog</a><small>1</small></li>
   
