@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>C++prime9.51:日期处理程序 | Hexo</title>
+  <meta name="author" content="John Doe">
+
+  
+  <meta name="description" content="C++ prime 习题9.51题目描述：
+练习9.51:设计一个类,它有三个unsigned成员,分别表示年、月和日。为其编写构造函数,接受一个表示日期的 string 参数。你的构造函数应该能处理不同数据格式,如 January 1,1900, 1/1/1900, Jan 1 1900等。
+本题">
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="C++prime9.51:日期处理程序">
+  <meta property="og:site_name" content="Hexo">
+
+  
+  
+
+  
+    <meta property="og:image" content>
+  
+
+  
+  <link href="/css/images/favicon.ico" rel="icon">
+  
+
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-13T01:11:24.000Z"><a href="/2019/10/13/C-prime9-51-日期处理程序/">2019-10-13</a></time>
+      
+      
+  
+    <h1 class="title">C++prime9.51:日期处理程序</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="C-prime-习题9-51"><a href="#C-prime-习题9-51" class="headerlink" title="C++ prime 习题9.51"></a>C++ prime 习题9.51</h3><h4 id="题目描述："><a href="#题目描述：" class="headerlink" title="题目描述："></a>题目描述：</h4><blockquote>
+<p>练习9.51:设计一个类,它有三个unsigned成员,分别表示年、月和日。为其编写构造函数,接受一个表示日期的 string 参数。你的构造函数应该能处理不同数据格式,如 January 1,1900, 1/1/1900, Jan 1 1900等。</p>
+<p>本题在题解给出的标准答案上对程序进行了扩展，使之可以处理 “2006年7月12日” 格式的字符串。</p>
+<p>总是，程序总共可以处理：<strong><em>January 1,1900；1/1/1900； Jan 1 1900；2006年7月12日</em></strong>；四种格式</p>
+</blockquote>
+<h4 id="出题思路："><a href="#出题思路：" class="headerlink" title="出题思路："></a>出题思路：</h4><blockquote>
+<p>本题看似简单,但实际上较为复杂。在实际应用程序开发中,编写从文本中提取格式数据的程序片段,是非常烦琐,很容易出错的工作。因为这部分程序<strong>不能只会解析格式正确的数据,还应检查格式错误,给出错误信息。</strong></p>
+</blockquote>
+<h4 id="解答："><a href="#解答：" class="headerlink" title="解答："></a>解答：</h4><blockquote>
+<p>在头文件中定义了 date类.构造函数date(string&amp;ds)从字符串中解析出年月,日的值,大致步骤如下:</p>
+<ol>
+<li>若首字符是数字，则为格式2或这格式4。用stoi提取数字值，并检查数字后面间隔符，若间隔符为 ‘/’ ，则检查月份值是否合法，不合法抛出异常，否则转到步骤6。若后面不是 ‘/‘，且不是全角字符，则抛出异常，否则为年份值，转步骤7。</li>
+<li>若首字符不是数字,表明是格式1或3,首先提取月份值.</li>
+<li>将ds 开始的子串与月份简称进行比较,若均不等,抛出异常(若与简称不<br>等.则不可能与全称相等).</li>
+<li>若与第i个月简称相等,且下一个字符是合法间隔符,返回月份值.</li>
+<li>否则,检查接下米的子串是否与全称剩余部分相等,若不等,抛出异常:否<br>则,返回月份值.</li>
+<li>用stoi提取日期值和年份值,如需要,检查间隔符合法性.</li>
+<li>利用substr() 获取字符串的 月和日 子串，利用stoi（）获取月份值，同时检查月份是否合法，以及月份后的间隔符是否合法。</li>
+<li>提取完月份值后，使用getday（）提取日期值，然后检查是否非法结尾。</li>
+</ol>
+</blockquote>
+<h4 id="设计知识点："><a href="#设计知识点：" class="headerlink" title="设计知识点："></a>设计知识点：</h4><blockquote>
+<p>本题逻辑上没有什么难度，但是需要熟悉字符串操作的各种函数，如stoi（），substr（）。在处理形如 ”2019年10月1日“ 的形式时，主要要考虑 汉字字符的处理，参考博客：<a href="https://treep9700.github.io/2019/10/12/C++%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%AF%B9%E6%B1%89%E5%AD%97%E7%9A%84%E5%A4%84%E7%90%86/" target="_blank" rel="noopener">https://treep9700.github.io/2019/10/12/C++%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%AF%B9%E6%B1%89%E5%AD%97%E7%9A%84%E5%A4%84%E7%90%86/</a>。此外，本题中还设计类的设计，C++11新特性，异常处理等知识。</p>
+</blockquote>
+<h3 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//9.51.h 文件</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> C11_9_H_INCLUDED</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> C11_9_H_INCLUDED</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">date</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">friend</span> ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp;, <span class="keyword">const</span> date&amp;);     <span class="comment">//运算符重载</span></span><br><span class="line"></span><br><span class="line">    date() = <span class="keyword">default</span>; <span class="comment">/** C++11 新特性 default函数作用于类的特殊成员函数，为其自动生成默认的函数定义体，提高代码的执行效率。C++11标准引入了一个新特性：default函数。程序员只需在类的特殊成员函数声明后加上“=default;”，就可将该函数声明为 defaulted 函数，编译器将为显式声明的 defaulted 函数自动生成函数体。    **********/</span></span><br><span class="line">    date(<span class="built_in">string</span> &amp;ds);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">y</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> year; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">m</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> month; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">d</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> day; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">unsigned</span> year, month, day;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 月份全称</span></span><br><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> month_name[]=&#123;<span class="string">"January"</span>,<span class="string">"February"</span>,<span class="string">"March"</span>,<span class="string">"April"</span>,<span class="string">"May"</span>,<span class="string">"June"</span>,<span class="string">"July"</span>,<span class="string">"August"</span>,<span class="string">"September"</span>,<span class="string">"October"</span>,<span class="string">"November"</span>,<span class="string">"December"</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//月份简写</span></span><br><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> month_abbr[] = &#123;<span class="string">"Jan"</span>,<span class="string">"Feb"</span>,<span class="string">"Mar"</span>,<span class="string">"Apr"</span>,<span class="string">"May"</span>,<span class="string">"Jun"</span>,<span class="string">"Jul"</span>,<span class="string">"Aug"</span>,<span class="string">"Sept"</span>,<span class="string">"Oct"</span>,<span class="string">"NOv"</span>,<span class="string">"Dec"</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//每月天数</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> days[] = &#123;<span class="number">0</span>, <span class="number">31</span>,<span class="number">28</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>,<span class="number">30</span>,<span class="number">31</span>&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/** 获取月份值，主要对"Jan 1, 2014", "February 1 2014"这两种情况进行处理 **/</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">get_month</span><span class="params">(<span class="built_in">string</span> &amp;ds,<span class="keyword">int</span> &amp;end_of_month)</span>     <span class="comment">//该函数返回月份数字</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">12</span>; i++)&#123;                       <span class="comment">//先进行前缀匹配检查</span></span><br><span class="line">    <span class="comment">//检查每个宇符是否与月份简写相等</span></span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;month_abbr[i].size();j++)</span><br><span class="line">            <span class="keyword">if</span>(ds[j]!=month_abbr[i][j])<span class="comment">//不是此月简写</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">if</span>(j==month_abbr[i].size())<span class="comment">//与简写匹配</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(i== <span class="number">12</span>)     <span class="comment">//与所有月份名都不相同</span></span><br><span class="line">    <span class="keyword">throw</span> invalid_argument(<span class="string">"不是合法月份名"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(ds[j] == <span class="string">' '</span>) &#123;</span><br><span class="line">        end_of_month = j + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> i + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>( ; j&lt; month_name[i].size(); j++)</span><br><span class="line">        <span class="keyword">if</span>(ds[j]!=month_name[i][j])</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">if</span>(j == month_name[i].size() &amp;&amp; ds[j] == <span class="string">' '</span>) &#123;<span class="comment">//月份全称</span></span><br><span class="line">            end_of_month = j+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span> i+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">throw</span> invalid_argument(<span class="string">"不是合法月份名"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">get_day</span><span class="params">(<span class="built_in">string</span> &amp;ds, <span class="keyword">int</span> month, <span class="keyword">int</span>&amp;p)</span></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> q;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> day = stoi(ds.substr(p), &amp;q); <span class="comment">//从p开始的部分转换为日期值</span></span><br><span class="line">    <span class="keyword">if</span>(day &lt; <span class="number">1</span> || day &gt; days[month])&#123;</span><br><span class="line">        <span class="keyword">throw</span> invalid_argument(<span class="string">"不是合法日期值"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    p += q;         <span class="comment">//移动到日期值之后</span></span><br><span class="line">    <span class="keyword">return</span> day;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">get_year</span><span class="params">(<span class="built_in">string</span> &amp;ds,<span class="keyword">int</span> &amp;p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span>  q;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> year =stoi(ds.substr(p),&amp;q);<span class="comment">//从p开始的部分转换为年</span></span><br><span class="line">    <span class="keyword">if</span> (p+q&lt;ds.size())</span><br><span class="line">    <span class="keyword">throw</span> invalid_argument(<span class="string">"非法结尾内容"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> year;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">date::date(<span class="built_in">string</span> &amp;ds) &#123;</span><br><span class="line">    <span class="keyword">int</span> p;        <span class="comment">//存储下标</span></span><br><span class="line">    <span class="keyword">size_t</span> q;</span><br><span class="line">    <span class="keyword">int</span> number;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>((p = ds.find_first_of(<span class="string">"0123456789"</span>))==<span class="built_in">string</span>::npos)</span><br><span class="line">    <span class="keyword">throw</span> invalid_argument(<span class="string">"没有数字,非法日期"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(p &gt; <span class="number">0</span>)&#123;     <span class="comment">//月份名格式</span></span><br><span class="line">        month = get_month(ds,p);</span><br><span class="line">        day = get_day(ds,month,p);</span><br><span class="line">        <span class="keyword">if</span> (ds[p] != <span class="string">' '</span> &amp;&amp; ds[p] != <span class="string">','</span>)</span><br><span class="line">            <span class="keyword">throw</span> invalid_argument(<span class="string">"非法间隔符1"</span>);</span><br><span class="line">        p++;</span><br><span class="line">        year = get_year(ds,p);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;                      <span class="comment">//月份值格式或者年份值格式</span></span><br><span class="line">        number = stoi(ds,&amp;q);</span><br><span class="line">        p = q;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>( number &gt;= <span class="number">1</span> &amp;&amp; number &lt;= <span class="number">12</span> &amp;&amp; ds[p++] == <span class="string">'/'</span> ) &#123;    <span class="comment">//月份值格式</span></span><br><span class="line">            month = number;</span><br><span class="line">        day = get_day(ds,month,p);</span><br><span class="line">        <span class="keyword">if</span> (ds[p++]!= <span class="string">'/'</span>)                <span class="comment">//这里为什么要有 p++</span></span><br><span class="line">            <span class="keyword">throw</span> invalid_argument(<span class="string">"非法间隔符2"</span>);</span><br><span class="line">        year = get_year(ds, p);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;                                            <span class="comment">//年份值格式</span></span><br><span class="line">            <span class="keyword">if</span>(ds[p+<span class="number">1</span>] &lt;= <span class="number">127</span> &amp;&amp; ds[p+<span class="number">1</span>] &gt;= <span class="number">0</span>)&#123;            <span class="comment">//间隔符不是汉字，则抛出异常</span></span><br><span class="line">                <span class="comment">//p++;</span></span><br><span class="line">                <span class="keyword">throw</span> invalid_argument(<span class="string">"非法间隔符3"</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            year = number;         </span><br><span class="line"></span><br><span class="line">            <span class="comment">//月份值格株式</span></span><br><span class="line">            p += <span class="number">3</span>;                <span class="comment">//指向月份数字,每个汉字在string中占三个字节</span></span><br><span class="line">            <span class="built_in">string</span> substring = ds.substr(p);</span><br><span class="line">            month = stoi(substring, &amp;q);</span><br><span class="line">            p = q;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(month&lt;<span class="number">1</span> || month&gt;<span class="number">12</span>)</span><br><span class="line">                <span class="keyword">throw</span> invalid_argument(<span class="string">"不是合法月份值"</span>);</span><br><span class="line">            <span class="keyword">if</span>(substring[p] &lt;= <span class="number">127</span> &amp;&amp; substring[p] &gt;= <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">throw</span> invalid_argument(<span class="string">"非法间隔符"</span>);</span><br><span class="line"></span><br><span class="line">            p += <span class="number">3</span>;</span><br><span class="line">            day = get_day(substring, month, p);</span><br><span class="line">            <span class="keyword">if</span>(substring[p] &lt;= <span class="number">127</span> &amp;&amp; substring[p] &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">throw</span> invalid_argument(<span class="string">"非法结尾"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(p + <span class="number">3</span> != substring.size())</span><br><span class="line">                <span class="keyword">throw</span> invalid_argument(<span class="string">"非法结尾"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ostream&amp;<span class="keyword">operator</span>&lt;&lt;(ostream&amp; out,<span class="keyword">const</span> date&amp;d) &#123;</span><br><span class="line">    out &lt;&lt;d.y() &lt;&lt;  <span class="string">"年"</span> &lt;&lt; d.m() &lt;&lt; <span class="string">"月"</span> &lt;&lt; d.d() &lt;&lt; <span class="string">"日"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> out;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// 11_9_H_INCLUDED</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//9.51.cpp 文件</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"9.51.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> dates[] = &#123;<span class="string">"1998年4月30号"</span>, <span class="string">"Jan 1, 2014"</span>, <span class="string">"2018年3月24号"</span>, <span class="string">"February 1 2014"</span>, <span class="string">"3/1/2014"</span>, <span class="string">"2015年 4 2"</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> ds : dates) &#123;</span><br><span class="line">            <span class="function">date <span class="title">dl</span><span class="params">(ds)</span></span>;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; dl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (invalid_argument e) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; e.what() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="运行结果："><a href="#运行结果：" class="headerlink" title="运行结果："></a>运行结果：</h4><p><img src="//yoursite.com/2019/10/13/C-prime9-51-日期处理程序/C:%5CUsers%5Chhe97%5Cblog%5Csource_posts%5CC-prime9-51-%E6%97%A5%E6%9C%9F%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%5Cresult.png" alt></p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/C-prime/">C++ prime</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2019/10/13/C-prime9-51-日期处理程序/">C++prime9.51:日期处理程序</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/12/C++字符串中对汉字的处理/">C++字符串中对汉字的处理</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/04/vector迭代器失效解决方法及其其内存原理/">C++vector迭代器失效解决方法及其其内存原理</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/02/C++ sort使用总结/">C++ sort使用总结</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/02/CC++中变量的作用域和存储类型/">C/C++中变量的作用域和存储类型</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>7</small></li>
+  
+    <li><a href="/tags/C-prime/">C++ prime</a><small>1</small></li>
+  
+    <li><a href="/tags/C-C/">C/C++</a><small>5</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/算法/">算法</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 16.67px;">C/C++</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  <p>
+  
+  &copy; 2019 John Doe
+  
+  All rights reserved.</p>
+  <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</div>
+<div class="clearfix"></div>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id='bg'></div>
+</body>
+</html>
