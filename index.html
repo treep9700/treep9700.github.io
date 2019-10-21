@@ -62,6 +62,101 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2019-10-21T07:02:54.000Z"><a href="/2019/10/21/二叉树的遍历/">2019-10-21</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/21/二叉树的遍历/">二叉树的遍历</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="二叉树的遍历"><a href="#二叉树的遍历" class="headerlink" title="二叉树的遍历"></a>二叉树的遍历</h3><h4 id="二叉树结构"><a href="#二叉树结构" class="headerlink" title="二叉树结构"></a>二叉树结构</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Definition for a binary tree node.</span></span><br><span class="line"> <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span> &#123;</span></span><br><span class="line">     <span class="keyword">int</span> val;</span><br><span class="line">     TreeNode *left;</span><br><span class="line">     TreeNode *right;</span><br><span class="line">     TreeNode(<span class="keyword">int</span> x) : val(x), left(<span class="literal">NULL</span>), right(<span class="literal">NULL</span>) &#123;&#125;</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>四种遍历方式：先序遍历、中序遍历、后序遍历、层次遍历。分别对应写出递归版本和非递归版本</p>
+<h4 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><p><strong>非递归版</strong>：<br>由于不管是先序遍历还是中序遍历以及后序遍历，我们都需要利用一个辅助栈来进行每个节点的存储打印，所以每个节点都要进栈和出栈，不过是根据那种遍历方式改变的是每个节点的进栈顺序，所以时间复杂度为<strong><em>O(n)</em></strong>，同样空间复杂度也为<strong><em>O(n)</em></strong>，n为结点数。<br>层序遍历是通过队列来进行每个节点的存储打印的，所以时间复杂度和空间复杂度也与前三种遍历方式一样。<br><strong>递归版</strong>：<br>空间复杂度与系统堆栈有关，系统栈需要记住每个节点的值，所以空间复杂度为<strong><em>O(n)</em></strong>。时间复杂度应该为<strong><em>O(n)</em></strong>，根据公式<strong><em>T(n)=2T(n/2)+1 = 2(2T(n/4)+1)+1 = 2^logn+2^(logn-1)+…+2+1 ~= n</em></strong>，所以时间复杂度为<strong><em>O(n)</em></strong>。</p>
+<h4 id="先序遍历"><a href="#先序遍历" class="headerlink" title="先序遍历"></a>先序遍历</h4><p>使用递归方式实现先序遍历的具体过程为：</p>
+<ul>
+<li>先访问根节点</li>
+<li>再序访问左子树</li>
+<li>最后序遍历右子树</li>
+</ul>
+<p><strong>tips：关于递归，编写递归代码的关键是，只要遇到递归，我们就把它抽象成一个递推公式，不用想一层层的调用关系，不要试图用人脑去分解递归的每个步骤。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;            <span class="comment">//注意数组定义的位置</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; preorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="literal">NULL</span> == root)</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        </span><br><span class="line">        v.push_back(root-&gt;val);</span><br><span class="line">        preorderTraversal(root-&gt;left);</span><br><span class="line">        preorderTraversal(root-&gt;right);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>非递归方式：</p>
+<p>递归过程其实就是模拟了一个天然的栈，通过递归可以重复的访问一个结点。因为要迭代实现二叉树的遍历，就很自然而然的相到使用栈，栈可以不以元素输入的顺序进行输出。具体步骤：</p>
+<ol>
+<li><p>若根节点不为空，则把根节点入栈</p>
+</li>
+<li><p>开始迭代，输出栈顶元素。然后每次都把栈顶元素的孩子节点（若存在）按照右、左的顺序存入栈中（与左右的遍历顺序正好相反）。</p>
+</li>
+<li><p>判断栈顶是否为空，重复2步骤。</p>
+<p><strong>tips：保证每次栈顶元素都是遍历顺序优先级最高的元素</strong></p>
+</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">    <span class="built_in">stack</span>&lt;TreeNode*&gt; s;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; preorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!root)</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">       s.push(root);       <span class="comment">//树根入栈</span></span><br><span class="line">       TreeNode *temp;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">while</span>(!s.empty())&#123;           <span class="comment">//每次都判断栈内是否为空</span></span><br><span class="line">           res.push_back(s.top()-&gt;val);      <span class="comment">//保证每次的栈顶元素都是 先序元素</span></span><br><span class="line">           temp = s.top();</span><br><span class="line"></span><br><span class="line">           TreeNode *l = temp-&gt;left;</span><br><span class="line">           TreeNode *r = temp-&gt;right;</span><br><span class="line">           s.pop();</span><br><span class="line"></span><br><span class="line">           <span class="keyword">if</span>(r)</span><br><span class="line">            s.push(r);</span><br><span class="line">           <span class="keyword">if</span>(l)</span><br><span class="line">            s.push(l);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h4><p>使用递归方法遍历的步骤：</p>
+<ul>
+<li>先遍历左节点</li>
+<li>然后遍历根节点</li>
+<li>最后遍历右节点</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; inorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!root)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;();</span><br><span class="line">        </span><br><span class="line">        inorderTraversal(root-&gt;left);</span><br><span class="line">        res.push_back(root-&gt;val);</span><br><span class="line">        inorderTraversal(root-&gt;right);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>非递归遍历：用栈的思路来处理问题，具体算法为：</p>
+<ol>
+<li>从根节点开始，先将根节点压入栈中</li>
+<li>然后再将其所有左子结点压入栈中，取出栈顶结点，保存结点值</li>
+<li>再将当前指针移到其右子节点上。若存在右子节点，则在下次循环的时候有可将其所有左子节点压入栈中。若不存在，则没有元素入栈，下次循环的时候取出上一个存入的左子节点。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">    <span class="built_in">stack</span>&lt;TreeNode *&gt; s;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; inorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!root)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ();</span><br><span class="line">        </span><br><span class="line">        TreeNode *p = root;</span><br><span class="line">        <span class="keyword">while</span>(p || !s.empty())&#123;</span><br><span class="line">            <span class="keyword">while</span>(p)&#123;            <span class="comment">//把所有的左子节点都压入栈中</span></span><br><span class="line">                s.push(p);</span><br><span class="line">                p = p-&gt;left;</span><br><span class="line">            &#125;</span><br><span class="line">            p = s.top();</span><br><span class="line">            s.pop();</span><br><span class="line">            res.push_back(p-&gt;val);</span><br><span class="line">            p = p-&gt;right;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="后续遍历"><a href="#后续遍历" class="headerlink" title="后续遍历"></a>后续遍历</h4><p>递归方式：</p>
+<ul>
+<li>先访问左节点</li>
+<li>然后访问右节点</li>
+<li>最后访问根节点</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; postorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!root)</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">        postorderTraversal(root-&gt;left);</span><br><span class="line">        postorderTraversal(root-&gt;right);</span><br><span class="line">        res.push_back(root-&gt;val);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>非递归方式：由于访问次序是左右根，则按照的入栈次序则为根右左。注意使用一个辅助结点记录上一个访问元素，若上一个访问元素是栈顶元素的孩子，则说明该节点的孩子已经被访问过，不在入栈，直接访问该元素。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; postorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!root) <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">        <span class="built_in">stack</span>&lt;TreeNode *&gt; s&#123;&#123;root&#125;&#125;;</span><br><span class="line">        TreeNode *last = root;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(!s.empty()) &#123;</span><br><span class="line">            TreeNode *p = s.top();</span><br><span class="line">            <span class="keyword">if</span>((!p-&gt;left &amp;&amp; !p-&gt;right) || last == p-&gt;left || last == p-&gt;right) &#123;</span><br><span class="line">                res.push_back(p-&gt;val);</span><br><span class="line">                s.pop();</span><br><span class="line">                last = p;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>(p-&gt;right) s.push(p-&gt;right);</span><br><span class="line">                <span class="keyword">if</span>(p-&gt;left) s.push(p-&gt;left);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/数据结构/">数据结构</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2019-10-13T01:11:24.000Z"><a href="/2019/10/13/C-prime9-51-日期处理程序/">2019-10-13</a></time>
       
       
@@ -254,52 +349,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/c++研发技术栈/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/c++研发技术栈/">C++研发技术岗</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>计算机网络：osi模型，三次握手，TCP状态转换图</p>
-<p>操作系统：死锁的条件与算法，进程的状态，进程和线程的区别，内存换页算法，同步与互斥</p>
-<p>数据库：SQL语句的基本写法，如Select，Gorupby having，数据库的范式，数据库的索引（实现是那种数据结构）和存储过程等</p>
-<p>数据结构与算法：各种排序算法的实现，时间与空间复杂度，稳定性等，二叉树的前中后序遍历的非递归与递归实现，树的基本概念，二分查找及其实现，图论算法 </p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C/">C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C语言编译过程详解/">2019-10-02</a></time>
       
       
@@ -419,96 +468,31 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/二进制数、八进制数和十六进制的表示/">2019-10-02</a></time>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/容器：顺序容器和关联容器/">2019-10-02</a></time>
       
       
   
-    <h1 class="title"><a href="/2019/10/02/二进制数、八进制数和十六进制的表示/">二进制数、八进制数和十六进制的表示</a></h1>
+    <h1 class="title"><a href="/2019/10/02/容器：顺序容器和关联容器/">顺序容器和关联容器</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h2 id="二进制数、八进制数和十六进制的表示"><a href="#二进制数、八进制数和十六进制的表示" class="headerlink" title="二进制数、八进制数和十六进制的表示"></a>二进制数、八进制数和十六进制的表示</h2><h4 id="1）二进制"><a href="#1）二进制" class="headerlink" title="1）二进制"></a>1）二进制</h4><p>二进制由 0 和 1 两个数字组成，使用时必须以0b或0B</p>
-<p>（不区分大小写）开头，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//合法的二进制</span><br><span class="line">int a = 0b101;  //换算成十进制为 5</span><br><span class="line">int b = -0b110010;  //换算成十进制为 -50</span><br><span class="line">int c = 0B100001;  //换算成十进制为 33</span><br><span class="line"></span><br><span class="line">//非法的二进制</span><br><span class="line">int m = 101010;  //无前缀 0B，相当于十进制</span><br><span class="line">int n = 0B410;  //4不是有效的二进制数字</span><br></pre></td></tr></table></figure>
-
-<p>读者请注意，标准的C语言并不支持上面的二进制写法，只是有些编译器自己进行了扩展，才支持二进制数字。</p>
-<p>换句话说，并不是所有的编译器都支持二进制数字，只有一部分编译器支持，并且跟编译器的版本有关系。</p>
-<h4 id="2-八进制"><a href="#2-八进制" class="headerlink" title="2) 八进制"></a>2) 八进制</h4><p>八进制由 0~7 八个数字组成，使用时必须以数字0开头</p>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//合法的八进制数</span><br><span class="line">int a = 015;  //换算成十进制为 13</span><br><span class="line">int b = -0101;  //换算成十进制为 -65</span><br><span class="line">int c = 0177777;  //换算成十进制为 65535</span><br><span class="line"></span><br><span class="line">//非法的八进制</span><br><span class="line">int m = 256;  //无前缀 0，相当于十进制</span><br><span class="line">int n = 03A2;  //A不是有效的八进制数字</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-十六进制"><a href="#3-十六进制" class="headerlink" title="3) 十六进制"></a>3) 十六进制</h4><p>十六进制由数字 0<del>9、字母 A</del>F 或 a~f（不区分大小写）组成，使用时必须以0x或0X（不区分大小写）开头，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//合法的十六进制</span><br><span class="line">int a = 0X2A;  //换算成十进制为 42</span><br><span class="line">int b = -0XA0;  //换算成十进制为 -160</span><br><span class="line">int c = 0xffff;  //换算成十进制为 65535</span><br><span class="line">//非法的十六进制</span><br><span class="line">int m = 5A;  //没有前缀 0X，是一个无效数字</span><br><span class="line">int n = 0X3H;  //H不是有效的十六进制数字</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-十进制"><a href="#4-十进制" class="headerlink" title="4) 十进制"></a>4) 十进制</h4><p>十进制由 0~9 十个数字组成，没有任何前缀，和我们平时的书写格式一样，不再赘述。</p>
-<h2 id="二进制数、八进制数和十六进制数的输出"><a href="#二进制数、八进制数和十六进制数的输出" class="headerlink" title="二进制数、八进制数和十六进制数的输出"></a>二进制数、八进制数和十六进制数的输出</h2><h2 id="二进制数、八进制数和十六进制数的输出-1"><a href="#二进制数、八进制数和十六进制数的输出-1" class="headerlink" title="二进制数、八进制数和十六进制数的输出"></a>二进制数、八进制数和十六进制数的输出</h2><p>C语言中常用的整数有 short、int 和 long 三种类型，通过 printf 函数，可以将它们以八进制、十进制和十六进制的形式输出。上节我们讲解了如何以十进制的形式输出，这节我们重点讲解如何以八进制和十六进制的形式输出，下表列出了不同类型的整数、以不同进制的形式输出时对应的格式控制符：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>short</th>
-<th>int</th>
-<th>long</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>八进制</td>
-<td>%ho</td>
-<td>%o</td>
-<td>%lo</td>
-</tr>
-<tr>
-<td>十进制</td>
-<td>%hd</td>
-<td>%d</td>
-<td>%ld</td>
-</tr>
-<tr>
-<td>十六进制</td>
-<td>%hx 或者 %hX</td>
-<td>%x 或者 %X</td>
-<td>%lx 或者 %lX</td>
-</tr>
-</tbody></table>
-<p>十六进制数字的表示用到了英文字母，有大小写之分，要在格式控制符中体现出来：</p>
+        <p>容器：顺序容器和关联容器</p>
+<p>迭代器类型：每种容器都定义了自己的迭代器类型，是一种数据类型</p>
+<p>const_iterator: 每种容器都定义了const_iterator类型，给类型只能用于读取容器内的元素，不能改变其值</p>
+<p>迭代器：有迭代器类型定义的实体</p>
+<p>访问容器的两种方法：</p>
 <ul>
-<li>%hx、%x 和 %lx 中的<code>x</code>小写，表明以小写字母的形式输出十六进制数；</li>
-<li>%hX、%X 和 %lX 中的<code>X</code>大写，表明以大写字母的形式输出十六进制数。</li>
+<li>下标：少数容器支持</li>
+<li>迭代器：对所有元素都适用，现代c++程序更倾向</li>
 </ul>
-<p>八进制数字和十进制数字不区分大小写，所以格式控制符都用小写形式。如果你比较叛逆，想使用大写形式，那么行为是未定义的，请你慎重：</p>
+<p>迭代器的操作：</p>
 <ul>
-<li>有些编译器支持大写形式，只不过行为和小写形式一样；</li>
-<li>有些编译器不支持大写形式，可能会报错，也可能会导致奇怪的输出。</li>
+<li>begin和end操作</li>
+<li>vector迭代器的自增和解引用运算</li>
+<li>迭代器比较</li>
 </ul>
-<p>注意，虽然部分编译器支持二进制数字的表示，但是却不能使用 printf 函数输出二进制，这一点比较遗憾。</p>
-<p>当然，通过转换函数可以将其它进制数字转换成二进制数字，并以字符串的形式存储，然后在 printf 函数中使用%s输出即可。考虑到读者的基础还不够，这里就先不讲这种方法了。</p>
-<p>【实例】以不同进制的形式输出整数：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> a = <span class="number">0b1010110</span>;  <span class="comment">//二进制数字</span></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">02713</span>;  <span class="comment">//八进制数字</span></span><br><span class="line">    <span class="keyword">long</span> c = <span class="number">0X1DAB83</span>;  <span class="comment">//十六进制数字</span></span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%ho, b=%o, c=%lo\n"</span>, a, b, c);  <span class="comment">//以八进制形似输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hd, b=%d, c=%ld\n"</span>, a, b, c);  <span class="comment">//以十进制形式输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hx, b=%x, c=%lx\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母小写）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hX, b=%X, c=%lX\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母大写）</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<p>a=126, b=2713, c=7325603</p>
-<p>a=86, b=1483, c=1944451</p>
-<p>a=56, b=5cb, c=1dab83</p>
-<p>a=56, b=5CB, c=1DAB83</p>
-<p>从这个例子可以发现，一个数字不管以何种进制来表示，都能够以任意进制的形式输出。数字在内存中始终以二进制的形式存储，其它进制的数字在存储前都必须转换为二进制形式；同理，一个数字在输出时要进行逆向的转换，也就是从二进制转换为其他进制。</p>
-<h4 id="输出时加上前缀"><a href="#输出时加上前缀" class="headerlink" title="输出时加上前缀"></a>输出时加上前缀</h4><p>请读者注意观察上面的例子，会发现有一点不完美，如果只看输出结果：</p>
-<ul>
-<li>对于八进制数字，它没法和十进制、十六进制区分，因为八进制、十进制和十六进制都包含 0~7 这几个数字。</li>
-<li>对于十进制数字，它没法和十六进制区分，因为十六进制也包含 0~9 这几个数字。如果十进制数字中还不包含 8 和 9，那么也不能和八进制区分了。</li>
-<li>对于十六进制数字，如果没有包含 a<del>f 或者 A</del>F，那么就无法和十进制区分，如果还不包含 8 和 9，那么也不能和八进制区分了。</li>
-</ul>
-<p>区分不同进制数字的一个简单办法就是，在输出时带上特定的前缀。在格式控制符中加上#</p>
-<p>即可输出前缀，例如 %#x、%#o、%#lX、%#ho 等，请看下面的代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> a = <span class="number">0b1010110</span>;  <span class="comment">//二进制数字</span></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">02713</span>;  <span class="comment">//八进制数字</span></span><br><span class="line">    <span class="keyword">long</span> c = <span class="number">0X1DAB83</span>;  <span class="comment">//十六进制数字</span></span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#ho, b=%#o, c=%#lo\n"</span>, a, b, c);  <span class="comment">//以八进制形似输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hd, b=%d, c=%ld\n"</span>, a, b, c);  <span class="comment">//以十进制形式输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#hx, b=%#x, c=%#lx\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母小写）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#hX, b=%#X, c=%#lX\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母大写）</span></span><br><span class="line">   </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<p>a=0126, b=02713, c=07325603</p>
-<p>a=86, b=1483, c=1944451</p>
-<p>a=0x56, b=0x5cb, c=0x1dab83</p>
-<p>a=0X56, b=0X5CB, c=0X1DAB83</p>
-<p>十进制数字没有前缀，所以不用加#。如果你加上了，那么它的行为是未定义的，有的编译器支持十进制加#，只不过输出结果和没有加#一样，有的编译器不支持加#，可能会报错，也可能会导致奇怪的输出；但是，大部分编译器都能正常输出，不至于当成一种错误。</p>
 
       
     </div>
@@ -541,102 +525,20 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C++ sort使用总结/">2019-10-02</a></time>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/c++研发技术栈/">2019-10-02</a></time>
       
       
   
-    <h1 class="title"><a href="/2019/10/02/C++ sort使用总结/">C++ sort使用总结</a></h1>
+    <h1 class="title"><a href="/2019/10/02/c++研发技术栈/">C++研发技术岗</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h3 id="C-sort使用总结"><a href="#C-sort使用总结" class="headerlink" title="C++ sort使用总结"></a>C++ sort使用总结</h3><table>
-<thead>
-<tr>
-<th align="center">函数名</th>
-<th align="center">功能描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">sort</td>
-<td align="center">对给定区间所有元素进行排序</td>
-</tr>
-<tr>
-<td align="center">stable_sort</td>
-<td align="center">对给定区间所有元素进行稳定排序</td>
-</tr>
-<tr>
-<td align="center">partial_sort</td>
-<td align="center">对给定区间所有元素部分排序</td>
-</tr>
-<tr>
-<td align="center">partial_sort_copy</td>
-<td align="center">对给定区间复制并排序</td>
-</tr>
-<tr>
-<td align="center">nth_element</td>
-<td align="center">找出给定区间的某个位置对应的元素</td>
-</tr>
-<tr>
-<td align="center">is_sorted</td>
-<td align="center">判断一个区间是否已经排好序</td>
-</tr>
-<tr>
-<td align="center">partition</td>
-<td align="center">使得符合某个条件的元素放在前面</td>
-</tr>
-<tr>
-<td align="center">stable_partition</td>
-<td align="center">相对稳定的使得符合某个条件的元素放在前面</td>
-</tr>
-</tbody></table>
-<p>需要头文件<algorithm></algorithm></p>
-<p>语法描述：sort（begin，end，cmp），cmp参数可以没有，如果没有默认非降序排序。</p>
-<p><strong>以int为例的基本数据类型的sort使用</strong></p>
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">5</span>]=&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">5</span>&#125;;</span><br><span class="line">    sort(a,a+<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="string">' '</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>因为没有cmp参数，默认为非降序排序，结果为：</p>
-<p>1 2 3 4 5</p>
-<p>若设计为非升序排序，则cmp函数的编写：</p>
-<p>bool cmp（int a,int b）</p>
-<p>{</p>
-<p>　　return a&gt;b;</p>
-<p>}</p>
-<p>其实对于这么简单的任务（类型支持“&lt;”、“&gt;”等比较运算符），完全没必要自己写一个类出来。标准库里已经有现成的了，就在functional里，include进来就行了。functional提供了一堆基于模板的比较函数对象。它们是（看名字就知道意思了）：equal_to<type>、not_equal_to<type>、greater<type>、greater_equal<type>、less<type>、less_equal<type>。对于这个问题来说，greater和less就足够了，直接拿过来用：</type></type></type></type></type></type></p>
-<ul>
-<li><p>升序：sort(begin,end,less<data-type>());</data-type></p>
-</li>
-<li><p>降序：sort(begin,end,greater<data-type>()).</data-type></p>
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">main</span> <span class="params">( )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">      <span class="keyword">int</span> a[<span class="number">20</span>]=&#123;<span class="number">2</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">23</span>,<span class="number">5</span>,<span class="number">76</span>,<span class="number">0</span>,<span class="number">43</span>,<span class="number">24</span>,<span class="number">65</span>&#125;,i;</span><br><span class="line">      <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++)</span><br><span class="line">          <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      sort(a,a+<span class="number">20</span>,greater&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">      <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++)</span><br><span class="line">          <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>引用数据类型string的使用</strong></p>
-</li>
-<li><p><strong>一个字符串间的个字符排序：</strong></p>
-</li>
-<li><p>使用迭代器可以完成顺序排序</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    string str(&quot;hello world&quot;);</span><br><span class="line">    sort(str.begin(),str.end());</span><br><span class="line">    cout&lt;&lt;str;</span><br><span class="line">    return 0;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p>结果：空格dehllloorw</p>
-<p><strong>使用反向迭代器可以完成逆序排序</strong></p>
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">str</span><span class="params">(<span class="string">"hello world"</span>)</span></span>;</span><br><span class="line">    sort(str.rbegin(),str.rend());</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;str;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果：wroolllhde空格</p>
-<p><strong>字符串间的比较排序</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstring &gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    string a[4];</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        getline(cin,a[i]);</span><br><span class="line">    sort(a,a+4);</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cout&lt;&lt;a[i]&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p><strong>以结构体为例的二级排序</strong></p>
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct link</span><br><span class="line">&#123;</span><br><span class="line">    int a,b;</span><br><span class="line">&#125;;</span><br><span class="line">bool cmp(link x,link y)</span><br><span class="line">&#123;</span><br><span class="line">    if(x.a==y.a)</span><br><span class="line">        return x.b&gt;y.b;</span><br><span class="line">    return x.a&gt;y.a;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    link x[4];</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cin&gt;&gt;x[i].a&gt;&gt;x[i].b;</span><br><span class="line">    sort(x,x+4,cmp);</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cout&lt;&lt;x[i].a&lt;&lt;&apos; &apos;&lt;&lt;x[i].b&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+        <p>计算机网络：osi模型，三次握手，TCP状态转换图</p>
+<p>操作系统：死锁的条件与算法，进程的状态，进程和线程的区别，内存换页算法，同步与互斥</p>
+<p>数据库：SQL语句的基本写法，如Select，Gorupby having，数据库的范式，数据库的索引（实现是那种数据结构）和存储过程等</p>
+<p>数据结构与算法：各种排序算法的实现，时间与空间复杂度，稳定性等，二叉树的前中后序遍历的非递归与递归实现，树的基本概念，二分查找及其实现，图论算法 </p>
 
       
     </div>
@@ -945,6 +847,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2019/10/21/二叉树的遍历/">二叉树的遍历</a>
+      </li>
+    
+      <li>
         <a href="/2019/10/13/C-prime9-51-日期处理程序/">C++prime9.51:日期处理程序</a>
       </li>
     
@@ -954,10 +860,6 @@
     
       <li>
         <a href="/2019/10/04/vector迭代器失效解决方法及其其内存原理/">C++vector迭代器失效解决方法及其其内存原理</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/02/c++研发技术栈/">C++研发技术岗</a>
       </li>
     
       <li>
@@ -981,6 +883,8 @@
   
     <li><a href="/tags/blog/">blog</a><small>1</small></li>
   
+    <li><a href="/tags/数据结构/">数据结构</a><small>1</small></li>
+  
     <li><a href="/tags/算法/">算法</a><small>2</small></li>
   
   </ul>
@@ -991,7 +895,7 @@
 <div class="widget tagcloud">
   <h3 class="title">Tag Cloud</h3>
   <div class="entry">
-    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 16.67px;">C/C++</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
+    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 16.67px;">C/C++</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
   </div>
 </div>
 
