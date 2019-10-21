@@ -62,175 +62,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C语言编译过程详解/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/C语言编译过程详解/">C语言编译过程详解</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h4 id="C语言编译过程详解"><a href="#C语言编译过程详解" class="headerlink" title="C语言编译过程详解"></a>C语言编译过程详解</h4><p>预处理，展开头文件/宏替换/去掉注释/条件编译</p>
-<p>编译，检查语法</p>
-<p>汇编，汇编代码转成机器码</p>
-<p>链接 链接到一起生成可执行程序</p>
-<p>参考<a href="https://blog.csdn.net/weixin_41143631/article/details/81221777" target="_blank" rel="noopener">https://blog.csdn.net/weixin_41143631/article/details/81221777</a></p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C-C/">C/C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/二进制数、八进制数和十六进制的表示/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/二进制数、八进制数和十六进制的表示/">二进制数、八进制数和十六进制的表示</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="二进制数、八进制数和十六进制的表示"><a href="#二进制数、八进制数和十六进制的表示" class="headerlink" title="二进制数、八进制数和十六进制的表示"></a>二进制数、八进制数和十六进制的表示</h2><h4 id="1）二进制"><a href="#1）二进制" class="headerlink" title="1）二进制"></a>1）二进制</h4><p>二进制由 0 和 1 两个数字组成，使用时必须以0b或0B</p>
-<p>（不区分大小写）开头，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//合法的二进制</span><br><span class="line">int a = 0b101;  //换算成十进制为 5</span><br><span class="line">int b = -0b110010;  //换算成十进制为 -50</span><br><span class="line">int c = 0B100001;  //换算成十进制为 33</span><br><span class="line"></span><br><span class="line">//非法的二进制</span><br><span class="line">int m = 101010;  //无前缀 0B，相当于十进制</span><br><span class="line">int n = 0B410;  //4不是有效的二进制数字</span><br></pre></td></tr></table></figure>
-
-<p>读者请注意，标准的C语言并不支持上面的二进制写法，只是有些编译器自己进行了扩展，才支持二进制数字。</p>
-<p>换句话说，并不是所有的编译器都支持二进制数字，只有一部分编译器支持，并且跟编译器的版本有关系。</p>
-<h4 id="2-八进制"><a href="#2-八进制" class="headerlink" title="2) 八进制"></a>2) 八进制</h4><p>八进制由 0~7 八个数字组成，使用时必须以数字0开头</p>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//合法的八进制数</span><br><span class="line">int a = 015;  //换算成十进制为 13</span><br><span class="line">int b = -0101;  //换算成十进制为 -65</span><br><span class="line">int c = 0177777;  //换算成十进制为 65535</span><br><span class="line"></span><br><span class="line">//非法的八进制</span><br><span class="line">int m = 256;  //无前缀 0，相当于十进制</span><br><span class="line">int n = 03A2;  //A不是有效的八进制数字</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-十六进制"><a href="#3-十六进制" class="headerlink" title="3) 十六进制"></a>3) 十六进制</h4><p>十六进制由数字 0<del>9、字母 A</del>F 或 a~f（不区分大小写）组成，使用时必须以0x或0X（不区分大小写）开头，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//合法的十六进制</span><br><span class="line">int a = 0X2A;  //换算成十进制为 42</span><br><span class="line">int b = -0XA0;  //换算成十进制为 -160</span><br><span class="line">int c = 0xffff;  //换算成十进制为 65535</span><br><span class="line">//非法的十六进制</span><br><span class="line">int m = 5A;  //没有前缀 0X，是一个无效数字</span><br><span class="line">int n = 0X3H;  //H不是有效的十六进制数字</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-十进制"><a href="#4-十进制" class="headerlink" title="4) 十进制"></a>4) 十进制</h4><p>十进制由 0~9 十个数字组成，没有任何前缀，和我们平时的书写格式一样，不再赘述。</p>
-<h2 id="二进制数、八进制数和十六进制数的输出"><a href="#二进制数、八进制数和十六进制数的输出" class="headerlink" title="二进制数、八进制数和十六进制数的输出"></a>二进制数、八进制数和十六进制数的输出</h2><h2 id="二进制数、八进制数和十六进制数的输出-1"><a href="#二进制数、八进制数和十六进制数的输出-1" class="headerlink" title="二进制数、八进制数和十六进制数的输出"></a>二进制数、八进制数和十六进制数的输出</h2><p>C语言中常用的整数有 short、int 和 long 三种类型，通过 printf 函数，可以将它们以八进制、十进制和十六进制的形式输出。上节我们讲解了如何以十进制的形式输出，这节我们重点讲解如何以八进制和十六进制的形式输出，下表列出了不同类型的整数、以不同进制的形式输出时对应的格式控制符：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>short</th>
-<th>int</th>
-<th>long</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>八进制</td>
-<td>%ho</td>
-<td>%o</td>
-<td>%lo</td>
-</tr>
-<tr>
-<td>十进制</td>
-<td>%hd</td>
-<td>%d</td>
-<td>%ld</td>
-</tr>
-<tr>
-<td>十六进制</td>
-<td>%hx 或者 %hX</td>
-<td>%x 或者 %X</td>
-<td>%lx 或者 %lX</td>
-</tr>
-</tbody></table>
-<p>十六进制数字的表示用到了英文字母，有大小写之分，要在格式控制符中体现出来：</p>
-<ul>
-<li>%hx、%x 和 %lx 中的<code>x</code>小写，表明以小写字母的形式输出十六进制数；</li>
-<li>%hX、%X 和 %lX 中的<code>X</code>大写，表明以大写字母的形式输出十六进制数。</li>
-</ul>
-<p>八进制数字和十进制数字不区分大小写，所以格式控制符都用小写形式。如果你比较叛逆，想使用大写形式，那么行为是未定义的，请你慎重：</p>
-<ul>
-<li>有些编译器支持大写形式，只不过行为和小写形式一样；</li>
-<li>有些编译器不支持大写形式，可能会报错，也可能会导致奇怪的输出。</li>
-</ul>
-<p>注意，虽然部分编译器支持二进制数字的表示，但是却不能使用 printf 函数输出二进制，这一点比较遗憾。</p>
-<p>当然，通过转换函数可以将其它进制数字转换成二进制数字，并以字符串的形式存储，然后在 printf 函数中使用%s输出即可。考虑到读者的基础还不够，这里就先不讲这种方法了。</p>
-<p>【实例】以不同进制的形式输出整数：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> a = <span class="number">0b1010110</span>;  <span class="comment">//二进制数字</span></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">02713</span>;  <span class="comment">//八进制数字</span></span><br><span class="line">    <span class="keyword">long</span> c = <span class="number">0X1DAB83</span>;  <span class="comment">//十六进制数字</span></span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%ho, b=%o, c=%lo\n"</span>, a, b, c);  <span class="comment">//以八进制形似输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hd, b=%d, c=%ld\n"</span>, a, b, c);  <span class="comment">//以十进制形式输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hx, b=%x, c=%lx\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母小写）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hX, b=%X, c=%lX\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母大写）</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<p>a=126, b=2713, c=7325603</p>
-<p>a=86, b=1483, c=1944451</p>
-<p>a=56, b=5cb, c=1dab83</p>
-<p>a=56, b=5CB, c=1DAB83</p>
-<p>从这个例子可以发现，一个数字不管以何种进制来表示，都能够以任意进制的形式输出。数字在内存中始终以二进制的形式存储，其它进制的数字在存储前都必须转换为二进制形式；同理，一个数字在输出时要进行逆向的转换，也就是从二进制转换为其他进制。</p>
-<h4 id="输出时加上前缀"><a href="#输出时加上前缀" class="headerlink" title="输出时加上前缀"></a>输出时加上前缀</h4><p>请读者注意观察上面的例子，会发现有一点不完美，如果只看输出结果：</p>
-<ul>
-<li>对于八进制数字，它没法和十进制、十六进制区分，因为八进制、十进制和十六进制都包含 0~7 这几个数字。</li>
-<li>对于十进制数字，它没法和十六进制区分，因为十六进制也包含 0~9 这几个数字。如果十进制数字中还不包含 8 和 9，那么也不能和八进制区分了。</li>
-<li>对于十六进制数字，如果没有包含 a<del>f 或者 A</del>F，那么就无法和十进制区分，如果还不包含 8 和 9，那么也不能和八进制区分了。</li>
-</ul>
-<p>区分不同进制数字的一个简单办法就是，在输出时带上特定的前缀。在格式控制符中加上#</p>
-<p>即可输出前缀，例如 %#x、%#o、%#lX、%#ho 等，请看下面的代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> a = <span class="number">0b1010110</span>;  <span class="comment">//二进制数字</span></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">02713</span>;  <span class="comment">//八进制数字</span></span><br><span class="line">    <span class="keyword">long</span> c = <span class="number">0X1DAB83</span>;  <span class="comment">//十六进制数字</span></span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#ho, b=%#o, c=%#lo\n"</span>, a, b, c);  <span class="comment">//以八进制形似输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hd, b=%d, c=%ld\n"</span>, a, b, c);  <span class="comment">//以十进制形式输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#hx, b=%#x, c=%#lx\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母小写）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#hX, b=%#X, c=%#lX\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母大写）</span></span><br><span class="line">   </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<p>a=0126, b=02713, c=07325603</p>
-<p>a=86, b=1483, c=1944451</p>
-<p>a=0x56, b=0x5cb, c=0x1dab83</p>
-<p>a=0X56, b=0X5CB, c=0X1DAB83</p>
-<p>十进制数字没有前缀，所以不用加#。如果你加上了，那么它的行为是未定义的，有的编译器支持十进制加#，只不过输出结果和没有加#一样，有的编译器不支持加#，可能会报错，也可能会导致奇怪的输出；但是，大部分编译器都能正常输出，不至于当成一种错误。</p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C/">C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/容器：顺序容器和关联容器/">2019-10-02</a></time>
       
       
@@ -270,6 +101,55 @@
   
   <div class="tags">
     <a href="/tags/C/">C++</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/日期类问题/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/日期类问题/">日期类问题</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="日期类问题"><a href="#日期类问题" class="headerlink" title="日期类问题"></a>日期类问题</h3><p>日期类问题中最基本的问题——求两个日期间的天数差</p>
+<p>解决方法：把原区间问题统一到起点确定的区间问题上去。</p>
+<blockquote>
+<p>分析：在该例中，不妨把问题统一到 </p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;isotream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ISYEAP(x) x%100!=0 &amp;&amp; x%4==0 || x%400==0?1:0  <span class="comment">//标识符与参数表之间不能有空格</span></span></span><br><span class="line"><span class="comment">//定义宏判断是否为闰年，方便计算每月天数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dayOfMonth[<span class="number">13</span>][<span class="number">2</span>]=&#123;  <span class="comment">//预存闰年和非闰年每月的天数，注意二月配合宏定义做特殊处理</span></span><br><span class="line">    <span class="number">0</span>,<span class="number">0</span>,                </span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">28</span>,<span class="number">29</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Date</span>&#123;</span>           <span class="comment">//日期类，方便日期的推移</span></span><br><span class="line">    <span class="keyword">int</span> Day;</span><br><span class="line">    <span class="keyword">int</span> Month;</span><br><span class="line">    <span class="keyword">int</span> Year;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">nextDay</span><span class="params">()</span></span>&#123;    <span class="comment">//计算下一天的天数</span></span><br><span class="line">        Day++;</span><br><span class="line">        <span class="keyword">if</span>(Day&gt;dayofMonth[Month][ISYEAP(year)])&#123;</span><br><span class="line">            Day = <span class="number">1</span>;</span><br><span class="line">            Month++;</span><br><span class="line">            <span class="keyword">if</span>(Month &gt; <span class="number">12</span>)&#123;</span><br><span class="line">                Month = <span class="number">1</span>;</span><br><span class="line">                Year++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> buf[<span class="number">5001</span>][<span class="number">13</span>][<span class="number">32</span>];     <span class="comment">//保存预处理的天数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Abs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;            <span class="comment">//求绝对值</span></span><br><span class="line">    <span class="keyword">return</span> x&lt;<span class="number">0</span>?-x:x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Date tmp;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;      <span class="comment">//天数计数</span></span><br><span class="line">    tmp.Day = <span class="number">1</span>;</span><br><span class="line">    tmp.Month = <span class="number">0</span>;</span><br><span class="line">    tmp.Year = <span class="number">0</span>;      <span class="comment">//初始化日期类对象为0年1月1日</span></span><br><span class="line">    <span class="keyword">while</span>(tmp.Year!=<span class="number">5001</span>)&#123;   <span class="comment">//日期不超过5000年</span></span><br><span class="line">        buf[tmp.Year][tmp.Month][tmp.Day] = cnt;</span><br><span class="line">                       <span class="comment">//将该日与0年1月1日的天数差保存起来</span></span><br><span class="line">        tmp.nextDay();  <span class="comment">//计算下一天的日期</span></span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> d1,m1,y1;</span><br><span class="line">    <span class="keyword">int</span> d2,m2,y2;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%4d%2d%2d"</span>, &amp;y1,&amp;m1,&amp;d1)!=EOF)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%4d%2d%2d"</span>,&amp;y2,&amp;m2,&amp;d2);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,Abs(buf[y2][m2][d2]-buf[y1][m1][d1])+<span class="number">1</span>);</span><br><span class="line">    &#125;              </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/算法/">算法</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -389,6 +269,77 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/十大排序算法/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/十大排序算法/">重要的排序算法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="重要的排序算法"><a href="#重要的排序算法" class="headerlink" title="重要的排序算法"></a>重要的排序算法</h3><h5 id="1-快排"><a href="#1-快排" class="headerlink" title="1.快排"></a>1.快排</h5><p>通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分小，则分别对这两部分记录继续进行排序，以达到整个序列有序。快排效率高，是处理大数据最快的排序算法之一。</p>
+<p><strong>快排采用了分治法，最好的情况是每次正好中分</strong></p>
+<p><strong>(1)具体算法实现</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,j,temp;</span><br><span class="line">	<span class="keyword">if</span>(left &gt; right)     <span class="comment">//递归终止条件</span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">		</span><br><span class="line">    temp = a[left];</span><br><span class="line">    i = left;</span><br><span class="line">    j = right;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(i!=j)&#123;</span><br><span class="line">        <span class="comment">/*顺序很重要，要先从右往左找 */</span> </span><br><span class="line">    	<span class="keyword">while</span>(a[j]&gt;=temp &amp;&amp; i&lt;j)   <span class="comment">//循环终止条件：1：找到了比temp小的数，且i&lt;j 2:没有找到，但是两个哨兵相遇 </span></span><br><span class="line">    		j--;</span><br><span class="line">        <span class="comment">//再从左往右找 </span></span><br><span class="line">    	<span class="keyword">while</span>(a[i]&lt;=temp &amp;&amp; i&lt;j)   <span class="comment">//循环终止条件：1：找到了比temp大的数，且i&lt;j 2:没有找到，但 是两个哨兵相遇 </span></span><br><span class="line">    	    i++;</span><br><span class="line">    	<span class="keyword">if</span>(i&lt;j)              <span class="comment">//排除i=j的情况 </span></span><br><span class="line">    		swap(a[i], a[j]);</span><br><span class="line">	&#125;</span><br><span class="line">	swap(a[left],a[i]);     <span class="comment">//将基准数与 i和j 相遇位置的数交换    bug:swap(temp,a[i]);  </span></span><br><span class="line">	</span><br><span class="line">	quickSort(a, letf, i<span class="number">-1</span>);</span><br><span class="line">	quickSort(a, i+<span class="number">1</span>, right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思考：为什么右边的哨兵先行 j先动相遇时一定可以找到小于等于基准元素的值；i先动的化不能保证  </p>
+<p>参见：<a href="https://blog.csdn.net/csdnqixiaoxin/article/details/89429528" target="_blank" rel="noopener">快排</a></p>
+<p><strong>(2)性能分析</strong></p>
+<ul>
+<li>最佳情况：T(n) = O(nlogn)</li>
+<li>最差情况：T(n) = O(n^2)</li>
+<li>平均情况：T(n) = O(nlogn)</li>
+</ul>
+<p><strong>(3)问题分析</strong></p>
+<p>如何选主元？</p>
+<ul>
+<li>若数据一开始就是顺序，选主元为第一个数据的话，为最坏情况，时间复杂度为(nlogn)</li>
+<li>一个比较好的解决办法：取头、中、尾的中位数</li>
+</ul>
+<p>子集划分，如果有元素正好等于pivot怎么办</p>
+<ul>
+<li>停下来交换（根据所有元素都相等的极端情况来考虑是否要交换）</li>
+</ul>
+<p>小规模数据的处理</p>
+<ul>
+<li>对小规模的数据（假如N不到100）可能还不如插入排序快。</li>
+<li>当递归的数据规模充分小的时候，则停止递归，直接调用简单排序（如插入排序）</li>
+</ul>
+<p>后面再继续补充。。</p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/算法/">算法</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2019-09-17T07:06:53.377Z"><a href="/2019/09/17/O(Nlog(N)）时间复杂度的主要来源：通常使用二分法使问题达到log(N)的层级，然后在每一个层级用O(N)级别的算法做事。/">2019-09-17</a></time>
       
       
@@ -417,6 +368,48 @@
         </div>
         
         
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-09-16T01:58:04.000Z"><a href="/2019/09/16/我的第一篇博客文章/">2019-09-16</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/09/16/我的第一篇博客文章/">我的第一篇博客文章</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/blog/">blog</a>
+  </div>
+
         <!-- partial('post/share') -->
       <div class="clearfix"></div>
     </footer>
@@ -561,48 +554,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-09-16T01:58:04.000Z"><a href="/2019/09/16/我的第一篇博客文章/">2019-09-16</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/09/16/我的第一篇博客文章/">我的第一篇博客文章</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/blog/">blog</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2019-09-13T03:00:37.943Z"><a href="/2019/09/13/hello-world/">2019-09-13</a></time>
       
       
@@ -684,11 +635,11 @@
       </li>
     
       <li>
-        <a href="/2019/10/02/C++ sort使用总结/">C++ sort使用总结</a>
+        <a href="/2019/10/02/c++研发技术栈/">C++研发技术岗</a>
       </li>
     
       <li>
-        <a href="/2019/10/02/CC++中变量的作用域和存储类型/">C/C++中变量的作用域和存储类型</a>
+        <a href="/2019/10/02/C语言编译过程详解/">C语言编译过程详解</a>
       </li>
     
   </ul>
