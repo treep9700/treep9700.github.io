@@ -56,6 +56,201 @@
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="leetcode235二叉树的最近公共祖先">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-23T01:25:57.000Z"><a href="/2019/10/23/LeetCode/">2019-10-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/23/LeetCode/">LeetCode</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-23T01:24:38.000Z"><a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">2019-10-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">LeetCode235二叉树的最近公共祖先</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h4 id="235-二叉搜索树的最近公共祖先"><a href="#235-二叉搜索树的最近公共祖先" class="headerlink" title="235. 二叉搜索树的最近公共祖先"></a><a href="https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-search-tree/" target="_blank" rel="noopener">235. 二叉搜索树的最近公共祖先</a></h4><p>终于做了一道简单题，思路是对的，就是实现的有点复杂。代码能力有待提高，以后写出代码后尽可能尝试优化！</p>
+<h4 id="我的解法"><a href="#我的解法" class="headerlink" title="我的解法"></a>我的解法</h4><p>思路: 将整棵二叉搜索树层次遍历一遍，存入数组。在数组首元素开始迭代找符合 p&lt;= val &lt;= q 的结点，即为最近公共祖先。</p>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;TreeNode *&gt; res;</span><br><span class="line"></span><br><span class="line">    <span class="function">TreeNode* <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode* root, TreeNode* p, TreeNode* q)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> max, min;</span><br><span class="line">        max = <span class="built_in">std</span>::max(p-&gt;val, q-&gt;val);</span><br><span class="line">        min = <span class="built_in">std</span>::min(p-&gt;val, q-&gt;val);</span><br><span class="line">        res.push_back(root);</span><br><span class="line">        travel(root);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i = <span class="number">0</span>; i&lt;res.size(); i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(min &lt;= res[i]-&gt;val &amp;&amp; max &gt;= res[i]-&gt;val)</span><br><span class="line">                <span class="keyword">return</span> res[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res[<span class="number">0</span>]; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">travel</span><span class="params">(TreeNode *root)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!root)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">if</span>(root-&gt;left)</span><br><span class="line">            res.push_back(root-&gt;left);</span><br><span class="line">        <span class="keyword">if</span>(root-&gt;right)</span><br><span class="line">            res.push_back(root-&gt;right);</span><br><span class="line">        </span><br><span class="line">        travel(root-&gt;left);</span><br><span class="line">        travel(root-&gt;right);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="官方解法"><a href="#官方解法" class="headerlink" title="官方解法"></a>官方解法</h4><p><strong>迭代版本</strong></p>
+<p>算法：</p>
+<p>这个方法跟方法一很接近。唯一的不同是，我们用迭代的方式替代了递归来遍历整棵树。由于我们不需要回溯来找到 LCA 节点，所以我们是完全可以不利用栈或者是递归的。实际上这个问题本身就是可以迭代的，我们只需要找到分割点就可以了。这个分割点就是能让节点 pp 和节点 qq 不能在同一颗子树上的那个节点，或者是节点 pp 和节点 qq 中的一个，这种情况下其中一个节点是另一个节点的父亲节点。</p>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">TreeNode* <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode* root, TreeNode* p, TreeNode* q)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(root) &#123;</span><br><span class="line">            <span class="keyword">if</span>(p-&gt;val &lt; root-&gt;val &amp;&amp; q-&gt;val &lt; root-&gt;val)</span><br><span class="line">                root = root-&gt;left;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (p-&gt;val &gt; root-&gt;val &amp;&amp; q-&gt;val &gt; root-&gt;val)</span><br><span class="line">                root = root-&gt;right;</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">                <span class="keyword">return</span> root;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>递归版本</strong></p>
+<p>算法：</p>
+<p>从根节点开始遍历树</p>
+<ol>
+<li>如果节点 pp 和节点 qq 都在右子树上，那么以右孩子为根节点继续 1 的操作</li>
+<li>如果节点 pp 和节点 qq 都在左子树上，那么以左孩子为根节点继续 1 的操作</li>
+<li>如果条件 2 和条件 3 都不成立，这就意味着我们已经找到节 pp 和节点 qq 的 LCA 了</li>
+</ol>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">    <span class="function">TreeNode* <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode* root, TreeNode* p, TreeNode* q)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(p-&gt;val &lt; root-&gt;val &amp;&amp; q-&gt;val &lt; root-&gt;val)</span><br><span class="line">                <span class="keyword">return</span> lowestCommonAncestor(root-&gt;left, p, q);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (p-&gt;val &gt; root-&gt;val &amp;&amp; q-&gt;val &gt; root-&gt;val)</span><br><span class="line">               <span class="keyword">return</span> lowestCommonAncestor(root-&gt;right, p, q);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-23T01:09:08.000Z"><a href="/2019/10/23/LeetCode102二叉树的层次遍历/">2019-10-23</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/23/LeetCode102二叉树的层次遍历/">LeetCode102二叉树的层次遍历</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h4 id="102-二叉树的层次遍历"><a href="#102-二叉树的层次遍历" class="headerlink" title="102. 二叉树的层次遍历"></a><a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/" target="_blank" rel="noopener">102. 二叉树的层次遍历</a></h4><h4 id="树的结构"><a href="#树的结构" class="headerlink" title="树的结构"></a>树的结构</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Definition for a binary tree node.</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span> &#123;</span></span><br><span class="line">      <span class="keyword">int</span> val;</span><br><span class="line">      TreeNode *left;</span><br><span class="line">      TreeNode *right;</span><br><span class="line">      TreeNode(<span class="keyword">int</span> x) : val(x), left(<span class="literal">NULL</span>), right(<span class="literal">NULL</span>) &#123;&#125;</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="广度优先遍历"><a href="#广度优先遍历" class="headerlink" title="广度优先遍历"></a>广度优先遍历</h4><p>利用了队列先进先出（FIFO）的特性。从第一层开始，一层一层的对二叉树进行迭代遍历。</p>
+<p>算法步骤：</p>
+<ol>
+<li>若根节点不为空，则先将根节点入队。否则直接返回空值。（<strong>对于树的操作来说，一般先判空，这样可以省去很多不必要的麻烦</strong>）。</li>
+<li>用一个size来记录每一层树的节点数，在遍历每一层的节点时，将该结点的孩子也都相应加到队列中。</li>
+<li>形成循环套循环的框架。不断迭代，至size为0的时候结束一层遍历，至对列为空的时候结束整个遍历。</li>
+</ol>
+<p>复杂度分析:</p>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; levelOrder(TreeNode* root) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!root)</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">        <span class="built_in">queue</span>&lt;TreeNode *&gt; q;</span><br><span class="line">        q.push(root);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(!q.empty()) &#123;</span><br><span class="line">            <span class="keyword">int</span> size = q.size();</span><br><span class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; arr;</span><br><span class="line">            <span class="keyword">while</span>(size--) &#123;</span><br><span class="line">                TreeNode *temp = q.front();</span><br><span class="line">                q.pop();</span><br><span class="line">                <span class="keyword">if</span>(temp-&gt;left)</span><br><span class="line">                    q.push(temp-&gt;left);</span><br><span class="line">                <span class="keyword">if</span>(temp-&gt;right)</span><br><span class="line">                    q.push(temp-&gt;right);</span><br><span class="line">                arr.push_back(temp-&gt;val);</span><br><span class="line">            &#125;</span><br><span class="line">            res.push_back(arr);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="深度优先遍历"><a href="#深度优先遍历" class="headerlink" title="深度优先遍历"></a>深度优先遍历</h4><p>深度优先遍历不是这道题的常规做法，感觉略绕。整体框架就是先序遍历的框架，只不过要增加一个变量depth来说明该结点的层数，从而将其存入相应的层数。</p>
+<p>算法步骤：</p>
+<ol>
+<li>判空。遍历根节点。</li>
+<li>若深度大于当前数组的容量大小，则数组容量相应扩大。</li>
+<li>先左子树后右子树的顺序来深度遍历整棵树。</li>
+</ol>
+<p>复杂度分析：</p>
+<ul>
+<li>时间复杂度: O(n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<p><strong>我的实现</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; levelOrder(TreeNode* root) &#123;</span><br><span class="line">        <span class="keyword">return</span> levelOrder1(root, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; levelOrder1(TreeNode *node, <span class="keyword">int</span> size)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!node)</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="keyword">if</span>(size &gt;= res.size())</span><br><span class="line">            res.push_back(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&#123;&#125;);</span><br><span class="line"></span><br><span class="line">        res[size].push_back(node-&gt;val);</span><br><span class="line">        levelOrder1(node-&gt;left, size + <span class="number">1</span>);</span><br><span class="line">        levelOrder1(node-&gt;right, size + <span class="number">1</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>网上的实现</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; levelOrder(TreeNode* root) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">        pre(root,<span class="number">0</span>,res);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pre</span><span class="params">(TreeNode *root,<span class="keyword">int</span> depth,<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; &amp;res)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!root) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">if</span>(depth&gt;=res.size())   <span class="comment">//说明需要增加一层</span></span><br><span class="line">            res.push_back(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&#123;&#125;);</span><br><span class="line">        res[depth].push_back(root-&gt;val);</span><br><span class="line">        pre(root-&gt;left,depth+<span class="number">1</span>,res);</span><br><span class="line">        pre(root-&gt;right,depth+<span class="number">1</span>,res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>比较</strong></p>
+<p>上面两种实现方式，一个使用了返回值，一个使用了引用传参。其余的代码逻辑都是一样的。但是两者的运行时间前者比后者慢很多。刚开始写这种代码的时候，只会使用返回值，但在C++中，引用用的应该多一点，效率也高。</p>
+<p>这样效率为什么差这么多，查了半天资料看不懂，先不深入研究生，不过这里牵出了几个概念：</p>
+<ul>
+<li>C++ vector 的拷贝构造</li>
+<li>深拷贝与浅拷贝</li>
+<li>编译器的返回值优化</li>
+</ul>
+<p>日后再看。。。。。。</p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
   <article class="post">
   
   <div class="post-content">
@@ -66,7 +261,7 @@
       
       
   
-    <h1 class="title"><a href="/2019/10/21/二叉树的遍历/">二叉树的遍历</a></h1>
+    <h1 class="title"><a href="/2019/10/21/二叉树的遍历/">LeetCode二叉树的遍历</a></h1>
   
 
     </header>
@@ -76,7 +271,7 @@
 
 <p>四种遍历方式：先序遍历、中序遍历、后序遍历、层次遍历。分别对应写出递归版本和非递归版本</p>
 <h4 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><p><strong>非递归版</strong>：<br>由于不管是先序遍历还是中序遍历以及后序遍历，我们都需要利用一个辅助栈来进行每个节点的存储打印，所以每个节点都要进栈和出栈，不过是根据那种遍历方式改变的是每个节点的进栈顺序，所以时间复杂度为<strong><em>O(n)</em></strong>，同样空间复杂度也为<strong><em>O(n)</em></strong>，n为结点数。<br>层序遍历是通过队列来进行每个节点的存储打印的，所以时间复杂度和空间复杂度也与前三种遍历方式一样。<br><strong>递归版</strong>：<br>空间复杂度与系统堆栈有关，系统栈需要记住每个节点的值，所以空间复杂度为<strong><em>O(n)</em></strong>。时间复杂度应该为<strong><em>O(n)</em></strong>，根据公式<strong><em>T(n)=2T(n/2)+1 = 2(2T(n/4)+1)+1 = 2^logn+2^(logn-1)+…+2+1 ~= n</em></strong>，所以时间复杂度为<strong><em>O(n)</em></strong>。</p>
-<h4 id="先序遍历"><a href="#先序遍历" class="headerlink" title="先序遍历"></a>先序遍历</h4><p>使用递归方式实现先序遍历的具体过程为：</p>
+<h4 id="144-二叉树的前序遍历"><a href="#144-二叉树的前序遍历" class="headerlink" title="144. 二叉树的前序遍历"></a><a href="https://leetcode-cn.com/problems/binary-tree-preorder-traversal/" target="_blank" rel="noopener">144. 二叉树的前序遍历</a></h4><p>使用递归方式实现先序遍历的具体过程为：</p>
 <ul>
 <li>先访问根节点</li>
 <li>再序访问左子树</li>
@@ -98,7 +293,7 @@
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">    <span class="built_in">stack</span>&lt;TreeNode*&gt; s;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; preorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!root)</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">       s.push(root);       <span class="comment">//树根入栈</span></span><br><span class="line">       TreeNode *temp;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">while</span>(!s.empty())&#123;           <span class="comment">//每次都判断栈内是否为空</span></span><br><span class="line">           res.push_back(s.top()-&gt;val);      <span class="comment">//保证每次的栈顶元素都是 先序元素</span></span><br><span class="line">           temp = s.top();</span><br><span class="line"></span><br><span class="line">           TreeNode *l = temp-&gt;left;</span><br><span class="line">           TreeNode *r = temp-&gt;right;</span><br><span class="line">           s.pop();</span><br><span class="line"></span><br><span class="line">           <span class="keyword">if</span>(r)</span><br><span class="line">            s.push(r);</span><br><span class="line">           <span class="keyword">if</span>(l)</span><br><span class="line">            s.push(l);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<h4 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h4><p>使用递归方法遍历的步骤：</p>
+<h4 id="94-二叉树的中序遍历"><a href="#94-二叉树的中序遍历" class="headerlink" title="94. 二叉树的中序遍历"></a><a href="https://leetcode-cn.com/problems/binary-tree-inorder-traversal/" target="_blank" rel="noopener">94. 二叉树的中序遍历</a></h4><p>使用递归方法遍历的步骤：</p>
 <ul>
 <li>先遍历左节点</li>
 <li>然后遍历根节点</li>
@@ -114,7 +309,7 @@
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">    <span class="built_in">stack</span>&lt;TreeNode *&gt; s;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; inorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!root)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ();</span><br><span class="line">        </span><br><span class="line">        TreeNode *p = root;</span><br><span class="line">        <span class="keyword">while</span>(p || !s.empty())&#123;</span><br><span class="line">            <span class="keyword">while</span>(p)&#123;            <span class="comment">//把所有的左子节点都压入栈中</span></span><br><span class="line">                s.push(p);</span><br><span class="line">                p = p-&gt;left;</span><br><span class="line">            &#125;</span><br><span class="line">            p = s.top();</span><br><span class="line">            s.pop();</span><br><span class="line">            res.push_back(p-&gt;val);</span><br><span class="line">            p = p-&gt;right;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<h4 id="后续遍历"><a href="#后续遍历" class="headerlink" title="后续遍历"></a>后续遍历</h4><p>递归方式：</p>
+<h4 id="145-二叉树的后序遍历"><a href="#145-二叉树的后序遍历" class="headerlink" title="145. 二叉树的后序遍历"></a><a href="https://leetcode-cn.com/problems/binary-tree-postorder-traversal/" target="_blank" rel="noopener">145. 二叉树的后序遍历</a></h4><p>递归方式：</p>
 <ul>
 <li>先访问左节点</li>
 <li>然后访问右节点</li>
@@ -138,7 +333,7 @@
         
   
   <div class="tags">
-    <a href="/tags/数据结构/">数据结构</a>
+    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -349,182 +544,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C语言编译过程详解/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/C语言编译过程详解/">C语言编译过程详解</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h4 id="C语言编译过程详解"><a href="#C语言编译过程详解" class="headerlink" title="C语言编译过程详解"></a>C语言编译过程详解</h4><p>预处理，展开头文件/宏替换/去掉注释/条件编译</p>
-<p>编译，检查语法</p>
-<p>汇编，汇编代码转成机器码</p>
-<p>链接 链接到一起生成可执行程序</p>
-<p>参考<a href="https://blog.csdn.net/weixin_41143631/article/details/81221777" target="_blank" rel="noopener">https://blog.csdn.net/weixin_41143631/article/details/81221777</a></p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C-C/">C/C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/CC++中变量的作用域和存储类型/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/CC++中变量的作用域和存储类型/">C/C++中变量的作用域和存储类型</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="C-C-中变量的作用域和存储类型"><a href="#C-C-中变量的作用域和存储类型" class="headerlink" title="C/C++中变量的作用域和存储类型"></a>C/C++中变量的作用域和存储类型</h2><h5 id="区分作用域和存储类型"><a href="#区分作用域和存储类型" class="headerlink" title="区分作用域和存储类型"></a>区分作用域和存储类型</h5><p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/*例1*/</span></span><br><span class="line"><span class="number">2</span> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="number">3</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">4 </span>&#123;</span><br><span class="line"><span class="number">5</span>     <span class="keyword">static</span> <span class="keyword">int</span> a=<span class="number">1</span>;<span class="comment">//定义了一个静态存储的局部变量</span></span><br><span class="line"><span class="number">6</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">7</span> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>a是一个采用静态存储的局部变量，像这样的变量在整个文件中都不会消失，但是只能在main()函数内被使用。</p>
-<hr>
-<p>作用域：一个变量能够被使用的范围，在C语言中有包括<strong>块作用域、函数作用域、函数原型作用域、文件作用域</strong>，在C++中还有<strong>类作用域</strong>和<strong>命名空间作用域。</strong></p>
-<p>存储类型：存储类型分为<strong>静态存储</strong>和<strong>动态存储</strong>，采用静态存储方式的变量一旦创建，其存储空间在整个程序的运行过程中都不会被释放。对于采用动态存储的变量来说，当进入该程序块（函数或复合语句等）时，建立该变量，分配存储空间，当退出该程序块时，撤销该变量，释放其存储空间。</p>
-<p>不用限定词的情况</p>
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/*例2，不用限定词的情况*/</span></span><br><span class="line"><span class="number">2</span> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="number">3</span> <span class="keyword">int</span> a=<span class="number">1</span>;<span class="comment">//a为全局变量，采用静态存储</span></span><br><span class="line"><span class="number">4</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">5 </span>&#123;</span><br><span class="line"><span class="number">6</span>     <span class="keyword">int</span> b=<span class="number">1</span>;<span class="comment">//b为局部变量，默认采用动态存储</span></span><br><span class="line"><span class="number">7</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">8</span> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>全局变量a采用静态方式存储，具有文件作用域，b采用动态方式存储，具有的是块作用域。</p>
-<p><strong>static变量类型</strong></p>
-<ul>
-<li>对于全局变量来说，加不加static，该变量都采取静态方式来存储。不加static的全局变量默认为“外部变量”，可以被其他文件在进行了引用申明<em>（用extern,稍后介绍）</em>后使用。但是加了static之后，该变量便变成了“内部变量”，即该变量只能在该文件内被使用。</li>
-<li>对于局部变量来说，定义的时候默认为自动变量，采用动态方式来存储。使用static修饰后，将采取静态方式进行存储。初始化在编译时进行，只会进行一次。</li>
-</ul>
-<p><strong>extern关键字</strong>（声明而非定义，也不分配存储空间）</p>
-<p>​    仅用于对全局变量进行引用声明，包括</p>
-<ul>
-<li>对定义在使用处后面的全局变量提前引用声明</li>
-<li>在一个文件中对另一个文件定义的全局外部变量做引用声明（若全局变量使用了static，则不可引用）</li>
-</ul>
-<p><strong>使用auto、register</strong></p>
-<ul>
-<li><p>使用auto可显示地声明自动变量，由于在程序块内声明的变量默认是auto的，所以auto更多地也就   只是起到一个标记的作用了。</p>
-</li>
-<li><p>使用register可以将一些将被频繁使用的局部变量放到寄存器中，这样可以提高程序执行的效率。</p>
-</li>
-</ul>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C-C/">C/C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/容器：顺序容器和关联容器/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/容器：顺序容器和关联容器/">顺序容器和关联容器</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>容器：顺序容器和关联容器</p>
-<p>迭代器类型：每种容器都定义了自己的迭代器类型，是一种数据类型</p>
-<p>const_iterator: 每种容器都定义了const_iterator类型，给类型只能用于读取容器内的元素，不能改变其值</p>
-<p>迭代器：有迭代器类型定义的实体</p>
-<p>访问容器的两种方法：</p>
-<ul>
-<li>下标：少数容器支持</li>
-<li>迭代器：对所有元素都适用，现代c++程序更倾向</li>
-</ul>
-<p>迭代器的操作：</p>
-<ul>
-<li>begin和end操作</li>
-<li>vector迭代器的自增和解引用运算</li>
-<li>迭代器比较</li>
-</ul>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C/">C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/c++研发技术栈/">2019-10-02</a></time>
       
       
@@ -571,171 +590,21 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C++基础语法笔记/">2019-10-02</a></time>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C语言编译过程详解/">2019-10-02</a></time>
       
       
   
-    <h1 class="title"><a href="/2019/10/02/C++基础语法笔记/">C++基础语法笔记</a></h1>
+    <h1 class="title"><a href="/2019/10/02/C语言编译过程详解/">C语言编译过程详解</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>[TOC]</p>
-<h3 id="C-新特性"><a href="#C-新特性" class="headerlink" title="C++新特性"></a>C++新特性</h3><p>bool是C++中的新类型，C语言中使用if语句</p>
-<p>C++支持C语言的复制初始化，同时新增了直接初始化，如：int x（1024）</p>
-<p>C++ 的变量不用定义在函数体最前面，可以随用随定义</p>
-<p>C++输入输出</p>
-<p>输入8进制，10进制，16进制分别为</p>
-<p>cout &lt;&lt; oct &lt;&lt; x &lt;&lt; endl;</p>
-<p>cout &lt;&lt; dec &lt;&lt; x &lt;&lt; endl;</p>
-<p>cout &lt;&lt; hex &lt;&lt; x &lt;&lt; endl;</p>
-<p>命名空间namespace</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567057130429.png" alt="1567057130429"></p>
-<p>要使用命名空间内的变量或者函数，需要在使用前声明</p>
-<p>如要使用cout需要using namespace std 声明或者 std::cout；</p>
-<p><strong>防止类名冲突，可以在定义类时使用命名空间限制</strong></p>
-<h3 id="C-封装篇"><a href="#C-封装篇" class="headerlink" title="C++ 封装篇"></a>C++ 封装篇</h3><ul>
-<li><p>类（虚拟）和对象（实体）</p>
-</li>
-<li><p>数据成员和成员函数，构成完整的类</p>
-</li>
-<li><p>构造函数和虚构函数，描述对象的生生死死</p>
-</li>
-<li><p>对象复制与对象赋值</p>
-</li>
-<li><p>对象数组和对象指针，对象的应用形态</p>
-</li>
-<li><p>this指针</p>
-</li>
-</ul>
-<p>类的访问限定符：public、private、protect</p>
-<p>对象实例化：从栈实例化、从堆实例化</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059216028.png" alt="1567059216028"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059243958.png" alt="1567059243958"></p>
-<p>从栈中实例化的对象，对象生命周期结束后会自动回收</p>
-<p>从堆中实例化出的对象，需要手动释放内存。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Tv *p = <span class="keyword">new</span> TV();</span><br><span class="line">Tv *p = <span class="keyword">new</span> TV[<span class="number">20</span>];  </span><br><span class="line"><span class="keyword">delete</span> p;  <span class="comment">//释放对象内存</span></span><br><span class="line"><span class="keyword">delete</span> []p; <span class="comment">//释放对象数组内存</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="对象成员访问"><a href="#对象成员访问" class="headerlink" title="对象成员访问"></a>对象成员访问</h3><p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059583881.png" alt="1567059583881"></p>
-<p>c++string</p>
-<p>字符数组char[]使用比较的复杂，而string被设计出来更加的方便</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060303688.png" alt="1567060303688"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060423517.png" alt="1567060423517"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060357425.png" alt="1567060357425"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060380451.png" alt="1567060380451"></p>
-<p>内联函数：inline关键字</p>
-<ul>
-<li>编译时省去步骤2和步骤4，速度更快，效率跟高</li>
-<li>但必须时短小，逻辑简单的函数。如果复杂函数使用了inline关键字，也会被编译器拒绝</li>
-</ul>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060836710.png" alt="1567060836710"></p>
-<p>类内定义和内联函数</p>
-<ul>
-<li>类内定义即将成员函数的函数体写在类内</li>
-<li>类内定义的函数，编译器在编译时会优先编译为内联函数</li>
-</ul>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567061108861.png" alt="1567061108861"></p>
-<p>类外定义：同文件类外定义/分文件类外定义  </p>
-<p>c++构造函数</p>
-<p>思考：</p>
-<ul>
-<li><p>实例化的对象如何在内存中存储</p>
-</li>
-<li><p>类中的代码如何在内存中存储</p>
-</li>
-<li><p>代码和数据之间有怎样的关系</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">        内存分区</span><br><span class="line">栈区：<span class="keyword">int</span> = <span class="number">0</span>；<span class="keyword">int</span> *p = <span class="literal">NULL</span>;  <span class="comment">//内存分配和回收由系统进行</span></span><br><span class="line">堆区：<span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">20</span>];   <span class="comment">//堆区内存需要手动回收</span></span><br><span class="line">全局区：存储全局变量及静态常量</span><br><span class="line">常量区：<span class="built_in">string</span> str = <span class="string">"hello"</span>;</span><br><span class="line">代码区：存储逻辑代码的二进制 ![<span class="number">1567062496284</span>](C:\Users\hhe97\AppData\Roaming\Typora\typora-user-images\<span class="number">1567062496284.</span>png)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567062521631.png" alt="1567062521631"></p>
-<p> 对象初始化</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567062779622.png" alt="1567062779622"></p>
-<p>构造函数的规则和特点（无参构造、有参构造、重载构造）</p>
-<ul>
-<li><p>构造函数在对象实例化时被自动调用</p>
-</li>
-<li><p>构造函数与类同名</p>
-</li>
-<li><p>构造函数没有返回值</p>
-</li>
-<li><p>构造函数可以有多个重载形式</p>
-</li>
-<li><p>实例化对象时仅用到一个构造函数</p>
-</li>
-<li><p>当用户没有定义构造函数时，编译器自动生成一个构造函数</p>
-</li>
-<li><p>默认构造函数：初始化对象时不需要传参的构造函数</p>
-</li>
-</ul>
-<h4 id="C-构造函数初始化列表"><a href="#C-构造函数初始化列表" class="headerlink" title="C++构造函数初始化列表"></a>C++构造函数初始化列表</h4><p>与其他函数不同，构造函数除了有名字，参数列表和函数体之外，还可以有初始化列表，初始化列表以冒号开头，后跟一系列以逗号分隔的初始化字段。<br>从概念上来讲，构造函数的执行可以分成两个阶段，初始化阶段和计算阶段，初始化阶段先于计算阶段.</p>
-<p>初始化阶段 ：所有类类型（class type）的成员都会在初始化阶段初始化，即使该成员没有出现在构造函数的初始化列表中。</p>
-<p>计算阶段 ：一般用于执行构造函数体内的赋值操作。</p>
-<ul>
-<li>初始化列表先于构造函数执行</li>
-<li>初始化列表只能用于构造函数</li>
-<li>初始化列表同时初始化多个数据成员</li>
-</ul>
-<p><strong>思考：c++为什么需要初始化列表，作用是什么</strong></p>
-<p><em>tips：搞清初始化和赋值的区别是非常重要的一点</em></p>
-<p>使用初始化列表的原因<br>初始化类的成员有两种方式，一是使用初始化列表，二是在构造函数体内进行赋值操作。 主要是性能问题，对于内置类型，如int, float等，使用初始化类表和在构造函数体内初始化差别不是很大，但是对于类类型来说，最好使用初始化列表，为什么呢？由下面的测试可知，使用初始化列表少了一次调用默认构造函数的过程，这对于数据密集型的类来说，是非常高效的。<br><strong><em>一个好的原则是，能使用初始化列表的时候尽量使用初始化列表.</em></strong></p>
-<p>必须使用初始化列表的时候<br>除了性能问题之外，有些时候合初始化列表是不可或缺的，以下几种情况时必须使用初始化列表 </p>
-<ul>
-<li><p>常量成员，因为<strong>常量只能初始化不能赋值</strong>，所以必须放在初始化列表里面</p>
-</li>
-<li><p>引用类型，<strong>引用必须在定义的时候初始化，并且不能重新赋值</strong>，所以也要写在初始化列表里面 </p>
-</li>
-<li><p>没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化，而是直接调用拷贝构造函数初始化</p>
-</li>
-<li><p>如果类存在继承关系，派生类必须在其初始化列表中调用基类的构造函数</p>
-</li>
-</ul>
-<p><strong>成员变量的顺序是按照他们在类中出现的顺序进行初始化的，而不是按照他们在初始化列表出现的顺序初始化的</strong></p>
-<h4 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h4><p>定义格式：类名（const 类名&amp; 变量名）如: Student（const Student&amp; stu）</p>
-<ul>
-<li>如果没有自定义的拷贝构造函数则系统自动生成一个默认的拷贝构造函数</li>
-<li>当采用直接初始化或者复制初始化实例化对象时系统自动调用拷贝构造函数</li>
-</ul>
-<h4 id="构造函数总结"><a href="#构造函数总结" class="headerlink" title="构造函数总结"></a>构造函数总结</h4><p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567066730363.png" alt="1567066730363"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567066786810.png" alt="1567066786810"></p>
-<p>c++析构函数</p>
-<ul>
-<li>如果没有自定义的析构函数则系统自动生成</li>
-<li>析构函数在对象销毁时自动调用</li>
-<li>析构函数没有返回值、没有参数也不能重载</li>
-</ul>
-<p>对象的生命历程</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567130868427.png" alt="1567130868427"></p>
-<p>对象数组</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567133398112.png" alt="1567133398112"></p>
-<p>对象成员</p>
-<p><strong>当一个类的成员是另一个类的对象时，这个对象就叫成员对象。概括的说，就是一个类的成员是一个对象，即成员对象。</strong></p>
-<ul>
-<li><p>出现成员对象时，该类的构造函数要包括对成员的初始化。如果构造函数的成员初始化列表没有对成员对象初始化，则使用成员对象的缺省构造函数。   构造函数对成员对象初始化列表的格式为：</p>
-<p>&lt;类名&gt;::&lt;类名&gt;(&lt;总参数表&gt;):&lt;成员对象1&gt;(&lt;形参表1&gt;), &lt;成员对象2&gt;(&lt;形参表2&gt;)，……</p>
-<p>{ //函数体 }   </p>
-</li>
-<li><p>建立一个类的对象时，应先调用其构造函数。但是如果这个类有成员对象，则要先执行成员对象自己所属类的构造函数，当全部成员对象都执行了自身类的构造函数后，再执行当前类的构造函数。析构函数的调用次序正好相反。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Coordinate</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    Coordinate(<span class="keyword">int</span> x,<span class="keyword">int</span> y);</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> m_iX;</span><br><span class="line">    <span class="keyword">int</span> m_iY;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Line</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    line(<span class="keyword">int</span> x1,<span class="keyword">int</span> y1,<span class="keyword">int</span> x2,<span class="keyword">int</span> y2);</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    Coordinate m_coorA;</span><br><span class="line">    Coordinare m_coorB;</span><br><span class="line">&#125;</span><br><span class="line">Line::Line(<span class="keyword">int</span> x1,<span class="keyword">int</span> y1,<span class="keyword">int</span> x2,<span class="keyword">int</span> y2):</span><br><span class="line">m_coorA(x1,y1),m_coorB(x2,y2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"line"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    Line *p = <span class="keyword">new</span> Line(<span class="number">2</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">delete</span> p;</span><br><span class="line">    p = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-<h3 id="浅拷贝和深拷贝"><a href="#浅拷贝和深拷贝" class="headerlink" title="浅拷贝和深拷贝"></a>浅拷贝和深拷贝</h3><p> 一、浅赋值问题<br>（1）如果类中叧包含简单数据成员，没有指向堆的指针， 可以使用编译器提供的默认复制构造函数</p>
-<p>（2）如果类中包含指向堆中数据的指针，浅复制将出现 严重问题</p>
-<p><img src="https://img-blog.csdn.net/20180725172907718?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhb2Fvd2VpdHQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
-<p>①浅复制直接复制两个对象间的指针成员，导致两个指针 指向堆中同一坑内存区域</p>
-<p>② 一个对象的修改将导致另一个对象的修改</p>
-<p>③ 一个对象超出作用域，将导致内存释放，使得另一个对 象的指针无效，对其访问将导致程序异常。</p>
-<p>二、编写自己的赋值构造函数（完成深复制的内容）：实现了资源的重新分配<br>（1）含有指针成员的类，通常需要编写构造函数和复制 构造函数，同时需要实现相应的复制构造函数，以 及运算符重载</p>
-<p>（2）实现“深复制”，创建对象备仹时，为新对象在堆 中分配自己的内存，并将现有值复制到新内存中。</p>
-<p><img src="https://img-blog.csdn.net/20180725173146940?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhb2Fvd2VpdHQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
-<p>对象成员和对象成员指针</p>
-<p>this指针（解决参数和数据成员同名冲突）</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567151506007.png" alt="1567151506007"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567151549356.png" alt="1567151549356"></p>
+        <h4 id="C语言编译过程详解"><a href="#C语言编译过程详解" class="headerlink" title="C语言编译过程详解"></a>C语言编译过程详解</h4><p>预处理，展开头文件/宏替换/去掉注释/条件编译</p>
+<p>编译，检查语法</p>
+<p>汇编，汇编代码转成机器码</p>
+<p>链接 链接到一起生成可执行程序</p>
+<p>参考<a href="https://blog.csdn.net/weixin_41143631/article/details/81221777" target="_blank" rel="noopener">https://blog.csdn.net/weixin_41143631/article/details/81221777</a></p>
 
       
     </div>
@@ -749,7 +618,7 @@
         
   
   <div class="tags">
-    <a href="/tags/C/">C++</a>
+    <a href="/tags/C-C/">C/C++</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -826,7 +695,7 @@
 <nav id="pagination">
   
   <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </nav>
@@ -847,23 +716,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2019/10/21/二叉树的遍历/">二叉树的遍历</a>
+        <a href="/2019/10/23/LeetCode/">LeetCode</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">LeetCode235二叉树的最近公共祖先</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/23/LeetCode102二叉树的层次遍历/">LeetCode102二叉树的层次遍历</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/21/二叉树的遍历/">LeetCode二叉树的遍历</a>
       </li>
     
       <li>
         <a href="/2019/10/13/C-prime9-51-日期处理程序/">C++prime9.51:日期处理程序</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/12/C++字符串中对汉字的处理/">C++字符串中对汉字的处理</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/04/vector迭代器失效解决方法及其其内存原理/">C++vector迭代器失效解决方法及其其内存原理</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/02/C语言编译过程详解/">C语言编译过程详解</a>
       </li>
     
   </ul>
@@ -875,15 +744,19 @@
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/C/">C++</a><small>7</small></li>
+    <li><a href="/tags/C/">C++</a><small>6</small></li>
   
     <li><a href="/tags/C-prime/">C++ prime</a><small>1</small></li>
   
     <li><a href="/tags/C-C/">C/C++</a><small>5</small></li>
   
+    <li><a href="/tags/C-C-、计算机基础/">C/C++、计算机基础</a><small>1</small></li>
+  
+    <li><a href="/tags/LeetCode/">LeetCode</a><small>3</small></li>
+  
     <li><a href="/tags/blog/">blog</a><small>1</small></li>
   
-    <li><a href="/tags/数据结构/">数据结构</a><small>1</small></li>
+    <li><a href="/tags/数据结构/">数据结构</a><small>3</small></li>
   
     <li><a href="/tags/算法/">算法</a><small>2</small></li>
   
@@ -895,7 +768,7 @@
 <div class="widget tagcloud">
   <h3 class="title">Tag Cloud</h3>
   <div class="entry">
-    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 16.67px;">C/C++</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
+    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 17.5px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 15px;">数据结构</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a>
   </div>
 </div>
 

@@ -3,7 +3,7 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>二叉树的遍历 | Hexo</title>
+  <title>LeetCode二叉树的遍历 | Hexo</title>
   <meta name="author" content="John Doe">
 
   
@@ -14,7 +14,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="二叉树的遍历">
+  <meta property="og:title" content="LeetCode二叉树的遍历">
   <meta property="og:site_name" content="Hexo">
 
   
@@ -67,7 +67,7 @@
       
       
   
-    <h1 class="title">二叉树的遍历</h1>
+    <h1 class="title">LeetCode二叉树的遍历</h1>
   
 
     </header>
@@ -77,7 +77,7 @@
 
 <p>四种遍历方式：先序遍历、中序遍历、后序遍历、层次遍历。分别对应写出递归版本和非递归版本</p>
 <h4 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><p><strong>非递归版</strong>：<br>由于不管是先序遍历还是中序遍历以及后序遍历，我们都需要利用一个辅助栈来进行每个节点的存储打印，所以每个节点都要进栈和出栈，不过是根据那种遍历方式改变的是每个节点的进栈顺序，所以时间复杂度为<strong><em>O(n)</em></strong>，同样空间复杂度也为<strong><em>O(n)</em></strong>，n为结点数。<br>层序遍历是通过队列来进行每个节点的存储打印的，所以时间复杂度和空间复杂度也与前三种遍历方式一样。<br><strong>递归版</strong>：<br>空间复杂度与系统堆栈有关，系统栈需要记住每个节点的值，所以空间复杂度为<strong><em>O(n)</em></strong>。时间复杂度应该为<strong><em>O(n)</em></strong>，根据公式<strong><em>T(n)=2T(n/2)+1 = 2(2T(n/4)+1)+1 = 2^logn+2^(logn-1)+…+2+1 ~= n</em></strong>，所以时间复杂度为<strong><em>O(n)</em></strong>。</p>
-<h4 id="先序遍历"><a href="#先序遍历" class="headerlink" title="先序遍历"></a>先序遍历</h4><p>使用递归方式实现先序遍历的具体过程为：</p>
+<h4 id="144-二叉树的前序遍历"><a href="#144-二叉树的前序遍历" class="headerlink" title="144. 二叉树的前序遍历"></a><a href="https://leetcode-cn.com/problems/binary-tree-preorder-traversal/" target="_blank" rel="noopener">144. 二叉树的前序遍历</a></h4><p>使用递归方式实现先序遍历的具体过程为：</p>
 <ul>
 <li>先访问根节点</li>
 <li>再序访问左子树</li>
@@ -99,7 +99,7 @@
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">    <span class="built_in">stack</span>&lt;TreeNode*&gt; s;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; preorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!root)</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">       s.push(root);       <span class="comment">//树根入栈</span></span><br><span class="line">       TreeNode *temp;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">while</span>(!s.empty())&#123;           <span class="comment">//每次都判断栈内是否为空</span></span><br><span class="line">           res.push_back(s.top()-&gt;val);      <span class="comment">//保证每次的栈顶元素都是 先序元素</span></span><br><span class="line">           temp = s.top();</span><br><span class="line"></span><br><span class="line">           TreeNode *l = temp-&gt;left;</span><br><span class="line">           TreeNode *r = temp-&gt;right;</span><br><span class="line">           s.pop();</span><br><span class="line"></span><br><span class="line">           <span class="keyword">if</span>(r)</span><br><span class="line">            s.push(r);</span><br><span class="line">           <span class="keyword">if</span>(l)</span><br><span class="line">            s.push(l);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<h4 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h4><p>使用递归方法遍历的步骤：</p>
+<h4 id="94-二叉树的中序遍历"><a href="#94-二叉树的中序遍历" class="headerlink" title="94. 二叉树的中序遍历"></a><a href="https://leetcode-cn.com/problems/binary-tree-inorder-traversal/" target="_blank" rel="noopener">94. 二叉树的中序遍历</a></h4><p>使用递归方法遍历的步骤：</p>
 <ul>
 <li>先遍历左节点</li>
 <li>然后遍历根节点</li>
@@ -115,7 +115,7 @@
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">    <span class="built_in">stack</span>&lt;TreeNode *&gt; s;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; inorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!root)</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ();</span><br><span class="line">        </span><br><span class="line">        TreeNode *p = root;</span><br><span class="line">        <span class="keyword">while</span>(p || !s.empty())&#123;</span><br><span class="line">            <span class="keyword">while</span>(p)&#123;            <span class="comment">//把所有的左子节点都压入栈中</span></span><br><span class="line">                s.push(p);</span><br><span class="line">                p = p-&gt;left;</span><br><span class="line">            &#125;</span><br><span class="line">            p = s.top();</span><br><span class="line">            s.pop();</span><br><span class="line">            res.push_back(p-&gt;val);</span><br><span class="line">            p = p-&gt;right;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<h4 id="后续遍历"><a href="#后续遍历" class="headerlink" title="后续遍历"></a>后续遍历</h4><p>递归方式：</p>
+<h4 id="145-二叉树的后序遍历"><a href="#145-二叉树的后序遍历" class="headerlink" title="145. 二叉树的后序遍历"></a><a href="https://leetcode-cn.com/problems/binary-tree-postorder-traversal/" target="_blank" rel="noopener">145. 二叉树的后序遍历</a></h4><p>递归方式：</p>
 <ul>
 <li>先访问左节点</li>
 <li>然后访问右节点</li>
@@ -139,7 +139,7 @@
         
   
   <div class="tags">
-    <a href="/tags/数据结构/">数据结构</a>
+    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -167,23 +167,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2019/10/21/二叉树的遍历/">二叉树的遍历</a>
+        <a href="/2019/10/23/LeetCode/">LeetCode</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">LeetCode235二叉树的最近公共祖先</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/23/LeetCode102二叉树的层次遍历/">LeetCode102二叉树的层次遍历</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/21/二叉树的遍历/">LeetCode二叉树的遍历</a>
       </li>
     
       <li>
         <a href="/2019/10/13/C-prime9-51-日期处理程序/">C++prime9.51:日期处理程序</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/12/C++字符串中对汉字的处理/">C++字符串中对汉字的处理</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/04/vector迭代器失效解决方法及其其内存原理/">C++vector迭代器失效解决方法及其其内存原理</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/02/C语言编译过程详解/">C语言编译过程详解</a>
       </li>
     
   </ul>
@@ -195,15 +195,19 @@
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/C/">C++</a><small>7</small></li>
+    <li><a href="/tags/C/">C++</a><small>6</small></li>
   
     <li><a href="/tags/C-prime/">C++ prime</a><small>1</small></li>
   
     <li><a href="/tags/C-C/">C/C++</a><small>5</small></li>
   
+    <li><a href="/tags/C-C-、计算机基础/">C/C++、计算机基础</a><small>1</small></li>
+  
+    <li><a href="/tags/LeetCode/">LeetCode</a><small>3</small></li>
+  
     <li><a href="/tags/blog/">blog</a><small>1</small></li>
   
-    <li><a href="/tags/数据结构/">数据结构</a><small>1</small></li>
+    <li><a href="/tags/数据结构/">数据结构</a><small>3</small></li>
   
     <li><a href="/tags/算法/">算法</a><small>2</small></li>
   
@@ -215,7 +219,7 @@
 <div class="widget tagcloud">
   <h3 class="title">Tag Cloud</h3>
   <div class="entry">
-    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 16.67px;">C/C++</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
+    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 17.5px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 15px;">数据结构</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a>
   </div>
 </div>
 

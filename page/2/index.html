@@ -62,300 +62,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/十大排序算法/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/十大排序算法/">重要的排序算法</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h3 id="重要的排序算法"><a href="#重要的排序算法" class="headerlink" title="重要的排序算法"></a>重要的排序算法</h3><h5 id="1-快排"><a href="#1-快排" class="headerlink" title="1.快排"></a>1.快排</h5><p>通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分小，则分别对这两部分记录继续进行排序，以达到整个序列有序。快排效率高，是处理大数据最快的排序算法之一。</p>
-<p><strong>快排采用了分治法，最好的情况是每次正好中分</strong></p>
-<p><strong>(1)具体算法实现</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,j,temp;</span><br><span class="line">	<span class="keyword">if</span>(left &gt; right)     <span class="comment">//递归终止条件</span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">		</span><br><span class="line">    temp = a[left];</span><br><span class="line">    i = left;</span><br><span class="line">    j = right;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(i!=j)&#123;</span><br><span class="line">        <span class="comment">/*顺序很重要，要先从右往左找 */</span> </span><br><span class="line">    	<span class="keyword">while</span>(a[j]&gt;=temp &amp;&amp; i&lt;j)   <span class="comment">//循环终止条件：1：找到了比temp小的数，且i&lt;j 2:没有找到，但是两个哨兵相遇 </span></span><br><span class="line">    		j--;</span><br><span class="line">        <span class="comment">//再从左往右找 </span></span><br><span class="line">    	<span class="keyword">while</span>(a[i]&lt;=temp &amp;&amp; i&lt;j)   <span class="comment">//循环终止条件：1：找到了比temp大的数，且i&lt;j 2:没有找到，但 是两个哨兵相遇 </span></span><br><span class="line">    	    i++;</span><br><span class="line">    	<span class="keyword">if</span>(i&lt;j)              <span class="comment">//排除i=j的情况 </span></span><br><span class="line">    		swap(a[i], a[j]);</span><br><span class="line">	&#125;</span><br><span class="line">	swap(a[left],a[i]);     <span class="comment">//将基准数与 i和j 相遇位置的数交换    bug:swap(temp,a[i]);  </span></span><br><span class="line">	</span><br><span class="line">	quickSort(a, letf, i<span class="number">-1</span>);</span><br><span class="line">	quickSort(a, i+<span class="number">1</span>, right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>思考：为什么右边的哨兵先行 j先动相遇时一定可以找到小于等于基准元素的值；i先动的化不能保证  </p>
-<p>参见：<a href="https://blog.csdn.net/csdnqixiaoxin/article/details/89429528" target="_blank" rel="noopener">快排</a></p>
-<p><strong>(2)性能分析</strong></p>
-<ul>
-<li>最佳情况：T(n) = O(nlogn)</li>
-<li>最差情况：T(n) = O(n^2)</li>
-<li>平均情况：T(n) = O(nlogn)</li>
-</ul>
-<p><strong>(3)问题分析</strong></p>
-<p>如何选主元？</p>
-<ul>
-<li>若数据一开始就是顺序，选主元为第一个数据的话，为最坏情况，时间复杂度为(nlogn)</li>
-<li>一个比较好的解决办法：取头、中、尾的中位数</li>
-</ul>
-<p>子集划分，如果有元素正好等于pivot怎么办</p>
-<ul>
-<li>停下来交换（根据所有元素都相等的极端情况来考虑是否要交换）</li>
-</ul>
-<p>小规模数据的处理</p>
-<ul>
-<li>对小规模的数据（假如N不到100）可能还不如插入排序快。</li>
-<li>当递归的数据规模充分小的时候，则停止递归，直接调用简单排序（如插入排序）</li>
-</ul>
-<p>后面再继续补充。。</p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/算法/">算法</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/二进制数、八进制数和十六进制的表示/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/二进制数、八进制数和十六进制的表示/">二进制数、八进制数和十六进制的表示</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="二进制数、八进制数和十六进制的表示"><a href="#二进制数、八进制数和十六进制的表示" class="headerlink" title="二进制数、八进制数和十六进制的表示"></a>二进制数、八进制数和十六进制的表示</h2><h4 id="1）二进制"><a href="#1）二进制" class="headerlink" title="1）二进制"></a>1）二进制</h4><p>二进制由 0 和 1 两个数字组成，使用时必须以0b或0B</p>
-<p>（不区分大小写）开头，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//合法的二进制</span><br><span class="line">int a = 0b101;  //换算成十进制为 5</span><br><span class="line">int b = -0b110010;  //换算成十进制为 -50</span><br><span class="line">int c = 0B100001;  //换算成十进制为 33</span><br><span class="line"></span><br><span class="line">//非法的二进制</span><br><span class="line">int m = 101010;  //无前缀 0B，相当于十进制</span><br><span class="line">int n = 0B410;  //4不是有效的二进制数字</span><br></pre></td></tr></table></figure>
-
-<p>读者请注意，标准的C语言并不支持上面的二进制写法，只是有些编译器自己进行了扩展，才支持二进制数字。</p>
-<p>换句话说，并不是所有的编译器都支持二进制数字，只有一部分编译器支持，并且跟编译器的版本有关系。</p>
-<h4 id="2-八进制"><a href="#2-八进制" class="headerlink" title="2) 八进制"></a>2) 八进制</h4><p>八进制由 0~7 八个数字组成，使用时必须以数字0开头</p>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//合法的八进制数</span><br><span class="line">int a = 015;  //换算成十进制为 13</span><br><span class="line">int b = -0101;  //换算成十进制为 -65</span><br><span class="line">int c = 0177777;  //换算成十进制为 65535</span><br><span class="line"></span><br><span class="line">//非法的八进制</span><br><span class="line">int m = 256;  //无前缀 0，相当于十进制</span><br><span class="line">int n = 03A2;  //A不是有效的八进制数字</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-十六进制"><a href="#3-十六进制" class="headerlink" title="3) 十六进制"></a>3) 十六进制</h4><p>十六进制由数字 0<del>9、字母 A</del>F 或 a~f（不区分大小写）组成，使用时必须以0x或0X（不区分大小写）开头，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//合法的十六进制</span><br><span class="line">int a = 0X2A;  //换算成十进制为 42</span><br><span class="line">int b = -0XA0;  //换算成十进制为 -160</span><br><span class="line">int c = 0xffff;  //换算成十进制为 65535</span><br><span class="line">//非法的十六进制</span><br><span class="line">int m = 5A;  //没有前缀 0X，是一个无效数字</span><br><span class="line">int n = 0X3H;  //H不是有效的十六进制数字</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-十进制"><a href="#4-十进制" class="headerlink" title="4) 十进制"></a>4) 十进制</h4><p>十进制由 0~9 十个数字组成，没有任何前缀，和我们平时的书写格式一样，不再赘述。</p>
-<h2 id="二进制数、八进制数和十六进制数的输出"><a href="#二进制数、八进制数和十六进制数的输出" class="headerlink" title="二进制数、八进制数和十六进制数的输出"></a>二进制数、八进制数和十六进制数的输出</h2><h2 id="二进制数、八进制数和十六进制数的输出-1"><a href="#二进制数、八进制数和十六进制数的输出-1" class="headerlink" title="二进制数、八进制数和十六进制数的输出"></a>二进制数、八进制数和十六进制数的输出</h2><p>C语言中常用的整数有 short、int 和 long 三种类型，通过 printf 函数，可以将它们以八进制、十进制和十六进制的形式输出。上节我们讲解了如何以十进制的形式输出，这节我们重点讲解如何以八进制和十六进制的形式输出，下表列出了不同类型的整数、以不同进制的形式输出时对应的格式控制符：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>short</th>
-<th>int</th>
-<th>long</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>八进制</td>
-<td>%ho</td>
-<td>%o</td>
-<td>%lo</td>
-</tr>
-<tr>
-<td>十进制</td>
-<td>%hd</td>
-<td>%d</td>
-<td>%ld</td>
-</tr>
-<tr>
-<td>十六进制</td>
-<td>%hx 或者 %hX</td>
-<td>%x 或者 %X</td>
-<td>%lx 或者 %lX</td>
-</tr>
-</tbody></table>
-<p>十六进制数字的表示用到了英文字母，有大小写之分，要在格式控制符中体现出来：</p>
-<ul>
-<li>%hx、%x 和 %lx 中的<code>x</code>小写，表明以小写字母的形式输出十六进制数；</li>
-<li>%hX、%X 和 %lX 中的<code>X</code>大写，表明以大写字母的形式输出十六进制数。</li>
-</ul>
-<p>八进制数字和十进制数字不区分大小写，所以格式控制符都用小写形式。如果你比较叛逆，想使用大写形式，那么行为是未定义的，请你慎重：</p>
-<ul>
-<li>有些编译器支持大写形式，只不过行为和小写形式一样；</li>
-<li>有些编译器不支持大写形式，可能会报错，也可能会导致奇怪的输出。</li>
-</ul>
-<p>注意，虽然部分编译器支持二进制数字的表示，但是却不能使用 printf 函数输出二进制，这一点比较遗憾。</p>
-<p>当然，通过转换函数可以将其它进制数字转换成二进制数字，并以字符串的形式存储，然后在 printf 函数中使用%s输出即可。考虑到读者的基础还不够，这里就先不讲这种方法了。</p>
-<p>【实例】以不同进制的形式输出整数：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> a = <span class="number">0b1010110</span>;  <span class="comment">//二进制数字</span></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">02713</span>;  <span class="comment">//八进制数字</span></span><br><span class="line">    <span class="keyword">long</span> c = <span class="number">0X1DAB83</span>;  <span class="comment">//十六进制数字</span></span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%ho, b=%o, c=%lo\n"</span>, a, b, c);  <span class="comment">//以八进制形似输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hd, b=%d, c=%ld\n"</span>, a, b, c);  <span class="comment">//以十进制形式输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hx, b=%x, c=%lx\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母小写）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hX, b=%X, c=%lX\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母大写）</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<p>a=126, b=2713, c=7325603</p>
-<p>a=86, b=1483, c=1944451</p>
-<p>a=56, b=5cb, c=1dab83</p>
-<p>a=56, b=5CB, c=1DAB83</p>
-<p>从这个例子可以发现，一个数字不管以何种进制来表示，都能够以任意进制的形式输出。数字在内存中始终以二进制的形式存储，其它进制的数字在存储前都必须转换为二进制形式；同理，一个数字在输出时要进行逆向的转换，也就是从二进制转换为其他进制。</p>
-<h4 id="输出时加上前缀"><a href="#输出时加上前缀" class="headerlink" title="输出时加上前缀"></a>输出时加上前缀</h4><p>请读者注意观察上面的例子，会发现有一点不完美，如果只看输出结果：</p>
-<ul>
-<li>对于八进制数字，它没法和十进制、十六进制区分，因为八进制、十进制和十六进制都包含 0~7 这几个数字。</li>
-<li>对于十进制数字，它没法和十六进制区分，因为十六进制也包含 0~9 这几个数字。如果十进制数字中还不包含 8 和 9，那么也不能和八进制区分了。</li>
-<li>对于十六进制数字，如果没有包含 a<del>f 或者 A</del>F，那么就无法和十进制区分，如果还不包含 8 和 9，那么也不能和八进制区分了。</li>
-</ul>
-<p>区分不同进制数字的一个简单办法就是，在输出时带上特定的前缀。在格式控制符中加上#</p>
-<p>即可输出前缀，例如 %#x、%#o、%#lX、%#ho 等，请看下面的代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> a = <span class="number">0b1010110</span>;  <span class="comment">//二进制数字</span></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">02713</span>;  <span class="comment">//八进制数字</span></span><br><span class="line">    <span class="keyword">long</span> c = <span class="number">0X1DAB83</span>;  <span class="comment">//十六进制数字</span></span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#ho, b=%#o, c=%#lo\n"</span>, a, b, c);  <span class="comment">//以八进制形似输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hd, b=%d, c=%ld\n"</span>, a, b, c);  <span class="comment">//以十进制形式输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#hx, b=%#x, c=%#lx\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母小写）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#hX, b=%#X, c=%#lX\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母大写）</span></span><br><span class="line">   </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<p>a=0126, b=02713, c=07325603</p>
-<p>a=86, b=1483, c=1944451</p>
-<p>a=0x56, b=0x5cb, c=0x1dab83</p>
-<p>a=0X56, b=0X5CB, c=0X1DAB83</p>
-<p>十进制数字没有前缀，所以不用加#。如果你加上了，那么它的行为是未定义的，有的编译器支持十进制加#，只不过输出结果和没有加#一样，有的编译器不支持加#，可能会报错，也可能会导致奇怪的输出；但是，大部分编译器都能正常输出，不至于当成一种错误。</p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C/">C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/常见c++笔试面试整理/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/常见c++笔试面试整理/">C和C++常见面试题</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h5 id="c-c-后缀"><a href="#c-c-后缀" class="headerlink" title="c/c++后缀"></a>c/c++后缀</h5><p>C中：</p>
-<p>头文件后缀名：.h</p>
-<p>源文件后缀名: .c</p>
-<p>c++中：</p>
-<p>头文件后缀名：.h, .hpp, .hxx</p>
-<p>源文件后缀名：.c，.cpp，.cxx .c++ .cc</p>
-<p>上面是不同标准下给出的扩展名</p>
-<p>只是个名称，我们自己知道哪些是同一个东西，能区别开c和c++就行了。</p>
-<p>另外，.h和.hpp的区别是：可以理解为：.hpp = .h + .cpp(<a href="https://www.sogou.com/" title="Sogou" target="_blank" rel="noopener">.hpp</a>)</p>
-<p><em>.h里面只有声明，没有实现，而</em>.hpp里声明实现都有，后者可以减少.cpp的数量，适合用来编写公用的开源库。</p>
-<h5 id="c-inl文件"><a href="#c-inl文件" class="headerlink" title="c++.inl文件"></a>c++.inl文件</h5><p> 在内联函数较多的情况下，为了避免头文件过长、版面混乱，可以将所有的内联函数定义移到一个单独的文件中去，然后再<strong>用#include指令将它包含到类声明的后面</strong>（类的头文件的底部）。这样的文件称为一个内联函数定义文件。inl文件中也可以包含头文件的，因为内联函数中可能包含其他文件中定义的东西。</p>
-<p>按照惯例，<strong>应该将这个文件命名为“filename.inl”，其中“filename”与相应的头文件和实现文件相同。</strong>  </p>
-<h5 id="gcc和g-的区别"><a href="#gcc和g-的区别" class="headerlink" title="gcc和g++的区别"></a>gcc和g++的区别</h5><p>简单来说，gcc与g++都是GNU(组织)的一个编译器。需要注意以下几点：</p>
-<ol>
-<li>gcc与g++都可以编译c代码与c++代码。但是：后缀为.c的，gcc把它当做C程序，而g++当做是C++程序；后缀为.cpp的，两者都会认为是C++程序。</li>
-<li>编译阶段，g++会调用gcc，对于c++代码，两者是等价的，但是因为gcc命令不能自动和C＋＋程序使用的库联接，所以通常用g++来完成链接。</li>
-<li>编译可以用gcc/g++，而链接可以用g++或者gcc -lstdc++。因为gcc命令不能自动和C＋＋程序使用的库联接（当然可以选择手动链接，使用命令如下），所以通常使用g++来完成联接。但在编译阶段，g++会自动调用gcc，二者等价。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.cpp -lstdc++</span><br></pre></td></tr></table></figure>
-
-<h5 id="gcc编译的四个步骤，以最简单的hello-c为例"><a href="#gcc编译的四个步骤，以最简单的hello-c为例" class="headerlink" title="gcc编译的四个步骤，以最简单的hello.c为例"></a>gcc编译的四个步骤，以最简单的hello.c为例</h5><p>一步到位：gcc hello.c</p>
-<p>这条命令隐含执行了</p>
-<ol>
-<li><p>预处理(hello.i)</p>
-</li>
-<li><p>编译(hello.s)</p>
-</li>
-<li><p>汇编(hello.o)</p>
-</li>
-<li><p>链接(可执行文件hello)</p>
-<p>这里未指定输出文件，默认输出为a.out<br>gcc编译C源码有四个步骤：<br>预处理 —-&gt; 编译 —-&gt; 汇编 —-&gt; 链接<br>现在我们就用gcc的命令选项来逐个剖析gcc过程。<br>1）预处理(Pre-processing)<br>在该阶段，编译器将C源代码中的包含的头文件如stdio.h添加进来<br>参数：”-E”<br>用法：gcc -E hello.c -o hello.i<br>作用：将hello.c预处理输出hello.i文件。<br>2)编译(Compiling)<br>第二步进行的是编译阶段，在这个阶段中，gcc首先要检查代码的规范性、是否有语法错误等，以确定代码的实际要做的工作，在检查无误后，gcc把代码翻译成汇编语言。<br>参数：”-S”<br>用法：gcc –S hello.i –o hello.s<br>作用：将预处理输出文件hello.i汇编成hello.s文件。<br>3)汇编(Assembling)<br>汇编阶段是把编译阶段生成的”.s”文件转成二进制目标代码“.o”文件<br>参数：“-c”<br>用法：gcc –c hello.s –o hello.o<br>作用：将汇编输出文件hello.s编译输出hello.o文件。<br>4）链接(Link)<br>在成功编译之后，就进入了链接阶段。<br>用法：gcc hello.o –o hello<br>作用：将编译输出文件hello.o链接成最终可执行文件hello。<br>运行该可执行文件，出现正确的结果如下。</p>
-<p>./hello</p>
-<p>Hello World!</p>
-</li>
-</ol>
-<h5 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h5><h5 id="c-11新特性"><a href="#c-11新特性" class="headerlink" title="c++11新特性"></a>c++11新特性</h5><p><strong>C和C++的区别</strong></p>
-<p>1）C是面向过程的语言，是一个结构化的语言，考虑如何通过一个过程对输入进行处理得到输出；C++是面向对象的语言，主要特征是“封装、继承和多态”。封装隐藏了实现细节，使得代码模块化；派生类可以继承父类的数据和方法，扩展了已经存在的模块，实现了代码重用；多态则是“一个接口，多种实现”，通过派生类重写父类的虚函数，实现了接口的重用。</p>
-<p>2）C和C++动态管理内存的方法不一样，C是使用malloc/free，而C++除此之外还有new/delete关键字。</p>
-<p>3）C++支持函数重载，C不支持函数重载</p>
-<p>4）C++中有引用，C中不存在引用的概念</p>
-<h5 id="c-引用"><a href="#c-引用" class="headerlink" title="c++引用"></a>c++引用</h5><p> 引用就是某一变量（目标）的一个别名，对引用的操作与对变量直接操作完全一样。</p>
-<p>引用的声明方法：类型标识符 &amp;引用名=目标变量名；</p>
-<p>　　【例1】：int a; int &amp;ra=a; //定义引用ra,它是变量a的引用，即别名</p>
-<p>　　说明：</p>
-<p>　　（1）&amp;在此不是求地址运算，而是起标识作用。</p>
-<p>　　（2）类型标识符是指目标变量的类型。</p>
-<p>　　（3）声明引用时，必须同时对其进行初始化。</p>
-<p>　　（4）引用声明完毕后，相当于目标变量名有两个名称，即该目标原名称和引用名，且不能再把该引用名作为其他变量名的别名。</p>
-<p>　　 ra=1; 等价于 a=1;</p>
-<p>　　（5）声明一个引用，不是新定义了一个变量，它只表示该引用名是目标变量名的一个别名，它本身不是一种数据类型，因此引用本身不占存储单元，系统也不给引用分配存储单元。故：对引用求地址，就是对目标变量求地址。&amp;ra与&amp;a相等。</p>
-<p>　　（6）不能建立数组的引用。因为数组是一个由若干个元素所组成的集合，所以无法建立一个数组的别名。</p>
-<p>常引用：</p>
-<p>目的：不想通过引用来改变原来空间的值</p>
-<p>形式： const int &amp;c = a//相当于  const int * const c = &amp;a</p>
-<h5 id="c-中指针和引用的区别"><a href="#c-中指针和引用的区别" class="headerlink" title="c++中指针和引用的区别"></a>c++中指针和引用的区别</h5><p>1）指针是一个新的变量，存储了另一个变量的地址，我们可以通过访问这个地址来修改另一个变量；</p>
-<p>引用只是一个别名，还是变量本身，对引用的任何操作就是对变量本身进行操作，以达到修改变量的目的</p>
-<p>2）引用只有一级，而指针可以有多级</p>
-<p>3）指针传参的时候，还是值传递，指针本身的值不可以修改，需要通过解引用才能对指向的对象进行操作</p>
-<p>引用传参的时候，传进来的就是变量本身，因此变量可以被修改</p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C/">C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/日期类问题/">2019-10-02</a></time>
       
       
@@ -533,6 +239,626 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/常见c++笔试面试整理/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/常见c++笔试面试整理/">C和C++常见面试题</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h5 id="c-c-后缀"><a href="#c-c-后缀" class="headerlink" title="c/c++后缀"></a>c/c++后缀</h5><p>C中：</p>
+<p>头文件后缀名：.h</p>
+<p>源文件后缀名: .c</p>
+<p>c++中：</p>
+<p>头文件后缀名：.h, .hpp, .hxx</p>
+<p>源文件后缀名：.c，.cpp，.cxx .c++ .cc</p>
+<p>上面是不同标准下给出的扩展名</p>
+<p>只是个名称，我们自己知道哪些是同一个东西，能区别开c和c++就行了。</p>
+<p>另外，.h和.hpp的区别是：可以理解为：.hpp = .h + .cpp(<a href="https://www.sogou.com/" title="Sogou" target="_blank" rel="noopener">.hpp</a>)</p>
+<p><em>.h里面只有声明，没有实现，而</em>.hpp里声明实现都有，后者可以减少.cpp的数量，适合用来编写公用的开源库。</p>
+<h5 id="c-inl文件"><a href="#c-inl文件" class="headerlink" title="c++.inl文件"></a>c++.inl文件</h5><p> 在内联函数较多的情况下，为了避免头文件过长、版面混乱，可以将所有的内联函数定义移到一个单独的文件中去，然后再<strong>用#include指令将它包含到类声明的后面</strong>（类的头文件的底部）。这样的文件称为一个内联函数定义文件。inl文件中也可以包含头文件的，因为内联函数中可能包含其他文件中定义的东西。</p>
+<p>按照惯例，<strong>应该将这个文件命名为“filename.inl”，其中“filename”与相应的头文件和实现文件相同。</strong>  </p>
+<h5 id="gcc和g-的区别"><a href="#gcc和g-的区别" class="headerlink" title="gcc和g++的区别"></a>gcc和g++的区别</h5><p>简单来说，gcc与g++都是GNU(组织)的一个编译器。需要注意以下几点：</p>
+<ol>
+<li>gcc与g++都可以编译c代码与c++代码。但是：后缀为.c的，gcc把它当做C程序，而g++当做是C++程序；后缀为.cpp的，两者都会认为是C++程序。</li>
+<li>编译阶段，g++会调用gcc，对于c++代码，两者是等价的，但是因为gcc命令不能自动和C＋＋程序使用的库联接，所以通常用g++来完成链接。</li>
+<li>编译可以用gcc/g++，而链接可以用g++或者gcc -lstdc++。因为gcc命令不能自动和C＋＋程序使用的库联接（当然可以选择手动链接，使用命令如下），所以通常使用g++来完成联接。但在编译阶段，g++会自动调用gcc，二者等价。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.cpp -lstdc++</span><br></pre></td></tr></table></figure>
+
+<h5 id="gcc编译的四个步骤，以最简单的hello-c为例"><a href="#gcc编译的四个步骤，以最简单的hello-c为例" class="headerlink" title="gcc编译的四个步骤，以最简单的hello.c为例"></a>gcc编译的四个步骤，以最简单的hello.c为例</h5><p>一步到位：gcc hello.c</p>
+<p>这条命令隐含执行了</p>
+<ol>
+<li><p>预处理(hello.i)</p>
+</li>
+<li><p>编译(hello.s)</p>
+</li>
+<li><p>汇编(hello.o)</p>
+</li>
+<li><p>链接(可执行文件hello)</p>
+<p>这里未指定输出文件，默认输出为a.out<br>gcc编译C源码有四个步骤：<br>预处理 —-&gt; 编译 —-&gt; 汇编 —-&gt; 链接<br>现在我们就用gcc的命令选项来逐个剖析gcc过程。<br>1）预处理(Pre-processing)<br>在该阶段，编译器将C源代码中的包含的头文件如stdio.h添加进来<br>参数：”-E”<br>用法：gcc -E hello.c -o hello.i<br>作用：将hello.c预处理输出hello.i文件。<br>2)编译(Compiling)<br>第二步进行的是编译阶段，在这个阶段中，gcc首先要检查代码的规范性、是否有语法错误等，以确定代码的实际要做的工作，在检查无误后，gcc把代码翻译成汇编语言。<br>参数：”-S”<br>用法：gcc –S hello.i –o hello.s<br>作用：将预处理输出文件hello.i汇编成hello.s文件。<br>3)汇编(Assembling)<br>汇编阶段是把编译阶段生成的”.s”文件转成二进制目标代码“.o”文件<br>参数：“-c”<br>用法：gcc –c hello.s –o hello.o<br>作用：将汇编输出文件hello.s编译输出hello.o文件。<br>4）链接(Link)<br>在成功编译之后，就进入了链接阶段。<br>用法：gcc hello.o –o hello<br>作用：将编译输出文件hello.o链接成最终可执行文件hello。<br>运行该可执行文件，出现正确的结果如下。</p>
+<p>./hello</p>
+<p>Hello World!</p>
+</li>
+</ol>
+<h5 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h5><h5 id="c-11新特性"><a href="#c-11新特性" class="headerlink" title="c++11新特性"></a>c++11新特性</h5><p><strong>C和C++的区别</strong></p>
+<p>1）C是面向过程的语言，是一个结构化的语言，考虑如何通过一个过程对输入进行处理得到输出；C++是面向对象的语言，主要特征是“封装、继承和多态”。封装隐藏了实现细节，使得代码模块化；派生类可以继承父类的数据和方法，扩展了已经存在的模块，实现了代码重用；多态则是“一个接口，多种实现”，通过派生类重写父类的虚函数，实现了接口的重用。</p>
+<p>2）C和C++动态管理内存的方法不一样，C是使用malloc/free，而C++除此之外还有new/delete关键字。</p>
+<p>3）C++支持函数重载，C不支持函数重载</p>
+<p>4）C++中有引用，C中不存在引用的概念</p>
+<h5 id="c-引用"><a href="#c-引用" class="headerlink" title="c++引用"></a>c++引用</h5><p> 引用就是某一变量（目标）的一个别名，对引用的操作与对变量直接操作完全一样。</p>
+<p>引用的声明方法：类型标识符 &amp;引用名=目标变量名；</p>
+<p>　　【例1】：int a; int &amp;ra=a; //定义引用ra,它是变量a的引用，即别名</p>
+<p>　　说明：</p>
+<p>　　（1）&amp;在此不是求地址运算，而是起标识作用。</p>
+<p>　　（2）类型标识符是指目标变量的类型。</p>
+<p>　　（3）声明引用时，必须同时对其进行初始化。</p>
+<p>　　（4）引用声明完毕后，相当于目标变量名有两个名称，即该目标原名称和引用名，且不能再把该引用名作为其他变量名的别名。</p>
+<p>　　 ra=1; 等价于 a=1;</p>
+<p>　　（5）声明一个引用，不是新定义了一个变量，它只表示该引用名是目标变量名的一个别名，它本身不是一种数据类型，因此引用本身不占存储单元，系统也不给引用分配存储单元。故：对引用求地址，就是对目标变量求地址。&amp;ra与&amp;a相等。</p>
+<p>　　（6）不能建立数组的引用。因为数组是一个由若干个元素所组成的集合，所以无法建立一个数组的别名。</p>
+<p>常引用：</p>
+<p>目的：不想通过引用来改变原来空间的值</p>
+<p>形式： const int &amp;c = a//相当于  const int * const c = &amp;a</p>
+<h5 id="c-中指针和引用的区别"><a href="#c-中指针和引用的区别" class="headerlink" title="c++中指针和引用的区别"></a>c++中指针和引用的区别</h5><p>1）指针是一个新的变量，存储了另一个变量的地址，我们可以通过访问这个地址来修改另一个变量；</p>
+<p>引用只是一个别名，还是变量本身，对引用的任何操作就是对变量本身进行操作，以达到修改变量的目的</p>
+<p>2）引用只有一级，而指针可以有多级</p>
+<p>3）指针传参的时候，还是值传递，指针本身的值不可以修改，需要通过解引用才能对指向的对象进行操作</p>
+<p>引用传参的时候，传进来的就是变量本身，因此变量可以被修改</p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/C/">C++</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/CC++中变量的作用域和存储类型/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/CC++中变量的作用域和存储类型/">C/C++中变量的作用域和存储类型</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="C-C-中变量的作用域和存储类型"><a href="#C-C-中变量的作用域和存储类型" class="headerlink" title="C/C++中变量的作用域和存储类型"></a>C/C++中变量的作用域和存储类型</h2><h5 id="区分作用域和存储类型"><a href="#区分作用域和存储类型" class="headerlink" title="区分作用域和存储类型"></a>区分作用域和存储类型</h5><p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/*例1*/</span></span><br><span class="line"><span class="number">2</span> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="number">3</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">4 </span>&#123;</span><br><span class="line"><span class="number">5</span>     <span class="keyword">static</span> <span class="keyword">int</span> a=<span class="number">1</span>;<span class="comment">//定义了一个静态存储的局部变量</span></span><br><span class="line"><span class="number">6</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">7</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>a是一个采用静态存储的局部变量，像这样的变量在整个文件中都不会消失，但是只能在main()函数内被使用。</p>
+<hr>
+<p>作用域：一个变量能够被使用的范围，在C语言中有包括<strong>块作用域、函数作用域、函数原型作用域、文件作用域</strong>，在C++中还有<strong>类作用域</strong>和<strong>命名空间作用域。</strong></p>
+<p>存储类型：存储类型分为<strong>静态存储</strong>和<strong>动态存储</strong>，采用静态存储方式的变量一旦创建，其存储空间在整个程序的运行过程中都不会被释放。对于采用动态存储的变量来说，当进入该程序块（函数或复合语句等）时，建立该变量，分配存储空间，当退出该程序块时，撤销该变量，释放其存储空间。</p>
+<p>不用限定词的情况</p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/*例2，不用限定词的情况*/</span></span><br><span class="line"><span class="number">2</span> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="number">3</span> <span class="keyword">int</span> a=<span class="number">1</span>;<span class="comment">//a为全局变量，采用静态存储</span></span><br><span class="line"><span class="number">4</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">5 </span>&#123;</span><br><span class="line"><span class="number">6</span>     <span class="keyword">int</span> b=<span class="number">1</span>;<span class="comment">//b为局部变量，默认采用动态存储</span></span><br><span class="line"><span class="number">7</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">8</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>全局变量a采用静态方式存储，具有文件作用域，b采用动态方式存储，具有的是块作用域。</p>
+<p><strong>static变量类型</strong></p>
+<ul>
+<li>对于全局变量来说，加不加static，该变量都采取静态方式来存储。不加static的全局变量默认为“外部变量”，可以被其他文件在进行了引用申明<em>（用extern,稍后介绍）</em>后使用。但是加了static之后，该变量便变成了“内部变量”，即该变量只能在该文件内被使用。</li>
+<li>对于局部变量来说，定义的时候默认为自动变量，采用动态方式来存储。使用static修饰后，将采取静态方式进行存储。初始化在编译时进行，只会进行一次。</li>
+</ul>
+<p><strong>extern关键字</strong>（声明而非定义，也不分配存储空间）</p>
+<p>​    仅用于对全局变量进行引用声明，包括</p>
+<ul>
+<li>对定义在使用处后面的全局变量提前引用声明</li>
+<li>在一个文件中对另一个文件定义的全局外部变量做引用声明（若全局变量使用了static，则不可引用）</li>
+</ul>
+<p><strong>使用auto、register</strong></p>
+<ul>
+<li><p>使用auto可显示地声明自动变量，由于在程序块内声明的变量默认是auto的，所以auto更多地也就   只是起到一个标记的作用了。</p>
+</li>
+<li><p>使用register可以将一些将被频繁使用的局部变量放到寄存器中，这样可以提高程序执行的效率。</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/C-C/">C/C++</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C++基础语法笔记/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/C++基础语法笔记/">C++基础语法笔记</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>[TOC]</p>
+<h3 id="C-新特性"><a href="#C-新特性" class="headerlink" title="C++新特性"></a>C++新特性</h3><p>bool是C++中的新类型，C语言中使用if语句</p>
+<p>C++支持C语言的复制初始化，同时新增了直接初始化，如：int x（1024）</p>
+<p>C++ 的变量不用定义在函数体最前面，可以随用随定义</p>
+<p>C++输入输出</p>
+<p>输入8进制，10进制，16进制分别为</p>
+<p>cout &lt;&lt; oct &lt;&lt; x &lt;&lt; endl;</p>
+<p>cout &lt;&lt; dec &lt;&lt; x &lt;&lt; endl;</p>
+<p>cout &lt;&lt; hex &lt;&lt; x &lt;&lt; endl;</p>
+<p>命名空间namespace</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567057130429.png" alt="1567057130429"></p>
+<p>要使用命名空间内的变量或者函数，需要在使用前声明</p>
+<p>如要使用cout需要using namespace std 声明或者 std::cout；</p>
+<p><strong>防止类名冲突，可以在定义类时使用命名空间限制</strong></p>
+<h3 id="C-封装篇"><a href="#C-封装篇" class="headerlink" title="C++ 封装篇"></a>C++ 封装篇</h3><ul>
+<li><p>类（虚拟）和对象（实体）</p>
+</li>
+<li><p>数据成员和成员函数，构成完整的类</p>
+</li>
+<li><p>构造函数和虚构函数，描述对象的生生死死</p>
+</li>
+<li><p>对象复制与对象赋值</p>
+</li>
+<li><p>对象数组和对象指针，对象的应用形态</p>
+</li>
+<li><p>this指针</p>
+</li>
+</ul>
+<p>类的访问限定符：public、private、protect</p>
+<p>对象实例化：从栈实例化、从堆实例化</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059216028.png" alt="1567059216028"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059243958.png" alt="1567059243958"></p>
+<p>从栈中实例化的对象，对象生命周期结束后会自动回收</p>
+<p>从堆中实例化出的对象，需要手动释放内存。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Tv *p = <span class="keyword">new</span> TV();</span><br><span class="line">Tv *p = <span class="keyword">new</span> TV[<span class="number">20</span>];  </span><br><span class="line"><span class="keyword">delete</span> p;  <span class="comment">//释放对象内存</span></span><br><span class="line"><span class="keyword">delete</span> []p; <span class="comment">//释放对象数组内存</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="对象成员访问"><a href="#对象成员访问" class="headerlink" title="对象成员访问"></a>对象成员访问</h3><p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059583881.png" alt="1567059583881"></p>
+<p>c++string</p>
+<p>字符数组char[]使用比较的复杂，而string被设计出来更加的方便</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060303688.png" alt="1567060303688"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060423517.png" alt="1567060423517"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060357425.png" alt="1567060357425"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060380451.png" alt="1567060380451"></p>
+<p>内联函数：inline关键字</p>
+<ul>
+<li>编译时省去步骤2和步骤4，速度更快，效率跟高</li>
+<li>但必须时短小，逻辑简单的函数。如果复杂函数使用了inline关键字，也会被编译器拒绝</li>
+</ul>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060836710.png" alt="1567060836710"></p>
+<p>类内定义和内联函数</p>
+<ul>
+<li>类内定义即将成员函数的函数体写在类内</li>
+<li>类内定义的函数，编译器在编译时会优先编译为内联函数</li>
+</ul>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567061108861.png" alt="1567061108861"></p>
+<p>类外定义：同文件类外定义/分文件类外定义  </p>
+<p>c++构造函数</p>
+<p>思考：</p>
+<ul>
+<li><p>实例化的对象如何在内存中存储</p>
+</li>
+<li><p>类中的代码如何在内存中存储</p>
+</li>
+<li><p>代码和数据之间有怎样的关系</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">        内存分区</span><br><span class="line">栈区：<span class="keyword">int</span> = <span class="number">0</span>；<span class="keyword">int</span> *p = <span class="literal">NULL</span>;  <span class="comment">//内存分配和回收由系统进行</span></span><br><span class="line">堆区：<span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">20</span>];   <span class="comment">//堆区内存需要手动回收</span></span><br><span class="line">全局区：存储全局变量及静态常量</span><br><span class="line">常量区：<span class="built_in">string</span> str = <span class="string">"hello"</span>;</span><br><span class="line">代码区：存储逻辑代码的二进制 ![<span class="number">1567062496284</span>](C:\Users\hhe97\AppData\Roaming\Typora\typora-user-images\<span class="number">1567062496284.</span>png)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567062521631.png" alt="1567062521631"></p>
+<p> 对象初始化</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567062779622.png" alt="1567062779622"></p>
+<p>构造函数的规则和特点（无参构造、有参构造、重载构造）</p>
+<ul>
+<li><p>构造函数在对象实例化时被自动调用</p>
+</li>
+<li><p>构造函数与类同名</p>
+</li>
+<li><p>构造函数没有返回值</p>
+</li>
+<li><p>构造函数可以有多个重载形式</p>
+</li>
+<li><p>实例化对象时仅用到一个构造函数</p>
+</li>
+<li><p>当用户没有定义构造函数时，编译器自动生成一个构造函数</p>
+</li>
+<li><p>默认构造函数：初始化对象时不需要传参的构造函数</p>
+</li>
+</ul>
+<h4 id="C-构造函数初始化列表"><a href="#C-构造函数初始化列表" class="headerlink" title="C++构造函数初始化列表"></a>C++构造函数初始化列表</h4><p>与其他函数不同，构造函数除了有名字，参数列表和函数体之外，还可以有初始化列表，初始化列表以冒号开头，后跟一系列以逗号分隔的初始化字段。<br>从概念上来讲，构造函数的执行可以分成两个阶段，初始化阶段和计算阶段，初始化阶段先于计算阶段.</p>
+<p>初始化阶段 ：所有类类型（class type）的成员都会在初始化阶段初始化，即使该成员没有出现在构造函数的初始化列表中。</p>
+<p>计算阶段 ：一般用于执行构造函数体内的赋值操作。</p>
+<ul>
+<li>初始化列表先于构造函数执行</li>
+<li>初始化列表只能用于构造函数</li>
+<li>初始化列表同时初始化多个数据成员</li>
+</ul>
+<p><strong>思考：c++为什么需要初始化列表，作用是什么</strong></p>
+<p><em>tips：搞清初始化和赋值的区别是非常重要的一点</em></p>
+<p>使用初始化列表的原因<br>初始化类的成员有两种方式，一是使用初始化列表，二是在构造函数体内进行赋值操作。 主要是性能问题，对于内置类型，如int, float等，使用初始化类表和在构造函数体内初始化差别不是很大，但是对于类类型来说，最好使用初始化列表，为什么呢？由下面的测试可知，使用初始化列表少了一次调用默认构造函数的过程，这对于数据密集型的类来说，是非常高效的。<br><strong><em>一个好的原则是，能使用初始化列表的时候尽量使用初始化列表.</em></strong></p>
+<p>必须使用初始化列表的时候<br>除了性能问题之外，有些时候合初始化列表是不可或缺的，以下几种情况时必须使用初始化列表 </p>
+<ul>
+<li><p>常量成员，因为<strong>常量只能初始化不能赋值</strong>，所以必须放在初始化列表里面</p>
+</li>
+<li><p>引用类型，<strong>引用必须在定义的时候初始化，并且不能重新赋值</strong>，所以也要写在初始化列表里面 </p>
+</li>
+<li><p>没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化，而是直接调用拷贝构造函数初始化</p>
+</li>
+<li><p>如果类存在继承关系，派生类必须在其初始化列表中调用基类的构造函数</p>
+</li>
+</ul>
+<p><strong>成员变量的顺序是按照他们在类中出现的顺序进行初始化的，而不是按照他们在初始化列表出现的顺序初始化的</strong></p>
+<h4 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h4><p>定义格式：类名（const 类名&amp; 变量名）如: Student（const Student&amp; stu）</p>
+<ul>
+<li>如果没有自定义的拷贝构造函数则系统自动生成一个默认的拷贝构造函数</li>
+<li>当采用直接初始化或者复制初始化实例化对象时系统自动调用拷贝构造函数</li>
+</ul>
+<h4 id="构造函数总结"><a href="#构造函数总结" class="headerlink" title="构造函数总结"></a>构造函数总结</h4><p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567066730363.png" alt="1567066730363"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567066786810.png" alt="1567066786810"></p>
+<p>c++析构函数</p>
+<ul>
+<li>如果没有自定义的析构函数则系统自动生成</li>
+<li>析构函数在对象销毁时自动调用</li>
+<li>析构函数没有返回值、没有参数也不能重载</li>
+</ul>
+<p>对象的生命历程</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567130868427.png" alt="1567130868427"></p>
+<p>对象数组</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567133398112.png" alt="1567133398112"></p>
+<p>对象成员</p>
+<p><strong>当一个类的成员是另一个类的对象时，这个对象就叫成员对象。概括的说，就是一个类的成员是一个对象，即成员对象。</strong></p>
+<ul>
+<li><p>出现成员对象时，该类的构造函数要包括对成员的初始化。如果构造函数的成员初始化列表没有对成员对象初始化，则使用成员对象的缺省构造函数。   构造函数对成员对象初始化列表的格式为：</p>
+<p>&lt;类名&gt;::&lt;类名&gt;(&lt;总参数表&gt;):&lt;成员对象1&gt;(&lt;形参表1&gt;), &lt;成员对象2&gt;(&lt;形参表2&gt;)，……</p>
+<p>{ //函数体 }   </p>
+</li>
+<li><p>建立一个类的对象时，应先调用其构造函数。但是如果这个类有成员对象，则要先执行成员对象自己所属类的构造函数，当全部成员对象都执行了自身类的构造函数后，再执行当前类的构造函数。析构函数的调用次序正好相反。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Coordinate</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    Coordinate(<span class="keyword">int</span> x,<span class="keyword">int</span> y);</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> m_iX;</span><br><span class="line">    <span class="keyword">int</span> m_iY;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Line</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    line(<span class="keyword">int</span> x1,<span class="keyword">int</span> y1,<span class="keyword">int</span> x2,<span class="keyword">int</span> y2);</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    Coordinate m_coorA;</span><br><span class="line">    Coordinare m_coorB;</span><br><span class="line">&#125;</span><br><span class="line">Line::Line(<span class="keyword">int</span> x1,<span class="keyword">int</span> y1,<span class="keyword">int</span> x2,<span class="keyword">int</span> y2):</span><br><span class="line">m_coorA(x1,y1),m_coorB(x2,y2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"line"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    Line *p = <span class="keyword">new</span> Line(<span class="number">2</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">delete</span> p;</span><br><span class="line">    p = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="浅拷贝和深拷贝"><a href="#浅拷贝和深拷贝" class="headerlink" title="浅拷贝和深拷贝"></a>浅拷贝和深拷贝</h3><p> 一、浅赋值问题<br>（1）如果类中叧包含简单数据成员，没有指向堆的指针， 可以使用编译器提供的默认复制构造函数</p>
+<p>（2）如果类中包含指向堆中数据的指针，浅复制将出现 严重问题</p>
+<p><img src="https://img-blog.csdn.net/20180725172907718?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhb2Fvd2VpdHQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+<p>①浅复制直接复制两个对象间的指针成员，导致两个指针 指向堆中同一坑内存区域</p>
+<p>② 一个对象的修改将导致另一个对象的修改</p>
+<p>③ 一个对象超出作用域，将导致内存释放，使得另一个对 象的指针无效，对其访问将导致程序异常。</p>
+<p>二、编写自己的赋值构造函数（完成深复制的内容）：实现了资源的重新分配<br>（1）含有指针成员的类，通常需要编写构造函数和复制 构造函数，同时需要实现相应的复制构造函数，以 及运算符重载</p>
+<p>（2）实现“深复制”，创建对象备仹时，为新对象在堆 中分配自己的内存，并将现有值复制到新内存中。</p>
+<p><img src="https://img-blog.csdn.net/20180725173146940?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhb2Fvd2VpdHQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+<p>对象成员和对象成员指针</p>
+<p>this指针（解决参数和数据成员同名冲突）</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567151506007.png" alt="1567151506007"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567151549356.png" alt="1567151549356"></p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/C/">C++</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/二进制数、八进制数和十六进制的表示/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/二进制数、八进制数和十六进制的表示/">二进制数、八进制数和十六进制的表示</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="二进制数、八进制数和十六进制的表示"><a href="#二进制数、八进制数和十六进制的表示" class="headerlink" title="二进制数、八进制数和十六进制的表示"></a>二进制数、八进制数和十六进制的表示</h2><h4 id="1）二进制"><a href="#1）二进制" class="headerlink" title="1）二进制"></a>1）二进制</h4><p>二进制由 0 和 1 两个数字组成，使用时必须以0b或0B</p>
+<p>（不区分大小写）开头，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//合法的二进制</span><br><span class="line">int a = 0b101;  //换算成十进制为 5</span><br><span class="line">int b = -0b110010;  //换算成十进制为 -50</span><br><span class="line">int c = 0B100001;  //换算成十进制为 33</span><br><span class="line"></span><br><span class="line">//非法的二进制</span><br><span class="line">int m = 101010;  //无前缀 0B，相当于十进制</span><br><span class="line">int n = 0B410;  //4不是有效的二进制数字</span><br></pre></td></tr></table></figure>
+
+<p>读者请注意，标准的C语言并不支持上面的二进制写法，只是有些编译器自己进行了扩展，才支持二进制数字。</p>
+<p>换句话说，并不是所有的编译器都支持二进制数字，只有一部分编译器支持，并且跟编译器的版本有关系。</p>
+<h4 id="2-八进制"><a href="#2-八进制" class="headerlink" title="2) 八进制"></a>2) 八进制</h4><p>八进制由 0~7 八个数字组成，使用时必须以数字0开头</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//合法的八进制数</span><br><span class="line">int a = 015;  //换算成十进制为 13</span><br><span class="line">int b = -0101;  //换算成十进制为 -65</span><br><span class="line">int c = 0177777;  //换算成十进制为 65535</span><br><span class="line"></span><br><span class="line">//非法的八进制</span><br><span class="line">int m = 256;  //无前缀 0，相当于十进制</span><br><span class="line">int n = 03A2;  //A不是有效的八进制数字</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-十六进制"><a href="#3-十六进制" class="headerlink" title="3) 十六进制"></a>3) 十六进制</h4><p>十六进制由数字 0<del>9、字母 A</del>F 或 a~f（不区分大小写）组成，使用时必须以0x或0X（不区分大小写）开头，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//合法的十六进制</span><br><span class="line">int a = 0X2A;  //换算成十进制为 42</span><br><span class="line">int b = -0XA0;  //换算成十进制为 -160</span><br><span class="line">int c = 0xffff;  //换算成十进制为 65535</span><br><span class="line">//非法的十六进制</span><br><span class="line">int m = 5A;  //没有前缀 0X，是一个无效数字</span><br><span class="line">int n = 0X3H;  //H不是有效的十六进制数字</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-十进制"><a href="#4-十进制" class="headerlink" title="4) 十进制"></a>4) 十进制</h4><p>十进制由 0~9 十个数字组成，没有任何前缀，和我们平时的书写格式一样，不再赘述。</p>
+<h2 id="二进制数、八进制数和十六进制数的输出"><a href="#二进制数、八进制数和十六进制数的输出" class="headerlink" title="二进制数、八进制数和十六进制数的输出"></a>二进制数、八进制数和十六进制数的输出</h2><h2 id="二进制数、八进制数和十六进制数的输出-1"><a href="#二进制数、八进制数和十六进制数的输出-1" class="headerlink" title="二进制数、八进制数和十六进制数的输出"></a>二进制数、八进制数和十六进制数的输出</h2><p>C语言中常用的整数有 short、int 和 long 三种类型，通过 printf 函数，可以将它们以八进制、十进制和十六进制的形式输出。上节我们讲解了如何以十进制的形式输出，这节我们重点讲解如何以八进制和十六进制的形式输出，下表列出了不同类型的整数、以不同进制的形式输出时对应的格式控制符：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>short</th>
+<th>int</th>
+<th>long</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>八进制</td>
+<td>%ho</td>
+<td>%o</td>
+<td>%lo</td>
+</tr>
+<tr>
+<td>十进制</td>
+<td>%hd</td>
+<td>%d</td>
+<td>%ld</td>
+</tr>
+<tr>
+<td>十六进制</td>
+<td>%hx 或者 %hX</td>
+<td>%x 或者 %X</td>
+<td>%lx 或者 %lX</td>
+</tr>
+</tbody></table>
+<p>十六进制数字的表示用到了英文字母，有大小写之分，要在格式控制符中体现出来：</p>
+<ul>
+<li>%hx、%x 和 %lx 中的<code>x</code>小写，表明以小写字母的形式输出十六进制数；</li>
+<li>%hX、%X 和 %lX 中的<code>X</code>大写，表明以大写字母的形式输出十六进制数。</li>
+</ul>
+<p>八进制数字和十进制数字不区分大小写，所以格式控制符都用小写形式。如果你比较叛逆，想使用大写形式，那么行为是未定义的，请你慎重：</p>
+<ul>
+<li>有些编译器支持大写形式，只不过行为和小写形式一样；</li>
+<li>有些编译器不支持大写形式，可能会报错，也可能会导致奇怪的输出。</li>
+</ul>
+<p>注意，虽然部分编译器支持二进制数字的表示，但是却不能使用 printf 函数输出二进制，这一点比较遗憾。</p>
+<p>当然，通过转换函数可以将其它进制数字转换成二进制数字，并以字符串的形式存储，然后在 printf 函数中使用%s输出即可。考虑到读者的基础还不够，这里就先不讲这种方法了。</p>
+<p>【实例】以不同进制的形式输出整数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> a = <span class="number">0b1010110</span>;  <span class="comment">//二进制数字</span></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">02713</span>;  <span class="comment">//八进制数字</span></span><br><span class="line">    <span class="keyword">long</span> c = <span class="number">0X1DAB83</span>;  <span class="comment">//十六进制数字</span></span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%ho, b=%o, c=%lo\n"</span>, a, b, c);  <span class="comment">//以八进制形似输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hd, b=%d, c=%ld\n"</span>, a, b, c);  <span class="comment">//以十进制形式输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hx, b=%x, c=%lx\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母小写）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hX, b=%X, c=%lX\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母大写）</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p>a=126, b=2713, c=7325603</p>
+<p>a=86, b=1483, c=1944451</p>
+<p>a=56, b=5cb, c=1dab83</p>
+<p>a=56, b=5CB, c=1DAB83</p>
+<p>从这个例子可以发现，一个数字不管以何种进制来表示，都能够以任意进制的形式输出。数字在内存中始终以二进制的形式存储，其它进制的数字在存储前都必须转换为二进制形式；同理，一个数字在输出时要进行逆向的转换，也就是从二进制转换为其他进制。</p>
+<h4 id="输出时加上前缀"><a href="#输出时加上前缀" class="headerlink" title="输出时加上前缀"></a>输出时加上前缀</h4><p>请读者注意观察上面的例子，会发现有一点不完美，如果只看输出结果：</p>
+<ul>
+<li>对于八进制数字，它没法和十进制、十六进制区分，因为八进制、十进制和十六进制都包含 0~7 这几个数字。</li>
+<li>对于十进制数字，它没法和十六进制区分，因为十六进制也包含 0~9 这几个数字。如果十进制数字中还不包含 8 和 9，那么也不能和八进制区分了。</li>
+<li>对于十六进制数字，如果没有包含 a<del>f 或者 A</del>F，那么就无法和十进制区分，如果还不包含 8 和 9，那么也不能和八进制区分了。</li>
+</ul>
+<p>区分不同进制数字的一个简单办法就是，在输出时带上特定的前缀。在格式控制符中加上#</p>
+<p>即可输出前缀，例如 %#x、%#o、%#lX、%#ho 等，请看下面的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> a = <span class="number">0b1010110</span>;  <span class="comment">//二进制数字</span></span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">02713</span>;  <span class="comment">//八进制数字</span></span><br><span class="line">    <span class="keyword">long</span> c = <span class="number">0X1DAB83</span>;  <span class="comment">//十六进制数字</span></span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#ho, b=%#o, c=%#lo\n"</span>, a, b, c);  <span class="comment">//以八进制形似输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%hd, b=%d, c=%ld\n"</span>, a, b, c);  <span class="comment">//以十进制形式输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#hx, b=%#x, c=%#lx\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母小写）</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"a=%#hX, b=%#X, c=%#lX\n"</span>, a, b, c);  <span class="comment">//以十六进制形式输出（字母大写）</span></span><br><span class="line">   </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<p>a=0126, b=02713, c=07325603</p>
+<p>a=86, b=1483, c=1944451</p>
+<p>a=0x56, b=0x5cb, c=0x1dab83</p>
+<p>a=0X56, b=0X5CB, c=0X1DAB83</p>
+<p>十进制数字没有前缀，所以不用加#。如果你加上了，那么它的行为是未定义的，有的编译器支持十进制加#，只不过输出结果和没有加#一样，有的编译器不支持加#，可能会报错，也可能会导致奇怪的输出；但是，大部分编译器都能正常输出，不至于当成一种错误。</p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/C-C-、计算机基础/">C/C++、计算机基础</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/十大排序算法/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/十大排序算法/">重要的排序算法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="重要的排序算法"><a href="#重要的排序算法" class="headerlink" title="重要的排序算法"></a>重要的排序算法</h3><h5 id="1-快排"><a href="#1-快排" class="headerlink" title="1.快排"></a>1.快排</h5><p>通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分小，则分别对这两部分记录继续进行排序，以达到整个序列有序。快排效率高，是处理大数据最快的排序算法之一。</p>
+<p><strong>快排采用了分治法，最好的情况是每次正好中分</strong></p>
+<p><strong>(1)具体算法实现</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,j,temp;</span><br><span class="line">	<span class="keyword">if</span>(left &gt; right)     <span class="comment">//递归终止条件</span></span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">		</span><br><span class="line">    temp = a[left];</span><br><span class="line">    i = left;</span><br><span class="line">    j = right;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span>(i!=j)&#123;</span><br><span class="line">        <span class="comment">/*顺序很重要，要先从右往左找 */</span> </span><br><span class="line">    	<span class="keyword">while</span>(a[j]&gt;=temp &amp;&amp; i&lt;j)   <span class="comment">//循环终止条件：1：找到了比temp小的数，且i&lt;j 2:没有找到，但是两个哨兵相遇 </span></span><br><span class="line">    		j--;</span><br><span class="line">        <span class="comment">//再从左往右找 </span></span><br><span class="line">    	<span class="keyword">while</span>(a[i]&lt;=temp &amp;&amp; i&lt;j)   <span class="comment">//循环终止条件：1：找到了比temp大的数，且i&lt;j 2:没有找到，但 是两个哨兵相遇 </span></span><br><span class="line">    	    i++;</span><br><span class="line">    	<span class="keyword">if</span>(i&lt;j)              <span class="comment">//排除i=j的情况 </span></span><br><span class="line">    		swap(a[i], a[j]);</span><br><span class="line">	&#125;</span><br><span class="line">	swap(a[left],a[i]);     <span class="comment">//将基准数与 i和j 相遇位置的数交换    bug:swap(temp,a[i]);  </span></span><br><span class="line">	</span><br><span class="line">	quickSort(a, letf, i<span class="number">-1</span>);</span><br><span class="line">	quickSort(a, i+<span class="number">1</span>, right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思考：为什么右边的哨兵先行 j先动相遇时一定可以找到小于等于基准元素的值；i先动的化不能保证  </p>
+<p>参见：<a href="https://blog.csdn.net/csdnqixiaoxin/article/details/89429528" target="_blank" rel="noopener">快排</a></p>
+<p><strong>(2)性能分析</strong></p>
+<ul>
+<li>最佳情况：T(n) = O(nlogn)</li>
+<li>最差情况：T(n) = O(n^2)</li>
+<li>平均情况：T(n) = O(nlogn)</li>
+</ul>
+<p><strong>(3)问题分析</strong></p>
+<p>如何选主元？</p>
+<ul>
+<li>若数据一开始就是顺序，选主元为第一个数据的话，为最坏情况，时间复杂度为(nlogn)</li>
+<li>一个比较好的解决办法：取头、中、尾的中位数</li>
+</ul>
+<p>子集划分，如果有元素正好等于pivot怎么办</p>
+<ul>
+<li>停下来交换（根据所有元素都相等的极端情况来考虑是否要交换）</li>
+</ul>
+<p>小规模数据的处理</p>
+<ul>
+<li>对小规模的数据（假如N不到100）可能还不如插入排序快。</li>
+<li>当递归的数据规模充分小的时候，则停止递归，直接调用简单排序（如插入排序）</li>
+</ul>
+<p>后面再继续补充。。</p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/算法/">算法</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/容器：顺序容器和关联容器/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/容器：顺序容器和关联容器/">顺序容器和关联容器</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>容器：顺序容器和关联容器</p>
+<p>迭代器类型：每种容器都定义了自己的迭代器类型，是一种数据类型</p>
+<p>const_iterator: 每种容器都定义了const_iterator类型，给类型只能用于读取容器内的元素，不能改变其值</p>
+<p>迭代器：有迭代器类型定义的实体</p>
+<p>访问容器的两种方法：</p>
+<ul>
+<li>下标：少数容器支持</li>
+<li>迭代器：对所有元素都适用，现代c++程序更倾向</li>
+</ul>
+<p>迭代器的操作：</p>
+<ul>
+<li>begin和end操作</li>
+<li>vector迭代器的自增和解引用运算</li>
+<li>迭代器比较</li>
+</ul>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/C/">C++</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2019-09-17T07:06:53.377Z"><a href="/2019/09/17/O(Nlog(N)）时间复杂度的主要来源：通常使用二分法使问题达到log(N)的层级，然后在每一个层级用O(N)级别的算法做事。/">2019-09-17</a></time>
       
       
@@ -613,189 +939,11 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-09-16T01:58:04.000Z"><a href="/2019/09/16/C 宏定义基本用法/">2019-09-16</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/09/16/C 宏定义基本用法/">C/C++宏定义用法</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h3 id="C-C-宏定义用法"><a href="#C-C-宏定义用法" class="headerlink" title="C/C++宏定义用法"></a>C/C++宏定义用法</h3><p>宏定义是比较常用的预处理指令，即使用“标识符”来表示“替换列表”中的内容。标识符称为宏名，在预处理过程中，预处理器会把源程序中所有宏名，替换成宏定义中替换列表中的内容。</p>
-<p>常见的宏定义有两种，<strong><em>不带参数的宏定义和带参数的宏定义</em></strong>。  </p>
-<h4 id="无参宏定义"><a href="#无参宏定义" class="headerlink" title="无参宏定义"></a>无参宏定义</h4><p>定义格式：<strong><em>#define 标识符 替换列表</em></strong></p>
-<p>定义规则：替换列表可以是<strong><em>数值常量<em>、</em>字符常量、字符串常量</em></strong>，故可以把宏定义理解为使用标识符表示一常量，或称符号常量。</p>
-<p>例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CHINA <span class="meta-string">"People's Republic of China"</span></span></span><br></pre></td></tr></table></figure>
-
-<p>调用cout语句，输出该字符串常量</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; CHINA ;</span><br></pre></td></tr></table></figure>
-
-<p>则输出结果为：People’s Republic of China</p>
-<p><font color="#FF0000">说明：</font></p>
-<p>1) # 可以不在行首，但只允许它前面有空格符。例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define PI 3.1416 //正确，该行#前允许有空格</span><br><span class="line"></span><br><span class="line">int a;#define N 5 //错误，该行#前不允许有空格外的其他字符</span><br></pre></td></tr></table></figure>
-
-<p>2) 标识符和替换列表之间不能加赋值号 =，替换列表后不能加分号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define N =5 //虽语法正确，但预处理器会把N替换成=5</span><br><span class="line"></span><br><span class="line">int a[N]; //错误，因为宏替换之后为 int a[=5];</span><br></pre></td></tr></table></figure>
-
-<p>宏定义不是语句，是预处理指令，故结尾不加分号。如果不小心添加了分号，虽然有时该宏定义没问题，但在宏替换时，可能导致 C 语法错误，或得不到预期结果。例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define N 5; //虽语法正确，但会把N替换成5;</span><br><span class="line"></span><br><span class="line">int a[N]; //语法错误，宏替换后，为int a[5;];错误</span><br></pre></td></tr></table></figure>
-
-<p>3) 由于宏定义仅是做简单的文本替换，故替换列表中如有表达式，必须把该表达式用括号括起来，否则可能会出现逻辑上的“错误”。例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define N 3+2</span><br><span class="line">int r=N*N;</span><br></pre></td></tr></table></figure>
-
-<p>宏替换后为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int r=3+2*3+2; //r=11</span><br></pre></td></tr></table></figure>
-
-<p>如果采用如下形式的宏定义：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define N (3+2)</span><br><span class="line">int r=N*N;</span><br></pre></td></tr></table></figure>
-
-<p>则宏替换后，为:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int r=(3+2)*(3+2); //r=25</span><br></pre></td></tr></table></figure>
-
-<p>4) 当替换列表一行写不下时，可以使用反斜线\作为续行符延续到下一行。例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#define USA &quot;The United \</span><br><span class="line">States of \</span><br><span class="line">America&quot;</span><br></pre></td></tr></table></figure>
-
-<p>该宏定义中替换列表为字符串常量，如果该串较长，或为了使替换列表的结构更清晰，可使用续行符 \ 把该串分若干行来写，除最后一行外，每行行尾都必须加续行符 \。</p>
-<p>如果调用 printf 函数，以串的形式输出该符号常量，即：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf(&quot;%s\n&quot;,USA);</span><br></pre></td></tr></table></figure>
-
-<p>则输出结果为:The United States of America</p>
-<p>注意：续行符后直接按回车键换行，不能含有包括空格在内的任何字符，否则是错误的宏定义形式。</p>
-<h2 id="带参宏定义"><a href="#带参宏定义" class="headerlink" title="带参宏定义"></a>带参宏定义</h2><p>带参数的宏定义格式为：</p>
-<p>#define 标识符(参数1,参数2,…,参数n) 替换列表</p>
-<p>例如，求两个参数中最大值的带参宏定义为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define MAX(a,b) ((a)&gt;(b)?(a) : (b))</span><br></pre></td></tr></table></figure>
-
-<p>当有如下语句时：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int c=MAX(5,3);</span><br></pre></td></tr></table></figure>
-
-<p>预处理器会将带参数的宏替换成如下形式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int c=((5)&gt;(3)?(5) : (3));</span><br></pre></td></tr></table></figure>
-
-<p>故计算结果c=5。</p>
-<p>删除宏定义的格式为：</p>
-<p>#undef 标识符</p>
-<p><font color="#FF0000">说明：</font></p>
-<p>1) 标识符与参数表的左括号之间不能有空格，否则预处理器会把该宏理解为普通的无参宏定义，故以下是错误的带参宏定义形式。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define MAX (a,b) ( (a) &gt; (b) ? (a) : (b) ) //错误的带参宏定义格式</span><br></pre></td></tr></table></figure>
-
-<p>2) 宏替换列表中每个参数及整个替换列表，都必须用一对小括号 () 括起来，否则可能会出现歧义。</p>
-<p>【例 1】</p>
-<p>以下程序试图定义求两个参数乘积的宏定义，欲使用该宏求 3 与 6 的乘积，分析该程序能否实现预期功能，如果不能，请给出修改方案。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MUL(a,b) (a*b)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">void</span>)</span></span>&#123;    </span><br><span class="line">    <span class="keyword">int</span> c;    c=MUL(<span class="number">3</span>,<span class="number">5</span>+<span class="number">1</span>);    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"c=%d\n"</span>,c);    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>分析:</p>
-<p>1) 由于该宏定义中的替换列表中的参数没有加括号，故宏调用时，如果参数是个表达式，可能会出现歧义，得不到预期结果。</p>
-<p>本例中宏调用 c=MUL(3,5+1); 会替换成 c=(3*5+1)=16;，与预期功能不符。</p>
-<p>2) 虽然把宏调用时的参数 5+1 括起来，可达到题目要求的效果，但这属于治标不治本。为统一编程规范，把替换列表中的每个参数均加括号，整个替换列表也加括号。</p>
-<p>同时，为达到标本兼治，在宏定义时，除单一值参数外，应显式加括号。</p>
-<p>修改代码为：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">纯文本复制</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MUL(a,b) ((a)*(b))<span class="comment">//修改处1</span></span></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">void</span>)</span></span>&#123;    </span><br><span class="line">	<span class="keyword">int</span> c;   </span><br><span class="line">	c=MUL(<span class="number">3</span>,(<span class="number">5</span>+<span class="number">1</span>);<span class="comment">//修改处2    </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"c=%d\n"</span>,c);   </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="带参宏定义-VS-函教调用"><a href="#带参宏定义-VS-函教调用" class="headerlink" title="带参宏定义 VS 函教调用"></a>带参宏定义 VS 函教调用</h2><p>接下来将从调用发生时间、参数类型检查、参数是否需要空间、运行速度等几个主要方面进行对比分析带参宏定义与函数调用的差异。</p>
-<h4 id="调用发生的时间"><a href="#调用发生的时间" class="headerlink" title="调用发生的时间"></a>调用发生的时间</h4><p>在源程序进行编译之前，即预处理阶段进行宏替换；而函数调用则发生在程序运行期间。</p>
-<h4 id="参数类型检查"><a href="#参数类型检查" class="headerlink" title="参数类型检查"></a>参数类型检查</h4><p>函数参数类型检查严格。程序在编译阶段，需要检查实参与形参个数是否相等及类型是否匹配或兼容，若参数个数不相同或类型不兼容，则会编译不通过。</p>
-<p>在预处理阶段，对带参宏调用中的参数不做检查。即宏定义时不需要指定参数类型，既可以认为这是宏的优点，即适用于多种数据类型，又可以认为这是宏的一个缺点，即类型不安全。故在宏调用时，需要程序设计者自行确保宏调用参数的类型正确。</p>
-<h4 id="参数是否需要空间"><a href="#参数是否需要空间" class="headerlink" title="参数是否需要空间"></a>参数是否需要空间</h4><p>函数调用时，需要为形参分配空间，并把实参的值复制一份赋给形参分配的空间中。而宏替换，仅是简单的文本替换，且替换完就把宏名对应标识符删除掉，即不需要分配空间。</p>
-<h4 id="执行速度"><a href="#执行速度" class="headerlink" title="执行速度"></a>执行速度</h4><p>函数在编译阶段需要检查参数个数是否相同、类型等是否匹配等多个语法，而宏替换仅 是简单文本替换，不做任何语法或逻辑检查。</p>
-<p>函数在运行阶段参数需入栈和出栈操作，速度相对较慢。</p>
-<h4 id="代码长度"><a href="#代码长度" class="headerlink" title="代码长度"></a>代码长度</h4><p>由于宏替换是文本替换，即如果需替换的文本较长，则替换后会影响代码长度；而函数不会影响代码长度。</p>
-<p>故使用较频繁且代码量较小的功能，一般采用宏定义的形式，比采用函数形式更合适。前面章节频繁使用的 getchar()，准确地说，是宏而非函数。</p>
-<p>为了使该宏调用像函数调用，故把该宏设计成了带参数的宏定义：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define getchar() getc(stdin)</span><br></pre></td></tr></table></figure>
-
-<p>故调用该宏时，需要加括号，即传空参数：getchar()。</p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C-C/">C/C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-09-13T03:00:37.943Z"><a href="/2019/09/13/hello-world/">2019-09-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/09/13/hello-world/">Hello World</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
 
 <nav id="pagination">
   
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
   </nav>
 
 </nav>
@@ -816,23 +964,23 @@
   <ul class="entry">
     
       <li>
-        <a href="/2019/10/21/二叉树的遍历/">二叉树的遍历</a>
+        <a href="/2019/10/23/LeetCode/">LeetCode</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">LeetCode235二叉树的最近公共祖先</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/23/LeetCode102二叉树的层次遍历/">LeetCode102二叉树的层次遍历</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/21/二叉树的遍历/">LeetCode二叉树的遍历</a>
       </li>
     
       <li>
         <a href="/2019/10/13/C-prime9-51-日期处理程序/">C++prime9.51:日期处理程序</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/12/C++字符串中对汉字的处理/">C++字符串中对汉字的处理</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/04/vector迭代器失效解决方法及其其内存原理/">C++vector迭代器失效解决方法及其其内存原理</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/02/C语言编译过程详解/">C语言编译过程详解</a>
       </li>
     
   </ul>
@@ -844,15 +992,19 @@
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/C/">C++</a><small>7</small></li>
+    <li><a href="/tags/C/">C++</a><small>6</small></li>
   
     <li><a href="/tags/C-prime/">C++ prime</a><small>1</small></li>
   
     <li><a href="/tags/C-C/">C/C++</a><small>5</small></li>
   
+    <li><a href="/tags/C-C-、计算机基础/">C/C++、计算机基础</a><small>1</small></li>
+  
+    <li><a href="/tags/LeetCode/">LeetCode</a><small>3</small></li>
+  
     <li><a href="/tags/blog/">blog</a><small>1</small></li>
   
-    <li><a href="/tags/数据结构/">数据结构</a><small>1</small></li>
+    <li><a href="/tags/数据结构/">数据结构</a><small>3</small></li>
   
     <li><a href="/tags/算法/">算法</a><small>2</small></li>
   
@@ -864,7 +1016,7 @@
 <div class="widget tagcloud">
   <h3 class="title">Tag Cloud</h3>
   <div class="entry">
-    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 16.67px;">C/C++</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
+    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 17.5px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 15px;">数据结构</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a>
   </div>
 </div>
 
