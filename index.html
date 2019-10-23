@@ -56,43 +56,6 @@
 <div class="clearfix"></div></header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="leetcode235二叉树的最近公共祖先">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-23T01:25:57.000Z"><a href="/2019/10/23/LeetCode/">2019-10-23</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/23/LeetCode/">LeetCode</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
   <article class="post">
   
   <div class="post-content">
@@ -153,7 +116,7 @@
         
   
   <div class="tags">
-    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
+    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -238,7 +201,7 @@
         
   
   <div class="tags">
-    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
+    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -333,7 +296,7 @@
         
   
   <div class="tags">
-    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
+    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -590,21 +553,171 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C语言编译过程详解/">2019-10-02</a></time>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C++基础语法笔记/">2019-10-02</a></time>
       
       
   
-    <h1 class="title"><a href="/2019/10/02/C语言编译过程详解/">C语言编译过程详解</a></h1>
+    <h1 class="title"><a href="/2019/10/02/C++基础语法笔记/">C++基础语法笔记</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h4 id="C语言编译过程详解"><a href="#C语言编译过程详解" class="headerlink" title="C语言编译过程详解"></a>C语言编译过程详解</h4><p>预处理，展开头文件/宏替换/去掉注释/条件编译</p>
-<p>编译，检查语法</p>
-<p>汇编，汇编代码转成机器码</p>
-<p>链接 链接到一起生成可执行程序</p>
-<p>参考<a href="https://blog.csdn.net/weixin_41143631/article/details/81221777" target="_blank" rel="noopener">https://blog.csdn.net/weixin_41143631/article/details/81221777</a></p>
+        <p>[TOC]</p>
+<h3 id="C-新特性"><a href="#C-新特性" class="headerlink" title="C++新特性"></a>C++新特性</h3><p>bool是C++中的新类型，C语言中使用if语句</p>
+<p>C++支持C语言的复制初始化，同时新增了直接初始化，如：int x（1024）</p>
+<p>C++ 的变量不用定义在函数体最前面，可以随用随定义</p>
+<p>C++输入输出</p>
+<p>输入8进制，10进制，16进制分别为</p>
+<p>cout &lt;&lt; oct &lt;&lt; x &lt;&lt; endl;</p>
+<p>cout &lt;&lt; dec &lt;&lt; x &lt;&lt; endl;</p>
+<p>cout &lt;&lt; hex &lt;&lt; x &lt;&lt; endl;</p>
+<p>命名空间namespace</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567057130429.png" alt="1567057130429"></p>
+<p>要使用命名空间内的变量或者函数，需要在使用前声明</p>
+<p>如要使用cout需要using namespace std 声明或者 std::cout；</p>
+<p><strong>防止类名冲突，可以在定义类时使用命名空间限制</strong></p>
+<h3 id="C-封装篇"><a href="#C-封装篇" class="headerlink" title="C++ 封装篇"></a>C++ 封装篇</h3><ul>
+<li><p>类（虚拟）和对象（实体）</p>
+</li>
+<li><p>数据成员和成员函数，构成完整的类</p>
+</li>
+<li><p>构造函数和虚构函数，描述对象的生生死死</p>
+</li>
+<li><p>对象复制与对象赋值</p>
+</li>
+<li><p>对象数组和对象指针，对象的应用形态</p>
+</li>
+<li><p>this指针</p>
+</li>
+</ul>
+<p>类的访问限定符：public、private、protect</p>
+<p>对象实例化：从栈实例化、从堆实例化</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059216028.png" alt="1567059216028"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059243958.png" alt="1567059243958"></p>
+<p>从栈中实例化的对象，对象生命周期结束后会自动回收</p>
+<p>从堆中实例化出的对象，需要手动释放内存。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Tv *p = <span class="keyword">new</span> TV();</span><br><span class="line">Tv *p = <span class="keyword">new</span> TV[<span class="number">20</span>];  </span><br><span class="line"><span class="keyword">delete</span> p;  <span class="comment">//释放对象内存</span></span><br><span class="line"><span class="keyword">delete</span> []p; <span class="comment">//释放对象数组内存</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="对象成员访问"><a href="#对象成员访问" class="headerlink" title="对象成员访问"></a>对象成员访问</h3><p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059583881.png" alt="1567059583881"></p>
+<p>c++string</p>
+<p>字符数组char[]使用比较的复杂，而string被设计出来更加的方便</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060303688.png" alt="1567060303688"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060423517.png" alt="1567060423517"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060357425.png" alt="1567060357425"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060380451.png" alt="1567060380451"></p>
+<p>内联函数：inline关键字</p>
+<ul>
+<li>编译时省去步骤2和步骤4，速度更快，效率跟高</li>
+<li>但必须时短小，逻辑简单的函数。如果复杂函数使用了inline关键字，也会被编译器拒绝</li>
+</ul>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060836710.png" alt="1567060836710"></p>
+<p>类内定义和内联函数</p>
+<ul>
+<li>类内定义即将成员函数的函数体写在类内</li>
+<li>类内定义的函数，编译器在编译时会优先编译为内联函数</li>
+</ul>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567061108861.png" alt="1567061108861"></p>
+<p>类外定义：同文件类外定义/分文件类外定义  </p>
+<p>c++构造函数</p>
+<p>思考：</p>
+<ul>
+<li><p>实例化的对象如何在内存中存储</p>
+</li>
+<li><p>类中的代码如何在内存中存储</p>
+</li>
+<li><p>代码和数据之间有怎样的关系</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">        内存分区</span><br><span class="line">栈区：<span class="keyword">int</span> = <span class="number">0</span>；<span class="keyword">int</span> *p = <span class="literal">NULL</span>;  <span class="comment">//内存分配和回收由系统进行</span></span><br><span class="line">堆区：<span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">20</span>];   <span class="comment">//堆区内存需要手动回收</span></span><br><span class="line">全局区：存储全局变量及静态常量</span><br><span class="line">常量区：<span class="built_in">string</span> str = <span class="string">"hello"</span>;</span><br><span class="line">代码区：存储逻辑代码的二进制 ![<span class="number">1567062496284</span>](C:\Users\hhe97\AppData\Roaming\Typora\typora-user-images\<span class="number">1567062496284.</span>png)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567062521631.png" alt="1567062521631"></p>
+<p> 对象初始化</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567062779622.png" alt="1567062779622"></p>
+<p>构造函数的规则和特点（无参构造、有参构造、重载构造）</p>
+<ul>
+<li><p>构造函数在对象实例化时被自动调用</p>
+</li>
+<li><p>构造函数与类同名</p>
+</li>
+<li><p>构造函数没有返回值</p>
+</li>
+<li><p>构造函数可以有多个重载形式</p>
+</li>
+<li><p>实例化对象时仅用到一个构造函数</p>
+</li>
+<li><p>当用户没有定义构造函数时，编译器自动生成一个构造函数</p>
+</li>
+<li><p>默认构造函数：初始化对象时不需要传参的构造函数</p>
+</li>
+</ul>
+<h4 id="C-构造函数初始化列表"><a href="#C-构造函数初始化列表" class="headerlink" title="C++构造函数初始化列表"></a>C++构造函数初始化列表</h4><p>与其他函数不同，构造函数除了有名字，参数列表和函数体之外，还可以有初始化列表，初始化列表以冒号开头，后跟一系列以逗号分隔的初始化字段。<br>从概念上来讲，构造函数的执行可以分成两个阶段，初始化阶段和计算阶段，初始化阶段先于计算阶段.</p>
+<p>初始化阶段 ：所有类类型（class type）的成员都会在初始化阶段初始化，即使该成员没有出现在构造函数的初始化列表中。</p>
+<p>计算阶段 ：一般用于执行构造函数体内的赋值操作。</p>
+<ul>
+<li>初始化列表先于构造函数执行</li>
+<li>初始化列表只能用于构造函数</li>
+<li>初始化列表同时初始化多个数据成员</li>
+</ul>
+<p><strong>思考：c++为什么需要初始化列表，作用是什么</strong></p>
+<p><em>tips：搞清初始化和赋值的区别是非常重要的一点</em></p>
+<p>使用初始化列表的原因<br>初始化类的成员有两种方式，一是使用初始化列表，二是在构造函数体内进行赋值操作。 主要是性能问题，对于内置类型，如int, float等，使用初始化类表和在构造函数体内初始化差别不是很大，但是对于类类型来说，最好使用初始化列表，为什么呢？由下面的测试可知，使用初始化列表少了一次调用默认构造函数的过程，这对于数据密集型的类来说，是非常高效的。<br><strong><em>一个好的原则是，能使用初始化列表的时候尽量使用初始化列表.</em></strong></p>
+<p>必须使用初始化列表的时候<br>除了性能问题之外，有些时候合初始化列表是不可或缺的，以下几种情况时必须使用初始化列表 </p>
+<ul>
+<li><p>常量成员，因为<strong>常量只能初始化不能赋值</strong>，所以必须放在初始化列表里面</p>
+</li>
+<li><p>引用类型，<strong>引用必须在定义的时候初始化，并且不能重新赋值</strong>，所以也要写在初始化列表里面 </p>
+</li>
+<li><p>没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化，而是直接调用拷贝构造函数初始化</p>
+</li>
+<li><p>如果类存在继承关系，派生类必须在其初始化列表中调用基类的构造函数</p>
+</li>
+</ul>
+<p><strong>成员变量的顺序是按照他们在类中出现的顺序进行初始化的，而不是按照他们在初始化列表出现的顺序初始化的</strong></p>
+<h4 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h4><p>定义格式：类名（const 类名&amp; 变量名）如: Student（const Student&amp; stu）</p>
+<ul>
+<li>如果没有自定义的拷贝构造函数则系统自动生成一个默认的拷贝构造函数</li>
+<li>当采用直接初始化或者复制初始化实例化对象时系统自动调用拷贝构造函数</li>
+</ul>
+<h4 id="构造函数总结"><a href="#构造函数总结" class="headerlink" title="构造函数总结"></a>构造函数总结</h4><p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567066730363.png" alt="1567066730363"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567066786810.png" alt="1567066786810"></p>
+<p>c++析构函数</p>
+<ul>
+<li>如果没有自定义的析构函数则系统自动生成</li>
+<li>析构函数在对象销毁时自动调用</li>
+<li>析构函数没有返回值、没有参数也不能重载</li>
+</ul>
+<p>对象的生命历程</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567130868427.png" alt="1567130868427"></p>
+<p>对象数组</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567133398112.png" alt="1567133398112"></p>
+<p>对象成员</p>
+<p><strong>当一个类的成员是另一个类的对象时，这个对象就叫成员对象。概括的说，就是一个类的成员是一个对象，即成员对象。</strong></p>
+<ul>
+<li><p>出现成员对象时，该类的构造函数要包括对成员的初始化。如果构造函数的成员初始化列表没有对成员对象初始化，则使用成员对象的缺省构造函数。   构造函数对成员对象初始化列表的格式为：</p>
+<p>&lt;类名&gt;::&lt;类名&gt;(&lt;总参数表&gt;):&lt;成员对象1&gt;(&lt;形参表1&gt;), &lt;成员对象2&gt;(&lt;形参表2&gt;)，……</p>
+<p>{ //函数体 }   </p>
+</li>
+<li><p>建立一个类的对象时，应先调用其构造函数。但是如果这个类有成员对象，则要先执行成员对象自己所属类的构造函数，当全部成员对象都执行了自身类的构造函数后，再执行当前类的构造函数。析构函数的调用次序正好相反。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Coordinate</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    Coordinate(<span class="keyword">int</span> x,<span class="keyword">int</span> y);</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> m_iX;</span><br><span class="line">    <span class="keyword">int</span> m_iY;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Line</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    line(<span class="keyword">int</span> x1,<span class="keyword">int</span> y1,<span class="keyword">int</span> x2,<span class="keyword">int</span> y2);</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    Coordinate m_coorA;</span><br><span class="line">    Coordinare m_coorB;</span><br><span class="line">&#125;</span><br><span class="line">Line::Line(<span class="keyword">int</span> x1,<span class="keyword">int</span> y1,<span class="keyword">int</span> x2,<span class="keyword">int</span> y2):</span><br><span class="line">m_coorA(x1,y1),m_coorB(x2,y2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"line"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    Line *p = <span class="keyword">new</span> Line(<span class="number">2</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">delete</span> p;</span><br><span class="line">    p = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="浅拷贝和深拷贝"><a href="#浅拷贝和深拷贝" class="headerlink" title="浅拷贝和深拷贝"></a>浅拷贝和深拷贝</h3><p> 一、浅赋值问题<br>（1）如果类中叧包含简单数据成员，没有指向堆的指针， 可以使用编译器提供的默认复制构造函数</p>
+<p>（2）如果类中包含指向堆中数据的指针，浅复制将出现 严重问题</p>
+<p><img src="https://img-blog.csdn.net/20180725172907718?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhb2Fvd2VpdHQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+<p>①浅复制直接复制两个对象间的指针成员，导致两个指针 指向堆中同一坑内存区域</p>
+<p>② 一个对象的修改将导致另一个对象的修改</p>
+<p>③ 一个对象超出作用域，将导致内存释放，使得另一个对 象的指针无效，对其访问将导致程序异常。</p>
+<p>二、编写自己的赋值构造函数（完成深复制的内容）：实现了资源的重新分配<br>（1）含有指针成员的类，通常需要编写构造函数和复制 构造函数，同时需要实现相应的复制构造函数，以 及运算符重载</p>
+<p>（2）实现“深复制”，创建对象备仹时，为新对象在堆 中分配自己的内存，并将现有值复制到新内存中。</p>
+<p><img src="https://img-blog.csdn.net/20180725173146940?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhb2Fvd2VpdHQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+<p>对象成员和对象成员指针</p>
+<p>this指针（解决参数和数据成员同名冲突）</p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567151506007.png" alt="1567151506007"></p>
+<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567151549356.png" alt="1567151549356"></p>
 
       
     </div>
@@ -618,7 +731,7 @@
         
   
   <div class="tags">
-    <a href="/tags/C-C/">C/C++</a>
+    <a href="/tags/C/">C++</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -691,6 +804,55 @@
 
 
 
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/日期类问题/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/日期类问题/">日期类问题</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="日期类问题"><a href="#日期类问题" class="headerlink" title="日期类问题"></a>日期类问题</h3><p>日期类问题中最基本的问题——求两个日期间的天数差</p>
+<p>解决方法：把原区间问题统一到起点确定的区间问题上去。</p>
+<blockquote>
+<p>分析：在该例中，不妨把问题统一到 </p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;isotream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ISYEAP(x) x%100!=0 &amp;&amp; x%4==0 || x%400==0?1:0  <span class="comment">//标识符与参数表之间不能有空格</span></span></span><br><span class="line"><span class="comment">//定义宏判断是否为闰年，方便计算每月天数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dayOfMonth[<span class="number">13</span>][<span class="number">2</span>]=&#123;  <span class="comment">//预存闰年和非闰年每月的天数，注意二月配合宏定义做特殊处理</span></span><br><span class="line">    <span class="number">0</span>,<span class="number">0</span>,                </span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">28</span>,<span class="number">29</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Date</span>&#123;</span>           <span class="comment">//日期类，方便日期的推移</span></span><br><span class="line">    <span class="keyword">int</span> Day;</span><br><span class="line">    <span class="keyword">int</span> Month;</span><br><span class="line">    <span class="keyword">int</span> Year;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">nextDay</span><span class="params">()</span></span>&#123;    <span class="comment">//计算下一天的天数</span></span><br><span class="line">        Day++;</span><br><span class="line">        <span class="keyword">if</span>(Day&gt;dayofMonth[Month][ISYEAP(year)])&#123;</span><br><span class="line">            Day = <span class="number">1</span>;</span><br><span class="line">            Month++;</span><br><span class="line">            <span class="keyword">if</span>(Month &gt; <span class="number">12</span>)&#123;</span><br><span class="line">                Month = <span class="number">1</span>;</span><br><span class="line">                Year++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> buf[<span class="number">5001</span>][<span class="number">13</span>][<span class="number">32</span>];     <span class="comment">//保存预处理的天数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Abs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;            <span class="comment">//求绝对值</span></span><br><span class="line">    <span class="keyword">return</span> x&lt;<span class="number">0</span>?-x:x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Date tmp;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;      <span class="comment">//天数计数</span></span><br><span class="line">    tmp.Day = <span class="number">1</span>;</span><br><span class="line">    tmp.Month = <span class="number">0</span>;</span><br><span class="line">    tmp.Year = <span class="number">0</span>;      <span class="comment">//初始化日期类对象为0年1月1日</span></span><br><span class="line">    <span class="keyword">while</span>(tmp.Year!=<span class="number">5001</span>)&#123;   <span class="comment">//日期不超过5000年</span></span><br><span class="line">        buf[tmp.Year][tmp.Month][tmp.Day] = cnt;</span><br><span class="line">                       <span class="comment">//将该日与0年1月1日的天数差保存起来</span></span><br><span class="line">        tmp.nextDay();  <span class="comment">//计算下一天的日期</span></span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> d1,m1,y1;</span><br><span class="line">    <span class="keyword">int</span> d2,m2,y2;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%4d%2d%2d"</span>, &amp;y1,&amp;m1,&amp;d1)!=EOF)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%4d%2d%2d"</span>,&amp;y2,&amp;m2,&amp;d2);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,Abs(buf[y2][m2][d2]-buf[y1][m1][d1])+<span class="number">1</span>);</span><br><span class="line">    &#125;              </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/算法/">算法</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
 
 <nav id="pagination">
   
@@ -716,10 +878,6 @@
   <ul class="entry">
     
       <li>
-        <a href="/2019/10/23/LeetCode/">LeetCode</a>
-      </li>
-    
-      <li>
         <a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">LeetCode235二叉树的最近公共祖先</a>
       </li>
     
@@ -733,6 +891,10 @@
     
       <li>
         <a href="/2019/10/13/C-prime9-51-日期处理程序/">C++prime9.51:日期处理程序</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/12/C++字符串中对汉字的处理/">C++字符串中对汉字的处理</a>
       </li>
     
   </ul>
