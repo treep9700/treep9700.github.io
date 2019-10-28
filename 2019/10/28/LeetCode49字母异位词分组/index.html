@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>LeetCode49字母异位词分组 | Hexo</title>
+  <meta name="author" content="John Doe">
+
+  
+  <meta name="description" content="49. 字母异位词分组给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。
+示例:
+1234567输入: [&amp;quot;eat&amp;quot;, &amp;quot;tea&amp;quot;, &amp;quot;tan&amp;quot;, &amp;quot;ate&amp;quot;, &amp;quot;nat&amp;q">
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="LeetCode49字母异位词分组">
+  <meta property="og:site_name" content="Hexo">
+
+  
+  
+
+  
+    <meta property="og:image" content>
+  
+
+  
+  <link href="/css/images/favicon.ico" rel="icon">
+  
+
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-28T07:52:43.000Z"><a href="/2019/10/28/LeetCode49字母异位词分组/">2019-10-28</a></time>
+      
+      
+  
+    <h1 class="title">LeetCode49字母异位词分组</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h4 id="49-字母异位词分组"><a href="#49-字母异位词分组" class="headerlink" title="49. 字母异位词分组"></a><a href="https://leetcode-cn.com/problems/group-anagrams/" target="_blank" rel="noopener">49. 字母异位词分组</a></h4><p>给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。</p>
+<p><strong>示例:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入: [&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;],</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [&quot;ate&quot;,&quot;eat&quot;,&quot;tea&quot;],</span><br><span class="line">  [&quot;nat&quot;,&quot;tan&quot;],</span><br><span class="line">  [&quot;bat&quot;]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p><strong>说明：</strong></p>
+<ul>
+<li><p>所有输入均为小写字母。</p>
+</li>
+<li><p>不考虑答案输出的顺序。</p>
+</li>
+</ul>
+<blockquote>
+<p>解题思路，如何能按字母的组合进行单词分类</p>
+</blockquote>
+<p><strong>思路一：直接对各单词的字母进行计数，按计数数组用map进行映射。</strong></p>
+<p>另外这种方法的单个单词的单个字母不能超过255</p>
+<p>复杂度分析：</p>
+<ul>
+<li><p>时间复杂度：O(n*k)   n是strs的长度，k是strs中子字符串的最大长度</p>
+</li>
+<li><p>空间复杂度：O(nk)  </p>
+<p><strong>注：当一个算法的空间复杂度与n成线性比例关系时，可表示为0(n)</strong>，<strong>计算空间复杂度，看算法耗费的空间和输入数据规模的关系</strong></p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; groupAnagrams(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; strs) &#123;</span><br><span class="line">        <span class="keyword">int</span> cnt=<span class="number">0</span>,len=strs.size();<span class="comment">//使用一个常量存储容器大小，不需要每次都调用size()计算</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;result(len);</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="built_in">string</span>,<span class="keyword">int</span>&gt;m;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">            <span class="built_in">string</span> temp=<span class="string">"00000000000000000000000000"</span>;  <span class="comment">//string类型的计数数组</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;strs[i].length();j++)</span><br><span class="line">                temp[strs[i][j]-<span class="string">'a'</span>]++;</span><br><span class="line">            <span class="keyword">if</span>(m.find(temp)==m.end())  <span class="comment">//如果该字符串尚未出现，则开一个新的容器来存储</span></span><br><span class="line">                m[temp]=cnt++;          <span class="comment">//计数数组的map映射，对应二维数组的位置</span></span><br><span class="line">            result[m[temp]].push_back(strs[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        result.resize(cnt);        <span class="comment">//重置数组的大小</span></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>语法小知识：二维数组插入空子数组的写法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;  res;</span><br><span class="line">&gt; </span><br><span class="line">&gt; res.push_back(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&#123;&#125;);</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>思路二：键值取每个单词的字母所组成的字典序排列</strong></p>
+<p>复杂度分析：</p>
+<ul>
+<li>时间复杂度：O(n*klogk)  n是strs的长度，k是strs中子字符串的最大长度</li>
+<li>空间复杂度：空间复杂度：O(nk)  </li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; groupAnagrams(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; strs) &#123;</span><br><span class="line">        <span class="keyword">int</span> cnt=<span class="number">0</span>,len=strs.size();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;result(len);</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="built_in">string</span>,<span class="keyword">int</span>&gt;m;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;strs.size();i++)&#123;</span><br><span class="line">            <span class="built_in">string</span> temp=strs[i];</span><br><span class="line">            sort(temp.begin(),temp.end());</span><br><span class="line">            <span class="keyword">if</span>(m.find(temp)==m.end())</span><br><span class="line">                m[temp]=cnt++;</span><br><span class="line">            result[m[temp]].push_back(strs[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        result.resize(cnt);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2019/10/28/LeetCode49字母异位词分组/">LeetCode49字母异位词分组</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/28/均摊分析法/">均摊分析法</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/28/初识散列表/">初识散列表</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/27/LeetCode242有效的字母异位词/">LeetCode242有效的字母异位词</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">LeetCode235二叉树的最近公共祖先</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>6</small></li>
+  
+    <li><a href="/tags/C-prime/">C++ prime</a><small>1</small></li>
+  
+    <li><a href="/tags/C-C/">C/C++</a><small>5</small></li>
+  
+    <li><a href="/tags/C-C-、计算机基础/">C/C++、计算机基础</a><small>1</small></li>
+  
+    <li><a href="/tags/LeetCode/">LeetCode</a><small>5</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/数据结构/">数据结构</a><small>6</small></li>
+  
+    <li><a href="/tags/算法/">算法</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 16.67px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 16.67px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  <p>
+  
+  &copy; 2019 John Doe
+  
+  All rights reserved.</p>
+  <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</div>
+<div class="clearfix"></div>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id='bg'></div>
+</body>
+</html>

@@ -62,6 +62,55 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/日期类问题/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/日期类问题/">日期类问题</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="日期类问题"><a href="#日期类问题" class="headerlink" title="日期类问题"></a>日期类问题</h3><p>日期类问题中最基本的问题——求两个日期间的天数差</p>
+<p>解决方法：把原区间问题统一到起点确定的区间问题上去。</p>
+<blockquote>
+<p>分析：在该例中，不妨把问题统一到 </p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;isotream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ISYEAP(x) x%100!=0 &amp;&amp; x%4==0 || x%400==0?1:0  <span class="comment">//标识符与参数表之间不能有空格</span></span></span><br><span class="line"><span class="comment">//定义宏判断是否为闰年，方便计算每月天数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dayOfMonth[<span class="number">13</span>][<span class="number">2</span>]=&#123;  <span class="comment">//预存闰年和非闰年每月的天数，注意二月配合宏定义做特殊处理</span></span><br><span class="line">    <span class="number">0</span>,<span class="number">0</span>,                </span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">28</span>,<span class="number">29</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Date</span>&#123;</span>           <span class="comment">//日期类，方便日期的推移</span></span><br><span class="line">    <span class="keyword">int</span> Day;</span><br><span class="line">    <span class="keyword">int</span> Month;</span><br><span class="line">    <span class="keyword">int</span> Year;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">nextDay</span><span class="params">()</span></span>&#123;    <span class="comment">//计算下一天的天数</span></span><br><span class="line">        Day++;</span><br><span class="line">        <span class="keyword">if</span>(Day&gt;dayofMonth[Month][ISYEAP(year)])&#123;</span><br><span class="line">            Day = <span class="number">1</span>;</span><br><span class="line">            Month++;</span><br><span class="line">            <span class="keyword">if</span>(Month &gt; <span class="number">12</span>)&#123;</span><br><span class="line">                Month = <span class="number">1</span>;</span><br><span class="line">                Year++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> buf[<span class="number">5001</span>][<span class="number">13</span>][<span class="number">32</span>];     <span class="comment">//保存预处理的天数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Abs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;            <span class="comment">//求绝对值</span></span><br><span class="line">    <span class="keyword">return</span> x&lt;<span class="number">0</span>?-x:x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Date tmp;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;      <span class="comment">//天数计数</span></span><br><span class="line">    tmp.Day = <span class="number">1</span>;</span><br><span class="line">    tmp.Month = <span class="number">0</span>;</span><br><span class="line">    tmp.Year = <span class="number">0</span>;      <span class="comment">//初始化日期类对象为0年1月1日</span></span><br><span class="line">    <span class="keyword">while</span>(tmp.Year!=<span class="number">5001</span>)&#123;   <span class="comment">//日期不超过5000年</span></span><br><span class="line">        buf[tmp.Year][tmp.Month][tmp.Day] = cnt;</span><br><span class="line">                       <span class="comment">//将该日与0年1月1日的天数差保存起来</span></span><br><span class="line">        tmp.nextDay();  <span class="comment">//计算下一天的日期</span></span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> d1,m1,y1;</span><br><span class="line">    <span class="keyword">int</span> d2,m2,y2;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%4d%2d%2d"</span>, &amp;y1,&amp;m1,&amp;d1)!=EOF)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%4d%2d%2d"</span>,&amp;y2,&amp;m2,&amp;d2);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,Abs(buf[y2][m2][d2]-buf[y1][m1][d1])+<span class="number">1</span>);</span><br><span class="line">    &#125;              </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/算法/">算法</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2019-09-17T07:06:53.377Z"><a href="/2019/09/17/O(Nlog(N)）时间复杂度的主要来源：通常使用二分法使问题达到log(N)的层级，然后在每一个层级用O(N)级别的算法做事。/">2019-09-17</a></time>
       
       
@@ -90,48 +139,6 @@
         </div>
         
         
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-09-16T01:58:04.000Z"><a href="/2019/09/16/我的第一篇博客文章/">2019-09-16</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/09/16/我的第一篇博客文章/">我的第一篇博客文章</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/blog/">blog</a>
-  </div>
-
         <!-- partial('post/share') -->
       <div class="clearfix"></div>
     </footer>
@@ -276,6 +283,48 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2019-09-16T01:58:04.000Z"><a href="/2019/09/16/我的第一篇博客文章/">2019-09-16</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/09/16/我的第一篇博客文章/">我的第一篇博客文章</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/blog/">blog</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2019-09-13T03:00:37.943Z"><a href="/2019/09/13/hello-world/">2019-09-13</a></time>
       
       
@@ -345,6 +394,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2019/10/28/LeetCode49字母异位词分组/">LeetCode49字母异位词分组</a>
+      </li>
+    
+      <li>
         <a href="/2019/10/28/均摊分析法/">均摊分析法</a>
       </li>
     
@@ -358,10 +411,6 @@
     
       <li>
         <a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">LeetCode235二叉树的最近公共祖先</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/23/LeetCode102二叉树的层次遍历/">LeetCode102二叉树的层次遍历</a>
       </li>
     
   </ul>
@@ -381,13 +430,11 @@
   
     <li><a href="/tags/C-C-、计算机基础/">C/C++、计算机基础</a><small>1</small></li>
   
-    <li><a href="/tags/LeetCode/">LeetCode</a><small>4</small></li>
-  
-    <li><a href="/tags/LeetCode、数据结构/">LeetCode、数据结构</a><small>0</small></li>
+    <li><a href="/tags/LeetCode/">LeetCode</a><small>5</small></li>
   
     <li><a href="/tags/blog/">blog</a><small>1</small></li>
   
-    <li><a href="/tags/数据结构/">数据结构</a><small>5</small></li>
+    <li><a href="/tags/数据结构/">数据结构</a><small>6</small></li>
   
     <li><a href="/tags/算法/">算法</a><small>3</small></li>
   
@@ -399,7 +446,7 @@
 <div class="widget tagcloud">
   <h3 class="title">Tag Cloud</h3>
   <div class="entry">
-    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 17.5px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 17.5px;">数据结构</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a>
+    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 16.67px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 16.67px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
   </div>
 </div>
 

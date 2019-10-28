@@ -62,107 +62,6 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/常见c++笔试面试整理/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/常见c++笔试面试整理/">C和C++常见面试题</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h5 id="c-c-后缀"><a href="#c-c-后缀" class="headerlink" title="c/c++后缀"></a>c/c++后缀</h5><p>C中：</p>
-<p>头文件后缀名：.h</p>
-<p>源文件后缀名: .c</p>
-<p>c++中：</p>
-<p>头文件后缀名：.h, .hpp, .hxx</p>
-<p>源文件后缀名：.c，.cpp，.cxx .c++ .cc</p>
-<p>上面是不同标准下给出的扩展名</p>
-<p>只是个名称，我们自己知道哪些是同一个东西，能区别开c和c++就行了。</p>
-<p>另外，.h和.hpp的区别是：可以理解为：.hpp = .h + .cpp(<a href="https://www.sogou.com/" title="Sogou" target="_blank" rel="noopener">.hpp</a>)</p>
-<p><em>.h里面只有声明，没有实现，而</em>.hpp里声明实现都有，后者可以减少.cpp的数量，适合用来编写公用的开源库。</p>
-<h5 id="c-inl文件"><a href="#c-inl文件" class="headerlink" title="c++.inl文件"></a>c++.inl文件</h5><p> 在内联函数较多的情况下，为了避免头文件过长、版面混乱，可以将所有的内联函数定义移到一个单独的文件中去，然后再<strong>用#include指令将它包含到类声明的后面</strong>（类的头文件的底部）。这样的文件称为一个内联函数定义文件。inl文件中也可以包含头文件的，因为内联函数中可能包含其他文件中定义的东西。</p>
-<p>按照惯例，<strong>应该将这个文件命名为“filename.inl”，其中“filename”与相应的头文件和实现文件相同。</strong>  </p>
-<h5 id="gcc和g-的区别"><a href="#gcc和g-的区别" class="headerlink" title="gcc和g++的区别"></a>gcc和g++的区别</h5><p>简单来说，gcc与g++都是GNU(组织)的一个编译器。需要注意以下几点：</p>
-<ol>
-<li>gcc与g++都可以编译c代码与c++代码。但是：后缀为.c的，gcc把它当做C程序，而g++当做是C++程序；后缀为.cpp的，两者都会认为是C++程序。</li>
-<li>编译阶段，g++会调用gcc，对于c++代码，两者是等价的，但是因为gcc命令不能自动和C＋＋程序使用的库联接，所以通常用g++来完成链接。</li>
-<li>编译可以用gcc/g++，而链接可以用g++或者gcc -lstdc++。因为gcc命令不能自动和C＋＋程序使用的库联接（当然可以选择手动链接，使用命令如下），所以通常使用g++来完成联接。但在编译阶段，g++会自动调用gcc，二者等价。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.cpp -lstdc++</span><br></pre></td></tr></table></figure>
-
-<h5 id="gcc编译的四个步骤，以最简单的hello-c为例"><a href="#gcc编译的四个步骤，以最简单的hello-c为例" class="headerlink" title="gcc编译的四个步骤，以最简单的hello.c为例"></a>gcc编译的四个步骤，以最简单的hello.c为例</h5><p>一步到位：gcc hello.c</p>
-<p>这条命令隐含执行了</p>
-<ol>
-<li><p>预处理(hello.i)</p>
-</li>
-<li><p>编译(hello.s)</p>
-</li>
-<li><p>汇编(hello.o)</p>
-</li>
-<li><p>链接(可执行文件hello)</p>
-<p>这里未指定输出文件，默认输出为a.out<br>gcc编译C源码有四个步骤：<br>预处理 —-&gt; 编译 —-&gt; 汇编 —-&gt; 链接<br>现在我们就用gcc的命令选项来逐个剖析gcc过程。<br>1）预处理(Pre-processing)<br>在该阶段，编译器将C源代码中的包含的头文件如stdio.h添加进来<br>参数：”-E”<br>用法：gcc -E hello.c -o hello.i<br>作用：将hello.c预处理输出hello.i文件。<br>2)编译(Compiling)<br>第二步进行的是编译阶段，在这个阶段中，gcc首先要检查代码的规范性、是否有语法错误等，以确定代码的实际要做的工作，在检查无误后，gcc把代码翻译成汇编语言。<br>参数：”-S”<br>用法：gcc –S hello.i –o hello.s<br>作用：将预处理输出文件hello.i汇编成hello.s文件。<br>3)汇编(Assembling)<br>汇编阶段是把编译阶段生成的”.s”文件转成二进制目标代码“.o”文件<br>参数：“-c”<br>用法：gcc –c hello.s –o hello.o<br>作用：将汇编输出文件hello.s编译输出hello.o文件。<br>4）链接(Link)<br>在成功编译之后，就进入了链接阶段。<br>用法：gcc hello.o –o hello<br>作用：将编译输出文件hello.o链接成最终可执行文件hello。<br>运行该可执行文件，出现正确的结果如下。</p>
-<p>./hello</p>
-<p>Hello World!</p>
-</li>
-</ol>
-<h5 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h5><h5 id="c-11新特性"><a href="#c-11新特性" class="headerlink" title="c++11新特性"></a>c++11新特性</h5><p><strong>C和C++的区别</strong></p>
-<p>1）C是面向过程的语言，是一个结构化的语言，考虑如何通过一个过程对输入进行处理得到输出；C++是面向对象的语言，主要特征是“封装、继承和多态”。封装隐藏了实现细节，使得代码模块化；派生类可以继承父类的数据和方法，扩展了已经存在的模块，实现了代码重用；多态则是“一个接口，多种实现”，通过派生类重写父类的虚函数，实现了接口的重用。</p>
-<p>2）C和C++动态管理内存的方法不一样，C是使用malloc/free，而C++除此之外还有new/delete关键字。</p>
-<p>3）C++支持函数重载，C不支持函数重载</p>
-<p>4）C++中有引用，C中不存在引用的概念</p>
-<h5 id="c-引用"><a href="#c-引用" class="headerlink" title="c++引用"></a>c++引用</h5><p> 引用就是某一变量（目标）的一个别名，对引用的操作与对变量直接操作完全一样。</p>
-<p>引用的声明方法：类型标识符 &amp;引用名=目标变量名；</p>
-<p>　　【例1】：int a; int &amp;ra=a; //定义引用ra,它是变量a的引用，即别名</p>
-<p>　　说明：</p>
-<p>　　（1）&amp;在此不是求地址运算，而是起标识作用。</p>
-<p>　　（2）类型标识符是指目标变量的类型。</p>
-<p>　　（3）声明引用时，必须同时对其进行初始化。</p>
-<p>　　（4）引用声明完毕后，相当于目标变量名有两个名称，即该目标原名称和引用名，且不能再把该引用名作为其他变量名的别名。</p>
-<p>　　 ra=1; 等价于 a=1;</p>
-<p>　　（5）声明一个引用，不是新定义了一个变量，它只表示该引用名是目标变量名的一个别名，它本身不是一种数据类型，因此引用本身不占存储单元，系统也不给引用分配存储单元。故：对引用求地址，就是对目标变量求地址。&amp;ra与&amp;a相等。</p>
-<p>　　（6）不能建立数组的引用。因为数组是一个由若干个元素所组成的集合，所以无法建立一个数组的别名。</p>
-<p>常引用：</p>
-<p>目的：不想通过引用来改变原来空间的值</p>
-<p>形式： const int &amp;c = a//相当于  const int * const c = &amp;a</p>
-<h5 id="c-中指针和引用的区别"><a href="#c-中指针和引用的区别" class="headerlink" title="c++中指针和引用的区别"></a>c++中指针和引用的区别</h5><p>1）指针是一个新的变量，存储了另一个变量的地址，我们可以通过访问这个地址来修改另一个变量；</p>
-<p>引用只是一个别名，还是变量本身，对引用的任何操作就是对变量本身进行操作，以达到修改变量的目的</p>
-<p>2）引用只有一级，而指针可以有多级</p>
-<p>3）指针传参的时候，还是值传递，指针本身的值不可以修改，需要通过解引用才能对指向的对象进行操作</p>
-<p>引用传参的时候，传进来的就是变量本身，因此变量可以被修改</p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C/">C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
         <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/c++研发技术栈/">2019-10-02</a></time>
       
       
@@ -191,187 +90,6 @@
   
   <div class="tags">
     <a href="/tags/C/">C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/CC++ 多组控制多组输入数据/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/CC++ 多组控制多组输入数据/">C/C++ 多组控制多组输入数据</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h3 id="C-C-多组控制多组输入数据"><a href="#C-C-多组控制多组输入数据" class="headerlink" title="C/C++ 多组控制多组输入数据"></a>C/C++ 多组控制多组输入数据</h3><blockquote>
-<p><strong>c++实现</strong></p>
-</blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> namespce <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">cin</span> &lt;&lt; a &lt;&lt;b)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; a+b &lt;&lt; end;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>cin是C++的<a href="https://www.baidu.com/s?wd=%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E6%B5%81&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">标准输入流</a>，其本身是一个对象，并不存在返回值的概念。<br>不过经常会有类似于<br>while(cin&gt;&gt;a)<br>的调用，这里并不是cin的返回值，而是&gt;&gt;操作重载函数<br>istream&amp; operator&gt;&gt;(istream&amp;, T &amp;);的返回值，其中第二个参数由cin&gt;&gt;后续参数类型决定。<br>其返回值类型为istream&amp;类型，大多数情况下其返回值为cin本身（非0值），只有当遇到EOF输入时，返回值为0。<br>输入EOF的方法，windows下输入ctrl+z, Linux下输入ctrl+d。<br>于是，当输入所有数据后，通过输入EOF的方法，可以退出while(cin&gt;&gt;a)这样的循环。</p>
-<hr>
-<blockquote>
-<p><strong>c实现</strong></p>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d,%d"</span>, &amp;a,&amp;b) != EOF)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d"</span>,a+b);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>scanf函数返回成功读入的数据项数，读入数据时遇到了“文件结束”则返回<a href="https://www.baidu.com/s?wd=EOF&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">EOF</a>。</p>
-<p>如：scanf(“%d %d”,&amp;a,&amp;b);</p>
-<p>函数返回值为int型。如果a和b都被成功读入，那么scanf的返回值就是2；</p>
-<p>如果只有a被成功读入，返回值为1；</p>
-<p>如果a和b都未被成功读入，返回值为0；</p>
-<p>如果遇到错误或遇到end of file，返回值为<a href="https://www.baidu.com/s?wd=EOF&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">EOF</a>。end of file为Ctrl+z 或者Ctrl+d。</p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C-C/">C/C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/CC++中变量的作用域和存储类型/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/CC++中变量的作用域和存储类型/">C/C++中变量的作用域和存储类型</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h2 id="C-C-中变量的作用域和存储类型"><a href="#C-C-中变量的作用域和存储类型" class="headerlink" title="C/C++中变量的作用域和存储类型"></a>C/C++中变量的作用域和存储类型</h2><h5 id="区分作用域和存储类型"><a href="#区分作用域和存储类型" class="headerlink" title="区分作用域和存储类型"></a>区分作用域和存储类型</h5><p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/*例1*/</span></span><br><span class="line"><span class="number">2</span> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="number">3</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">4 </span>&#123;</span><br><span class="line"><span class="number">5</span>     <span class="keyword">static</span> <span class="keyword">int</span> a=<span class="number">1</span>;<span class="comment">//定义了一个静态存储的局部变量</span></span><br><span class="line"><span class="number">6</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">7</span> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>a是一个采用静态存储的局部变量，像这样的变量在整个文件中都不会消失，但是只能在main()函数内被使用。</p>
-<hr>
-<p>作用域：一个变量能够被使用的范围，在C语言中有包括<strong>块作用域、函数作用域、函数原型作用域、文件作用域</strong>，在C++中还有<strong>类作用域</strong>和<strong>命名空间作用域。</strong></p>
-<p>存储类型：存储类型分为<strong>静态存储</strong>和<strong>动态存储</strong>，采用静态存储方式的变量一旦创建，其存储空间在整个程序的运行过程中都不会被释放。对于采用动态存储的变量来说，当进入该程序块（函数或复合语句等）时，建立该变量，分配存储空间，当退出该程序块时，撤销该变量，释放其存储空间。</p>
-<p>不用限定词的情况</p>
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/*例2，不用限定词的情况*/</span></span><br><span class="line"><span class="number">2</span> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="number">3</span> <span class="keyword">int</span> a=<span class="number">1</span>;<span class="comment">//a为全局变量，采用静态存储</span></span><br><span class="line"><span class="number">4</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">5 </span>&#123;</span><br><span class="line"><span class="number">6</span>     <span class="keyword">int</span> b=<span class="number">1</span>;<span class="comment">//b为局部变量，默认采用动态存储</span></span><br><span class="line"><span class="number">7</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">8</span> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>全局变量a采用静态方式存储，具有文件作用域，b采用动态方式存储，具有的是块作用域。</p>
-<p><strong>static变量类型</strong></p>
-<ul>
-<li>对于全局变量来说，加不加static，该变量都采取静态方式来存储。不加static的全局变量默认为“外部变量”，可以被其他文件在进行了引用申明<em>（用extern,稍后介绍）</em>后使用。但是加了static之后，该变量便变成了“内部变量”，即该变量只能在该文件内被使用。</li>
-<li>对于局部变量来说，定义的时候默认为自动变量，采用动态方式来存储。使用static修饰后，将采取静态方式进行存储。初始化在编译时进行，只会进行一次。</li>
-</ul>
-<p><strong>extern关键字</strong>（声明而非定义，也不分配存储空间）</p>
-<p>​    仅用于对全局变量进行引用声明，包括</p>
-<ul>
-<li>对定义在使用处后面的全局变量提前引用声明</li>
-<li>在一个文件中对另一个文件定义的全局外部变量做引用声明（若全局变量使用了static，则不可引用）</li>
-</ul>
-<p><strong>使用auto、register</strong></p>
-<ul>
-<li><p>使用auto可显示地声明自动变量，由于在程序块内声明的变量默认是auto的，所以auto更多地也就   只是起到一个标记的作用了。</p>
-</li>
-<li><p>使用register可以将一些将被频繁使用的局部变量放到寄存器中，这样可以提高程序执行的效率。</p>
-</li>
-</ul>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C-C/">C/C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/日期类问题/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/日期类问题/">日期类问题</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h3 id="日期类问题"><a href="#日期类问题" class="headerlink" title="日期类问题"></a>日期类问题</h3><p>日期类问题中最基本的问题——求两个日期间的天数差</p>
-<p>解决方法：把原区间问题统一到起点确定的区间问题上去。</p>
-<blockquote>
-<p>分析：在该例中，不妨把问题统一到 </p>
-</blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;isotream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ISYEAP(x) x%100!=0 &amp;&amp; x%4==0 || x%400==0?1:0  <span class="comment">//标识符与参数表之间不能有空格</span></span></span><br><span class="line"><span class="comment">//定义宏判断是否为闰年，方便计算每月天数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dayOfMonth[<span class="number">13</span>][<span class="number">2</span>]=&#123;  <span class="comment">//预存闰年和非闰年每月的天数，注意二月配合宏定义做特殊处理</span></span><br><span class="line">    <span class="number">0</span>,<span class="number">0</span>,                </span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">28</span>,<span class="number">29</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Date</span>&#123;</span>           <span class="comment">//日期类，方便日期的推移</span></span><br><span class="line">    <span class="keyword">int</span> Day;</span><br><span class="line">    <span class="keyword">int</span> Month;</span><br><span class="line">    <span class="keyword">int</span> Year;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">nextDay</span><span class="params">()</span></span>&#123;    <span class="comment">//计算下一天的天数</span></span><br><span class="line">        Day++;</span><br><span class="line">        <span class="keyword">if</span>(Day&gt;dayofMonth[Month][ISYEAP(year)])&#123;</span><br><span class="line">            Day = <span class="number">1</span>;</span><br><span class="line">            Month++;</span><br><span class="line">            <span class="keyword">if</span>(Month &gt; <span class="number">12</span>)&#123;</span><br><span class="line">                Month = <span class="number">1</span>;</span><br><span class="line">                Year++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> buf[<span class="number">5001</span>][<span class="number">13</span>][<span class="number">32</span>];     <span class="comment">//保存预处理的天数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Abs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;            <span class="comment">//求绝对值</span></span><br><span class="line">    <span class="keyword">return</span> x&lt;<span class="number">0</span>?-x:x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Date tmp;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;      <span class="comment">//天数计数</span></span><br><span class="line">    tmp.Day = <span class="number">1</span>;</span><br><span class="line">    tmp.Month = <span class="number">0</span>;</span><br><span class="line">    tmp.Year = <span class="number">0</span>;      <span class="comment">//初始化日期类对象为0年1月1日</span></span><br><span class="line">    <span class="keyword">while</span>(tmp.Year!=<span class="number">5001</span>)&#123;   <span class="comment">//日期不超过5000年</span></span><br><span class="line">        buf[tmp.Year][tmp.Month][tmp.Day] = cnt;</span><br><span class="line">                       <span class="comment">//将该日与0年1月1日的天数差保存起来</span></span><br><span class="line">        tmp.nextDay();  <span class="comment">//计算下一天的日期</span></span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> d1,m1,y1;</span><br><span class="line">    <span class="keyword">int</span> d2,m2,y2;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%4d%2d%2d"</span>, &amp;y1,&amp;m1,&amp;d1)!=EOF)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%4d%2d%2d"</span>,&amp;y2,&amp;m2,&amp;d2);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,Abs(buf[y2][m2][d2]-buf[y1][m1][d1])+<span class="number">1</span>);</span><br><span class="line">    &#125;              </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/算法/">算法</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -587,6 +305,411 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/容器：顺序容器和关联容器/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/容器：顺序容器和关联容器/">顺序容器和关联容器</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>容器：顺序容器和关联容器</p>
+<p>迭代器类型：每种容器都定义了自己的迭代器类型，是一种数据类型</p>
+<p>const_iterator: 每种容器都定义了const_iterator类型，给类型只能用于读取容器内的元素，不能改变其值</p>
+<p>迭代器：有迭代器类型定义的实体</p>
+<p>访问容器的两种方法：</p>
+<ul>
+<li>下标：少数容器支持</li>
+<li>迭代器：对所有元素都适用，现代c++程序更倾向</li>
+</ul>
+<p>迭代器的操作：</p>
+<ul>
+<li>begin和end操作</li>
+<li>vector迭代器的自增和解引用运算</li>
+<li>迭代器比较</li>
+</ul>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/C/">C++</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/常见c++笔试面试整理/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/常见c++笔试面试整理/">C和C++常见面试题</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h5 id="c-c-后缀"><a href="#c-c-后缀" class="headerlink" title="c/c++后缀"></a>c/c++后缀</h5><p>C中：</p>
+<p>头文件后缀名：.h</p>
+<p>源文件后缀名: .c</p>
+<p>c++中：</p>
+<p>头文件后缀名：.h, .hpp, .hxx</p>
+<p>源文件后缀名：.c，.cpp，.cxx .c++ .cc</p>
+<p>上面是不同标准下给出的扩展名</p>
+<p>只是个名称，我们自己知道哪些是同一个东西，能区别开c和c++就行了。</p>
+<p>另外，.h和.hpp的区别是：可以理解为：.hpp = .h + .cpp(<a href="https://www.sogou.com/" title="Sogou" target="_blank" rel="noopener">.hpp</a>)</p>
+<p><em>.h里面只有声明，没有实现，而</em>.hpp里声明实现都有，后者可以减少.cpp的数量，适合用来编写公用的开源库。</p>
+<h5 id="c-inl文件"><a href="#c-inl文件" class="headerlink" title="c++.inl文件"></a>c++.inl文件</h5><p> 在内联函数较多的情况下，为了避免头文件过长、版面混乱，可以将所有的内联函数定义移到一个单独的文件中去，然后再<strong>用#include指令将它包含到类声明的后面</strong>（类的头文件的底部）。这样的文件称为一个内联函数定义文件。inl文件中也可以包含头文件的，因为内联函数中可能包含其他文件中定义的东西。</p>
+<p>按照惯例，<strong>应该将这个文件命名为“filename.inl”，其中“filename”与相应的头文件和实现文件相同。</strong>  </p>
+<h5 id="gcc和g-的区别"><a href="#gcc和g-的区别" class="headerlink" title="gcc和g++的区别"></a>gcc和g++的区别</h5><p>简单来说，gcc与g++都是GNU(组织)的一个编译器。需要注意以下几点：</p>
+<ol>
+<li>gcc与g++都可以编译c代码与c++代码。但是：后缀为.c的，gcc把它当做C程序，而g++当做是C++程序；后缀为.cpp的，两者都会认为是C++程序。</li>
+<li>编译阶段，g++会调用gcc，对于c++代码，两者是等价的，但是因为gcc命令不能自动和C＋＋程序使用的库联接，所以通常用g++来完成链接。</li>
+<li>编译可以用gcc/g++，而链接可以用g++或者gcc -lstdc++。因为gcc命令不能自动和C＋＋程序使用的库联接（当然可以选择手动链接，使用命令如下），所以通常使用g++来完成联接。但在编译阶段，g++会自动调用gcc，二者等价。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.cpp -lstdc++</span><br></pre></td></tr></table></figure>
+
+<h5 id="gcc编译的四个步骤，以最简单的hello-c为例"><a href="#gcc编译的四个步骤，以最简单的hello-c为例" class="headerlink" title="gcc编译的四个步骤，以最简单的hello.c为例"></a>gcc编译的四个步骤，以最简单的hello.c为例</h5><p>一步到位：gcc hello.c</p>
+<p>这条命令隐含执行了</p>
+<ol>
+<li><p>预处理(hello.i)</p>
+</li>
+<li><p>编译(hello.s)</p>
+</li>
+<li><p>汇编(hello.o)</p>
+</li>
+<li><p>链接(可执行文件hello)</p>
+<p>这里未指定输出文件，默认输出为a.out<br>gcc编译C源码有四个步骤：<br>预处理 —-&gt; 编译 —-&gt; 汇编 —-&gt; 链接<br>现在我们就用gcc的命令选项来逐个剖析gcc过程。<br>1）预处理(Pre-processing)<br>在该阶段，编译器将C源代码中的包含的头文件如stdio.h添加进来<br>参数：”-E”<br>用法：gcc -E hello.c -o hello.i<br>作用：将hello.c预处理输出hello.i文件。<br>2)编译(Compiling)<br>第二步进行的是编译阶段，在这个阶段中，gcc首先要检查代码的规范性、是否有语法错误等，以确定代码的实际要做的工作，在检查无误后，gcc把代码翻译成汇编语言。<br>参数：”-S”<br>用法：gcc –S hello.i –o hello.s<br>作用：将预处理输出文件hello.i汇编成hello.s文件。<br>3)汇编(Assembling)<br>汇编阶段是把编译阶段生成的”.s”文件转成二进制目标代码“.o”文件<br>参数：“-c”<br>用法：gcc –c hello.s –o hello.o<br>作用：将汇编输出文件hello.s编译输出hello.o文件。<br>4）链接(Link)<br>在成功编译之后，就进入了链接阶段。<br>用法：gcc hello.o –o hello<br>作用：将编译输出文件hello.o链接成最终可执行文件hello。<br>运行该可执行文件，出现正确的结果如下。</p>
+<p>./hello</p>
+<p>Hello World!</p>
+</li>
+</ol>
+<h5 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h5><h5 id="c-11新特性"><a href="#c-11新特性" class="headerlink" title="c++11新特性"></a>c++11新特性</h5><p><strong>C和C++的区别</strong></p>
+<p>1）C是面向过程的语言，是一个结构化的语言，考虑如何通过一个过程对输入进行处理得到输出；C++是面向对象的语言，主要特征是“封装、继承和多态”。封装隐藏了实现细节，使得代码模块化；派生类可以继承父类的数据和方法，扩展了已经存在的模块，实现了代码重用；多态则是“一个接口，多种实现”，通过派生类重写父类的虚函数，实现了接口的重用。</p>
+<p>2）C和C++动态管理内存的方法不一样，C是使用malloc/free，而C++除此之外还有new/delete关键字。</p>
+<p>3）C++支持函数重载，C不支持函数重载</p>
+<p>4）C++中有引用，C中不存在引用的概念</p>
+<h5 id="c-引用"><a href="#c-引用" class="headerlink" title="c++引用"></a>c++引用</h5><p> 引用就是某一变量（目标）的一个别名，对引用的操作与对变量直接操作完全一样。</p>
+<p>引用的声明方法：类型标识符 &amp;引用名=目标变量名；</p>
+<p>　　【例1】：int a; int &amp;ra=a; //定义引用ra,它是变量a的引用，即别名</p>
+<p>　　说明：</p>
+<p>　　（1）&amp;在此不是求地址运算，而是起标识作用。</p>
+<p>　　（2）类型标识符是指目标变量的类型。</p>
+<p>　　（3）声明引用时，必须同时对其进行初始化。</p>
+<p>　　（4）引用声明完毕后，相当于目标变量名有两个名称，即该目标原名称和引用名，且不能再把该引用名作为其他变量名的别名。</p>
+<p>　　 ra=1; 等价于 a=1;</p>
+<p>　　（5）声明一个引用，不是新定义了一个变量，它只表示该引用名是目标变量名的一个别名，它本身不是一种数据类型，因此引用本身不占存储单元，系统也不给引用分配存储单元。故：对引用求地址，就是对目标变量求地址。&amp;ra与&amp;a相等。</p>
+<p>　　（6）不能建立数组的引用。因为数组是一个由若干个元素所组成的集合，所以无法建立一个数组的别名。</p>
+<p>常引用：</p>
+<p>目的：不想通过引用来改变原来空间的值</p>
+<p>形式： const int &amp;c = a//相当于  const int * const c = &amp;a</p>
+<h5 id="c-中指针和引用的区别"><a href="#c-中指针和引用的区别" class="headerlink" title="c++中指针和引用的区别"></a>c++中指针和引用的区别</h5><p>1）指针是一个新的变量，存储了另一个变量的地址，我们可以通过访问这个地址来修改另一个变量；</p>
+<p>引用只是一个别名，还是变量本身，对引用的任何操作就是对变量本身进行操作，以达到修改变量的目的</p>
+<p>2）引用只有一级，而指针可以有多级</p>
+<p>3）指针传参的时候，还是值传递，指针本身的值不可以修改，需要通过解引用才能对指向的对象进行操作</p>
+<p>引用传参的时候，传进来的就是变量本身，因此变量可以被修改</p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/C/">C++</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C语言编译过程详解/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/C语言编译过程详解/">C语言编译过程详解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h4 id="C语言编译过程详解"><a href="#C语言编译过程详解" class="headerlink" title="C语言编译过程详解"></a>C语言编译过程详解</h4><p>预处理，展开头文件/宏替换/去掉注释/条件编译</p>
+<p>编译，检查语法</p>
+<p>汇编，汇编代码转成机器码</p>
+<p>链接 链接到一起生成可执行程序</p>
+<p>参考<a href="https://blog.csdn.net/weixin_41143631/article/details/81221777" target="_blank" rel="noopener">https://blog.csdn.net/weixin_41143631/article/details/81221777</a></p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/C-C/">C/C++</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C++ sort使用总结/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/C++ sort使用总结/">C++ sort使用总结</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="C-sort使用总结"><a href="#C-sort使用总结" class="headerlink" title="C++ sort使用总结"></a>C++ sort使用总结</h3><table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th align="center">功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">sort</td>
+<td align="center">对给定区间所有元素进行排序</td>
+</tr>
+<tr>
+<td align="center">stable_sort</td>
+<td align="center">对给定区间所有元素进行稳定排序</td>
+</tr>
+<tr>
+<td align="center">partial_sort</td>
+<td align="center">对给定区间所有元素部分排序</td>
+</tr>
+<tr>
+<td align="center">partial_sort_copy</td>
+<td align="center">对给定区间复制并排序</td>
+</tr>
+<tr>
+<td align="center">nth_element</td>
+<td align="center">找出给定区间的某个位置对应的元素</td>
+</tr>
+<tr>
+<td align="center">is_sorted</td>
+<td align="center">判断一个区间是否已经排好序</td>
+</tr>
+<tr>
+<td align="center">partition</td>
+<td align="center">使得符合某个条件的元素放在前面</td>
+</tr>
+<tr>
+<td align="center">stable_partition</td>
+<td align="center">相对稳定的使得符合某个条件的元素放在前面</td>
+</tr>
+</tbody></table>
+<p>需要头文件<algorithm></algorithm></p>
+<p>语法描述：sort（begin，end，cmp），cmp参数可以没有，如果没有默认非降序排序。</p>
+<p><strong>以int为例的基本数据类型的sort使用</strong></p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">5</span>]=&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">5</span>&#125;;</span><br><span class="line">    sort(a,a+<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="string">' '</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为没有cmp参数，默认为非降序排序，结果为：</p>
+<p>1 2 3 4 5</p>
+<p>若设计为非升序排序，则cmp函数的编写：</p>
+<p>bool cmp（int a,int b）</p>
+<p>{</p>
+<p>　　return a&gt;b;</p>
+<p>}</p>
+<p>其实对于这么简单的任务（类型支持“&lt;”、“&gt;”等比较运算符），完全没必要自己写一个类出来。标准库里已经有现成的了，就在functional里，include进来就行了。functional提供了一堆基于模板的比较函数对象。它们是（看名字就知道意思了）：equal_to<type>、not_equal_to<type>、greater<type>、greater_equal<type>、less<type>、less_equal<type>。对于这个问题来说，greater和less就足够了，直接拿过来用：</type></type></type></type></type></type></p>
+<ul>
+<li><p>升序：sort(begin,end,less<data-type>());</data-type></p>
+</li>
+<li><p>降序：sort(begin,end,greater<data-type>()).</data-type></p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">main</span> <span class="params">( )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">      <span class="keyword">int</span> a[<span class="number">20</span>]=&#123;<span class="number">2</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">23</span>,<span class="number">5</span>,<span class="number">76</span>,<span class="number">0</span>,<span class="number">43</span>,<span class="number">24</span>,<span class="number">65</span>&#125;,i;</span><br><span class="line">      <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++)</span><br><span class="line">          <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      sort(a,a+<span class="number">20</span>,greater&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">      <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++)</span><br><span class="line">          <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>引用数据类型string的使用</strong></p>
+</li>
+<li><p><strong>一个字符串间的个字符排序：</strong></p>
+</li>
+<li><p>使用迭代器可以完成顺序排序</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    string str(&quot;hello world&quot;);</span><br><span class="line">    sort(str.begin(),str.end());</span><br><span class="line">    cout&lt;&lt;str;</span><br><span class="line">    return 0;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p>结果：空格dehllloorw</p>
+<p><strong>使用反向迭代器可以完成逆序排序</strong></p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">str</span><span class="params">(<span class="string">"hello world"</span>)</span></span>;</span><br><span class="line">    sort(str.rbegin(),str.rend());</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;str;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：wroolllhde空格</p>
+<p><strong>字符串间的比较排序</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstring &gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    string a[4];</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        getline(cin,a[i]);</span><br><span class="line">    sort(a,a+4);</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cout&lt;&lt;a[i]&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p><strong>以结构体为例的二级排序</strong></p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct link</span><br><span class="line">&#123;</span><br><span class="line">    int a,b;</span><br><span class="line">&#125;;</span><br><span class="line">bool cmp(link x,link y)</span><br><span class="line">&#123;</span><br><span class="line">    if(x.a==y.a)</span><br><span class="line">        return x.b&gt;y.b;</span><br><span class="line">    return x.a&gt;y.a;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    link x[4];</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cin&gt;&gt;x[i].a&gt;&gt;x[i].b;</span><br><span class="line">    sort(x,x+4,cmp);</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cout&lt;&lt;x[i].a&lt;&lt;&apos; &apos;&lt;&lt;x[i].b&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/C/">C++</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/CC++中变量的作用域和存储类型/">2019-10-02</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/02/CC++中变量的作用域和存储类型/">C/C++中变量的作用域和存储类型</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="C-C-中变量的作用域和存储类型"><a href="#C-C-中变量的作用域和存储类型" class="headerlink" title="C/C++中变量的作用域和存储类型"></a>C/C++中变量的作用域和存储类型</h2><h5 id="区分作用域和存储类型"><a href="#区分作用域和存储类型" class="headerlink" title="区分作用域和存储类型"></a>区分作用域和存储类型</h5><p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/*例1*/</span></span><br><span class="line"><span class="number">2</span> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="number">3</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">4 </span>&#123;</span><br><span class="line"><span class="number">5</span>     <span class="keyword">static</span> <span class="keyword">int</span> a=<span class="number">1</span>;<span class="comment">//定义了一个静态存储的局部变量</span></span><br><span class="line"><span class="number">6</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">7</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>a是一个采用静态存储的局部变量，像这样的变量在整个文件中都不会消失，但是只能在main()函数内被使用。</p>
+<hr>
+<p>作用域：一个变量能够被使用的范围，在C语言中有包括<strong>块作用域、函数作用域、函数原型作用域、文件作用域</strong>，在C++中还有<strong>类作用域</strong>和<strong>命名空间作用域。</strong></p>
+<p>存储类型：存储类型分为<strong>静态存储</strong>和<strong>动态存储</strong>，采用静态存储方式的变量一旦创建，其存储空间在整个程序的运行过程中都不会被释放。对于采用动态存储的变量来说，当进入该程序块（函数或复合语句等）时，建立该变量，分配存储空间，当退出该程序块时，撤销该变量，释放其存储空间。</p>
+<p>不用限定词的情况</p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="comment">/*例2，不用限定词的情况*/</span></span><br><span class="line"><span class="number">2</span> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="number">3</span> <span class="keyword">int</span> a=<span class="number">1</span>;<span class="comment">//a为全局变量，采用静态存储</span></span><br><span class="line"><span class="number">4</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">5 </span>&#123;</span><br><span class="line"><span class="number">6</span>     <span class="keyword">int</span> b=<span class="number">1</span>;<span class="comment">//b为局部变量，默认采用动态存储</span></span><br><span class="line"><span class="number">7</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">8</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>全局变量a采用静态方式存储，具有文件作用域，b采用动态方式存储，具有的是块作用域。</p>
+<p><strong>static变量类型</strong></p>
+<ul>
+<li>对于全局变量来说，加不加static，该变量都采取静态方式来存储。不加static的全局变量默认为“外部变量”，可以被其他文件在进行了引用申明<em>（用extern,稍后介绍）</em>后使用。但是加了static之后，该变量便变成了“内部变量”，即该变量只能在该文件内被使用。</li>
+<li>对于局部变量来说，定义的时候默认为自动变量，采用动态方式来存储。使用static修饰后，将采取静态方式进行存储。初始化在编译时进行，只会进行一次。</li>
+</ul>
+<p><strong>extern关键字</strong>（声明而非定义，也不分配存储空间）</p>
+<p>​    仅用于对全局变量进行引用声明，包括</p>
+<ul>
+<li>对定义在使用处后面的全局变量提前引用声明</li>
+<li>在一个文件中对另一个文件定义的全局外部变量做引用声明（若全局变量使用了static，则不可引用）</li>
+</ul>
+<p><strong>使用auto、register</strong></p>
+<ul>
+<li><p>使用auto可显示地声明自动变量，由于在程序块内声明的变量默认是auto的，所以auto更多地也就   只是起到一个标记的作用了。</p>
+</li>
+<li><p>使用register可以将一些将被频繁使用的局部变量放到寄存器中，这样可以提高程序执行的效率。</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/C-C/">C/C++</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/二进制数、八进制数和十六进制的表示/">2019-10-02</a></time>
       
       
@@ -709,21 +832,34 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C语言编译过程详解/">2019-10-02</a></time>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/CC++ 多组控制多组输入数据/">2019-10-02</a></time>
       
       
   
-    <h1 class="title"><a href="/2019/10/02/C语言编译过程详解/">C语言编译过程详解</a></h1>
+    <h1 class="title"><a href="/2019/10/02/CC++ 多组控制多组输入数据/">C/C++ 多组控制多组输入数据</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <h4 id="C语言编译过程详解"><a href="#C语言编译过程详解" class="headerlink" title="C语言编译过程详解"></a>C语言编译过程详解</h4><p>预处理，展开头文件/宏替换/去掉注释/条件编译</p>
-<p>编译，检查语法</p>
-<p>汇编，汇编代码转成机器码</p>
-<p>链接 链接到一起生成可执行程序</p>
-<p>参考<a href="https://blog.csdn.net/weixin_41143631/article/details/81221777" target="_blank" rel="noopener">https://blog.csdn.net/weixin_41143631/article/details/81221777</a></p>
+        <h3 id="C-C-多组控制多组输入数据"><a href="#C-C-多组控制多组输入数据" class="headerlink" title="C/C++ 多组控制多组输入数据"></a>C/C++ 多组控制多组输入数据</h3><blockquote>
+<p><strong>c++实现</strong></p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> namespce <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">cin</span> &lt;&lt; a &lt;&lt;b)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; a+b &lt;&lt; end;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>cin是C++的<a href="https://www.baidu.com/s?wd=%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E6%B5%81&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">标准输入流</a>，其本身是一个对象，并不存在返回值的概念。<br>不过经常会有类似于<br>while(cin&gt;&gt;a)<br>的调用，这里并不是cin的返回值，而是&gt;&gt;操作重载函数<br>istream&amp; operator&gt;&gt;(istream&amp;, T &amp;);的返回值，其中第二个参数由cin&gt;&gt;后续参数类型决定。<br>其返回值类型为istream&amp;类型，大多数情况下其返回值为cin本身（非0值），只有当遇到EOF输入时，返回值为0。<br>输入EOF的方法，windows下输入ctrl+z, Linux下输入ctrl+d。<br>于是，当输入所有数据后，通过输入EOF的方法，可以退出while(cin&gt;&gt;a)这样的循环。</p>
+<hr>
+<blockquote>
+<p><strong>c实现</strong></p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d,%d"</span>, &amp;a,&amp;b) != EOF)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d"</span>,a+b);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>scanf函数返回成功读入的数据项数，读入数据时遇到了“文件结束”则返回<a href="https://www.baidu.com/s?wd=EOF&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">EOF</a>。</p>
+<p>如：scanf(“%d %d”,&amp;a,&amp;b);</p>
+<p>函数返回值为int型。如果a和b都被成功读入，那么scanf的返回值就是2；</p>
+<p>如果只有a被成功读入，返回值为1；</p>
+<p>如果a和b都未被成功读入，返回值为0；</p>
+<p>如果遇到错误或遇到end of file，返回值为<a href="https://www.baidu.com/s?wd=EOF&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">EOF</a>。end of file为Ctrl+z 或者Ctrl+d。</p>
 
       
     </div>
@@ -821,63 +957,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/容器：顺序容器和关联容器/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/容器：顺序容器和关联容器/">顺序容器和关联容器</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>容器：顺序容器和关联容器</p>
-<p>迭代器类型：每种容器都定义了自己的迭代器类型，是一种数据类型</p>
-<p>const_iterator: 每种容器都定义了const_iterator类型，给类型只能用于读取容器内的元素，不能改变其值</p>
-<p>迭代器：有迭代器类型定义的实体</p>
-<p>访问容器的两种方法：</p>
-<ul>
-<li>下标：少数容器支持</li>
-<li>迭代器：对所有元素都适用，现代c++程序更倾向</li>
-</ul>
-<p>迭代器的操作：</p>
-<ul>
-<li>begin和end操作</li>
-<li>vector迭代器的自增和解引用运算</li>
-<li>迭代器比较</li>
-</ul>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C/">C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
 
 <nav id="pagination">
   
@@ -903,6 +982,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2019/10/28/LeetCode49字母异位词分组/">LeetCode49字母异位词分组</a>
+      </li>
+    
+      <li>
         <a href="/2019/10/28/均摊分析法/">均摊分析法</a>
       </li>
     
@@ -916,10 +999,6 @@
     
       <li>
         <a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">LeetCode235二叉树的最近公共祖先</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/23/LeetCode102二叉树的层次遍历/">LeetCode102二叉树的层次遍历</a>
       </li>
     
   </ul>
@@ -939,13 +1018,11 @@
   
     <li><a href="/tags/C-C-、计算机基础/">C/C++、计算机基础</a><small>1</small></li>
   
-    <li><a href="/tags/LeetCode/">LeetCode</a><small>4</small></li>
-  
-    <li><a href="/tags/LeetCode、数据结构/">LeetCode、数据结构</a><small>0</small></li>
+    <li><a href="/tags/LeetCode/">LeetCode</a><small>5</small></li>
   
     <li><a href="/tags/blog/">blog</a><small>1</small></li>
   
-    <li><a href="/tags/数据结构/">数据结构</a><small>5</small></li>
+    <li><a href="/tags/数据结构/">数据结构</a><small>6</small></li>
   
     <li><a href="/tags/算法/">算法</a><small>3</small></li>
   
@@ -957,7 +1034,7 @@
 <div class="widget tagcloud">
   <h3 class="title">Tag Cloud</h3>
   <div class="entry">
-    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 17.5px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 17.5px;">数据结构</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a>
+    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 16.67px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 16.67px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
   </div>
 </div>
 

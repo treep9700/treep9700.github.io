@@ -62,6 +62,86 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2019-10-28T07:52:43.000Z"><a href="/2019/10/28/LeetCode49字母异位词分组/">2019-10-28</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/28/LeetCode49字母异位词分组/">LeetCode49字母异位词分组</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h4 id="49-字母异位词分组"><a href="#49-字母异位词分组" class="headerlink" title="49. 字母异位词分组"></a><a href="https://leetcode-cn.com/problems/group-anagrams/" target="_blank" rel="noopener">49. 字母异位词分组</a></h4><p>给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。</p>
+<p><strong>示例:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入: [&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;],</span><br><span class="line">输出:</span><br><span class="line">[</span><br><span class="line">  [&quot;ate&quot;,&quot;eat&quot;,&quot;tea&quot;],</span><br><span class="line">  [&quot;nat&quot;,&quot;tan&quot;],</span><br><span class="line">  [&quot;bat&quot;]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p><strong>说明：</strong></p>
+<ul>
+<li><p>所有输入均为小写字母。</p>
+</li>
+<li><p>不考虑答案输出的顺序。</p>
+</li>
+</ul>
+<blockquote>
+<p>解题思路，如何能按字母的组合进行单词分类</p>
+</blockquote>
+<p><strong>思路一：直接对各单词的字母进行计数，按计数数组用map进行映射。</strong></p>
+<p>另外这种方法的单个单词的单个字母不能超过255</p>
+<p>复杂度分析：</p>
+<ul>
+<li><p>时间复杂度：O(n*k)   n是strs的长度，k是strs中子字符串的最大长度</p>
+</li>
+<li><p>空间复杂度：O(nk)  </p>
+<p><strong>注：当一个算法的空间复杂度与n成线性比例关系时，可表示为0(n)</strong>，<strong>计算空间复杂度，看算法耗费的空间和输入数据规模的关系</strong></p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; groupAnagrams(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; strs) &#123;</span><br><span class="line">        <span class="keyword">int</span> cnt=<span class="number">0</span>,len=strs.size();<span class="comment">//使用一个常量存储容器大小，不需要每次都调用size()计算</span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;result(len);</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="built_in">string</span>,<span class="keyword">int</span>&gt;m;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">            <span class="built_in">string</span> temp=<span class="string">"00000000000000000000000000"</span>;  <span class="comment">//string类型的计数数组</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;strs[i].length();j++)</span><br><span class="line">                temp[strs[i][j]-<span class="string">'a'</span>]++;</span><br><span class="line">            <span class="keyword">if</span>(m.find(temp)==m.end())  <span class="comment">//如果该字符串尚未出现，则开一个新的容器来存储</span></span><br><span class="line">                m[temp]=cnt++;          <span class="comment">//计数数组的map映射，对应二维数组的位置</span></span><br><span class="line">            result[m[temp]].push_back(strs[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        result.resize(cnt);        <span class="comment">//重置数组的大小</span></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>语法小知识：二维数组插入空子数组的写法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;  res;</span><br><span class="line">&gt; </span><br><span class="line">&gt; res.push_back(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&#123;&#125;);</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>思路二：键值取每个单词的字母所组成的字典序排列</strong></p>
+<p>复杂度分析：</p>
+<ul>
+<li>时间复杂度：O(n*klogk)  n是strs的长度，k是strs中子字符串的最大长度</li>
+<li>空间复杂度：空间复杂度：O(nk)  </li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; groupAnagrams(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; strs) &#123;</span><br><span class="line">        <span class="keyword">int</span> cnt=<span class="number">0</span>,len=strs.size();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt;result(len);</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="built_in">string</span>,<span class="keyword">int</span>&gt;m;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;strs.size();i++)&#123;</span><br><span class="line">            <span class="built_in">string</span> temp=strs[i];</span><br><span class="line">            sort(temp.begin(),temp.end());</span><br><span class="line">            <span class="keyword">if</span>(m.find(temp)==m.end())</span><br><span class="line">                m[temp]=cnt++;</span><br><span class="line">            result[m[temp]].push_back(strs[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        result.resize(cnt);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2019-10-28T07:06:42.000Z"><a href="/2019/10/28/均摊分析法/">2019-10-28</a></time>
       
       
@@ -309,7 +389,7 @@
         
   
   <div class="tags">
-    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
+    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -382,7 +462,7 @@
         
   
   <div class="tags">
-    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
+    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -467,7 +547,7 @@
         
   
   <div class="tags">
-    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
+    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -562,7 +642,7 @@
         
   
   <div class="tags">
-    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
+    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -767,134 +847,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C++ sort使用总结/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/C++ sort使用总结/">C++ sort使用总结</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h3 id="C-sort使用总结"><a href="#C-sort使用总结" class="headerlink" title="C++ sort使用总结"></a>C++ sort使用总结</h3><table>
-<thead>
-<tr>
-<th align="center">函数名</th>
-<th align="center">功能描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">sort</td>
-<td align="center">对给定区间所有元素进行排序</td>
-</tr>
-<tr>
-<td align="center">stable_sort</td>
-<td align="center">对给定区间所有元素进行稳定排序</td>
-</tr>
-<tr>
-<td align="center">partial_sort</td>
-<td align="center">对给定区间所有元素部分排序</td>
-</tr>
-<tr>
-<td align="center">partial_sort_copy</td>
-<td align="center">对给定区间复制并排序</td>
-</tr>
-<tr>
-<td align="center">nth_element</td>
-<td align="center">找出给定区间的某个位置对应的元素</td>
-</tr>
-<tr>
-<td align="center">is_sorted</td>
-<td align="center">判断一个区间是否已经排好序</td>
-</tr>
-<tr>
-<td align="center">partition</td>
-<td align="center">使得符合某个条件的元素放在前面</td>
-</tr>
-<tr>
-<td align="center">stable_partition</td>
-<td align="center">相对稳定的使得符合某个条件的元素放在前面</td>
-</tr>
-</tbody></table>
-<p>需要头文件<algorithm></algorithm></p>
-<p>语法描述：sort（begin，end，cmp），cmp参数可以没有，如果没有默认非降序排序。</p>
-<p><strong>以int为例的基本数据类型的sort使用</strong></p>
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">5</span>]=&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">5</span>&#125;;</span><br><span class="line">    sort(a,a+<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="string">' '</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>因为没有cmp参数，默认为非降序排序，结果为：</p>
-<p>1 2 3 4 5</p>
-<p>若设计为非升序排序，则cmp函数的编写：</p>
-<p>bool cmp（int a,int b）</p>
-<p>{</p>
-<p>　　return a&gt;b;</p>
-<p>}</p>
-<p>其实对于这么简单的任务（类型支持“&lt;”、“&gt;”等比较运算符），完全没必要自己写一个类出来。标准库里已经有现成的了，就在functional里，include进来就行了。functional提供了一堆基于模板的比较函数对象。它们是（看名字就知道意思了）：equal_to<type>、not_equal_to<type>、greater<type>、greater_equal<type>、less<type>、less_equal<type>。对于这个问题来说，greater和less就足够了，直接拿过来用：</type></type></type></type></type></type></p>
-<ul>
-<li><p>升序：sort(begin,end,less<data-type>());</data-type></p>
-</li>
-<li><p>降序：sort(begin,end,greater<data-type>()).</data-type></p>
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">main</span> <span class="params">( )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">      <span class="keyword">int</span> a[<span class="number">20</span>]=&#123;<span class="number">2</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">23</span>,<span class="number">5</span>,<span class="number">76</span>,<span class="number">0</span>,<span class="number">43</span>,<span class="number">24</span>,<span class="number">65</span>&#125;,i;</span><br><span class="line">      <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++)</span><br><span class="line">          <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      sort(a,a+<span class="number">20</span>,greater&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">      <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++)</span><br><span class="line">          <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>引用数据类型string的使用</strong></p>
-</li>
-<li><p><strong>一个字符串间的个字符排序：</strong></p>
-</li>
-<li><p>使用迭代器可以完成顺序排序</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    string str(&quot;hello world&quot;);</span><br><span class="line">    sort(str.begin(),str.end());</span><br><span class="line">    cout&lt;&lt;str;</span><br><span class="line">    return 0;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p>结果：空格dehllloorw</p>
-<p><strong>使用反向迭代器可以完成逆序排序</strong></p>
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">str</span><span class="params">(<span class="string">"hello world"</span>)</span></span>;</span><br><span class="line">    sort(str.rbegin(),str.rend());</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;str;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果：wroolllhde空格</p>
-<p><strong>字符串间的比较排序</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstring &gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    string a[4];</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        getline(cin,a[i]);</span><br><span class="line">    sort(a,a+4);</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cout&lt;&lt;a[i]&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<p><strong>以结构体为例的二级排序</strong></p>
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct link</span><br><span class="line">&#123;</span><br><span class="line">    int a,b;</span><br><span class="line">&#125;;</span><br><span class="line">bool cmp(link x,link y)</span><br><span class="line">&#123;</span><br><span class="line">    if(x.a==y.a)</span><br><span class="line">        return x.b&gt;y.b;</span><br><span class="line">    return x.a&gt;y.a;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    link x[4];</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cin&gt;&gt;x[i].a&gt;&gt;x[i].b;</span><br><span class="line">    sort(x,x+4,cmp);</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cout&lt;&lt;x[i].a&lt;&lt;&apos; &apos;&lt;&lt;x[i].b&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C/">C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
 
 <nav id="pagination">
   
@@ -920,6 +872,10 @@
   <ul class="entry">
     
       <li>
+        <a href="/2019/10/28/LeetCode49字母异位词分组/">LeetCode49字母异位词分组</a>
+      </li>
+    
+      <li>
         <a href="/2019/10/28/均摊分析法/">均摊分析法</a>
       </li>
     
@@ -933,10 +889,6 @@
     
       <li>
         <a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">LeetCode235二叉树的最近公共祖先</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/23/LeetCode102二叉树的层次遍历/">LeetCode102二叉树的层次遍历</a>
       </li>
     
   </ul>
@@ -956,13 +908,11 @@
   
     <li><a href="/tags/C-C-、计算机基础/">C/C++、计算机基础</a><small>1</small></li>
   
-    <li><a href="/tags/LeetCode/">LeetCode</a><small>4</small></li>
-  
-    <li><a href="/tags/LeetCode、数据结构/">LeetCode、数据结构</a><small>0</small></li>
+    <li><a href="/tags/LeetCode/">LeetCode</a><small>5</small></li>
   
     <li><a href="/tags/blog/">blog</a><small>1</small></li>
   
-    <li><a href="/tags/数据结构/">数据结构</a><small>5</small></li>
+    <li><a href="/tags/数据结构/">数据结构</a><small>6</small></li>
   
     <li><a href="/tags/算法/">算法</a><small>3</small></li>
   
@@ -974,7 +924,7 @@
 <div class="widget tagcloud">
   <h3 class="title">Tag Cloud</h3>
   <div class="entry">
-    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 17.5px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 17.5px;">数据结构</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a>
+    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 16.67px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 16.67px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
   </div>
 </div>
 
