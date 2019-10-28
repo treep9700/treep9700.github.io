@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>初识散列表 | Hexo</title>
+  <meta name="author" content="John Doe">
+
+  
+  <meta name="description" content="初识散列表散列思想散列表用的是数组支持按照下标随机访问数据的特性，所以散列表是数组的一种扩展，由数组演化而来。时间复杂度是O(1)的特性。我们通过散列函数把元素的键值映射为下标，然后将数据存储在数组中对应下标的位置。当我们按照键值查询元素时，我们用同样的散列函数，将键值转化数组下标，从对应的数组下标">
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="初识散列表">
+  <meta property="og:site_name" content="Hexo">
+
+  
+  
+
+  
+    <meta property="og:image" content>
+  
+
+  
+  <link href="/css/images/favicon.ico" rel="icon">
+  
+
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-28T06:59:26.000Z"><a href="/2019/10/28/初识散列表/">2019-10-28</a></time>
+      
+      
+  
+    <h1 class="title">初识散列表</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="初识散列表"><a href="#初识散列表" class="headerlink" title="初识散列表"></a>初识散列表</h3><h4 id="散列思想"><a href="#散列思想" class="headerlink" title="散列思想"></a>散列思想</h4><p>散列表用的是数组支持按照下标随机访问数据的特性，所以散列表是数组的一种扩展，由数组演化而来。时间复杂度是O(1)的特性。我们通过散列函数把元素的键值映射为下标，然后将数据存储在数组中对应下标的位置。当我们按照键值查询元素时，我们用同样的散列函数，将键值转化数组下标，从对应的数组下标的位置取数据。</p>
+<h4 id="散列函数"><a href="#散列函数" class="headerlink" title="散列函数"></a>散列函数</h4><p>散列函数，顾名思义，它是一个函数。我们可以把它定义成hash(key)，其中 key 表示元素的键值，hash(key) 的值表示经过散列函数计算得到的散列值。</p>
+<p><strong>如何构造散列函数呢？</strong></p>
+<p>三点散列函数设计的基本要求：</p>
+<ol>
+<li>散列函数计算得到的散列值是一个非负整数；</li>
+<li>如果 key1 = key2，那 hash(key1) == hash(key2)；</li>
+<li>如果 key1 ≠ key2，那 hash(key1) ≠ hash(key2)。</li>
+</ol>
+<p>所以我们几乎无法找到一个完美的无冲突的散列函数，即便能找到，付出的时间成本、计算成本也是很大的，所以针对散列冲突问题，我们需要通过其他途径来解决。</p>
+<h4 id="散列冲突"><a href="#散列冲突" class="headerlink" title="散列冲突"></a>散列冲突</h4><p>再好的散列函数也无法避免散列冲突。那究竟该如何解决散列冲突问题呢？我们常用的散列冲突解决方法有两类，<strong>开放寻址法（open addressing）和链表法（chaining）</strong>。</p>
+<h5 id="开放地址法"><a href="#开放地址法" class="headerlink" title="开放地址法"></a>开放地址法</h5><ol>
+<li><p><strong>线性探测法</strong></p>
+<p>当我们往散列表中插入数据时，如果某个数据经过散列函数散列之后，存储位置已经被占用了，我们就从当前位置开始，依次往后查找，看是否有空闲位置，直到找到为止。</p>
+<p>在<strong>散列表中查找元素</strong>：我们通过散列函数求出要查找元素的键值对应的散列值，然后比较数组中下标为散列值的元素和要查找的元素。如果相等，则说明就是我们要找的元素；否则就顺序往后依次查找。如果遍历到数组中的空闲位置，还没有找到，就说明要查找的元素并没有在散列表中。</p>
+<blockquote>
+<p>那么，散列表查找元素的时间复杂度是多少呢？</p>
+<p>答：O(1), 但这只是理想情况下的查找复杂度。因为在实际的应用中，想要散列表没有冲突是不可能的。这个时候，散列表的性能跟<strong>散列函数、冲突处理方法、散列表的装填因子</strong>有关。</p>
+</blockquote>
+<p>散列表跟数组一样支持<strong>删除操作</strong>。对于使用线性探测法解决冲突的散列表，删除操作、不能单纯地把要删除的元素设置为空。这是为什么呢？因为在查找的时候，一旦我们通过线性探测方法，找到一个空闲位置，我们就可以认定散列表中不存在这个数据。但是，如果这个空闲位置是我们后来删除的，就会导致原来的查找算法失效。本来存在的数据，会被认定为不存在。<strong>解决办法：我们可以将删除的元素，特殊标记为 deleted。当线性探测查找的时候，遇到标记为 deleted 的空间，并不是停下来，而是继续往下探测。</strong></p>
+</li>
+<li><p><strong>二次探测法</strong></p>
+<p>所谓二次探测，跟线性探测很像，线性探测每次探测的步长是 1，那它探测的下标序列就是 hash(key)+0，hash(key)+1，hash(key)+2……而二次探测探测的步长就变成了原来的“二次方”，也就是说，它探测的下标序列就是 hash(key)+0，hash(key)+1^2，hash(key)+2^2……</p>
+</li>
+<li><p><strong>双重散列法</strong></p>
+<p>所谓双重散列，意思就是不仅要使用一个散列函数。我们使用一组散列函数 hash1(key)，hash2(key)，hash3(key)……我们先用第一个散列函数，如果计算得到的存储位置已经被占用，再用第二个散列函数，依次类推，直到找到空闲的存储位置。</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>不管采用哪种探测方法，当散列表中空闲位置不多的时候，散列冲突的概率就会大大提高</strong>。为了尽可能保证散列表的操作效率，一般情况下，我们会尽可能保证散列表中有一定比例的空闲槽位。我们用装载因子（load factor）来表示空位的多少。</p>
+<p>装载因子的计算公式是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; 散列表的装载 因子=填入表中的元素个数/散列表的长度</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>装载因子越大，说明空闲位置越少，冲突越多，散列表的性能会下降 。</p>
+<p>我的理解：装载因子只是衡量当前散列表冲突概率的，而不代表某一散列函数的性能</p>
+</blockquote>
+<h5 id="链表法（更常用）"><a href="#链表法（更常用）" class="headerlink" title="链表法（更常用）"></a><strong>链表法</strong>（更常用）</h5><p>插入数据：当插入的时候，我们需要通过散列函数计算出对应的散列槽位，将其插入到对应的链表中即可，所以插入的时间复杂度为O(1)。<br>查找或删除数据：当查找、删除一个元素时，通过散列函数计算对应的槽，然后遍历链表查找或删除。对于散列比较均匀的散列函数，链表的节点个数k=n/m，其中n表示散列表中数据的个数，m表示散列表中槽的个数，所以是时间复杂度为O(k)。</p>
+<hr>
+<h3 id="如何打造一个工业级的散列表"><a href="#如何打造一个工业级的散列表" class="headerlink" title="如何打造一个工业级的散列表"></a>如何打造一个工业级的散列表</h3><h4 id="面试题目：如何设计一个工业级的散列函数？"><a href="#面试题目：如何设计一个工业级的散列函数？" class="headerlink" title="面试题目：如何设计一个工业级的散列函数？"></a><strong>面试题目：如何设计一个工业级的散列函数？</strong></h4><p>思路：何为一个工业级的散列表？工业级的散列表应该具有哪些特性？结合学过的知识，我觉的应该有这样的要求：</p>
+<ul>
+<li>支持快速的查询、插入、删除操作；</li>
+<li>内存占用合理，不能浪费过多空间；</li>
+<li>性能稳定，在极端情况下，散列表的性能也不会退化到无法接受的情况。</li>
+</ul>
+<p>方案：从3个方面来考虑设计思路：</p>
+<ul>
+<li>设计一个合适的散列函数；</li>
+<li>定义装载因子阈值，并且设计动态扩容策略；</li>
+<li>选择合适的散列冲突解决方法。</li>
+</ul>
+<p>知识总结：</p>
+<p><strong>一、如何设计散列函数？</strong></p>
+<ol>
+<li><p>要尽可能让散列后的值随机且均匀分布，这样会尽可能减少散列冲突，即便冲突之后，分配到每个槽内的数据</p>
+<p>也比较均匀。</p>
+</li>
+<li><p>除此之外，散列函数的设计也不能太复杂，太复杂就会太耗时间，也会影响到散列表的性能。</p>
+</li>
+<li><p>常见的散列函数设计方法：直接寻址法、平方取中法、折叠法、随机数法等。</p>
+</li>
+</ol>
+<p><strong>二、如何根据装载因子动态扩容？</strong></p>
+<ol>
+<li><p>如何设置装载因子阈值？</p>
+<p>①可以通过设置装载因子的阈值来控制是扩容还是缩容，支持动态扩容的散列表，插入数据的时间复杂度使用摊还分析法。</p>
+<p>② 装载因子的阈值设置需要权衡时间复杂度和空间复杂度。如何权衡？如果内存空间不紧张，对执行效率要求很高，可以降低装载因子的阈值；相反，如果内存空间紧张，对执行效率要求又不高，可以增加装载因子的阈值。</p>
+</li>
+<li><p>如何避免低效扩容？分批扩容<br>①分批扩容的插入操作：当有新数据要插入时，我们将数据插入新的散列表，并且从老的散列表中拿出一个数据放入新散列表。每次插入都重复上面的过程。这样插入操作就变得很快了。<br>②分批扩容的查询操作：先查新散列表，再查老散列表。<br>③通过分批扩容的方式，任何情况下，插入一个数据的时间复杂度都是O(1)。</p>
+</li>
+</ol>
+<p><strong>三、如何选择散列冲突解决方法？</strong></p>
+<p>​    ①常见的2中方法：开放寻址法和链表法。<br>​    ②大部分情况下，链表法更加普适。而且，我们还可以通过将链表法中的链表改造成其他动态查找数据结    构，比如红黑树、跳表，来避免散列表时间复杂度退化成O(n)，抵御散列冲突攻击。<br>​    ③但是，对于小规模数据、装载因子不高的散列表，比较适合用开放寻址法。</p>
+<p>附：</p>
+<blockquote>
+<p>常见的哈希面试问题</p>
+</blockquote>
+<ul>
+<li>找到数组中的对称队</li>
+<li>追踪遍历的完整路径</li>
+<li>查看一个数组是否为另一个数组的子集</li>
+<li>检查给定数组是否不想交</li>
+</ul>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/数据结构/">数据结构</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2019/10/28/均摊分析法/">均摊分析法</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/28/初识散列表/">初识散列表</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/27/LeetCode242有效的字母异位词/">LeetCode242有效的字母异位词</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">LeetCode235二叉树的最近公共祖先</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/23/LeetCode102二叉树的层次遍历/">LeetCode102二叉树的层次遍历</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>6</small></li>
+  
+    <li><a href="/tags/C-prime/">C++ prime</a><small>1</small></li>
+  
+    <li><a href="/tags/C-C/">C/C++</a><small>5</small></li>
+  
+    <li><a href="/tags/C-C-、计算机基础/">C/C++、计算机基础</a><small>1</small></li>
+  
+    <li><a href="/tags/LeetCode/">LeetCode</a><small>4</small></li>
+  
+    <li><a href="/tags/LeetCode、数据结构/">LeetCode、数据结构</a><small>0</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/数据结构/">数据结构</a><small>5</small></li>
+  
+    <li><a href="/tags/算法/">算法</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 17.5px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 17.5px;">数据结构</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  <p>
+  
+  &copy; 2019 John Doe
+  
+  All rights reserved.</p>
+  <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</div>
+<div class="clearfix"></div>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id='bg'></div>
+</body>
+</html>

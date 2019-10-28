@@ -62,6 +62,272 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2019-10-28T07:06:42.000Z"><a href="/2019/10/28/均摊分析法/">2019-10-28</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/28/均摊分析法/">均摊分析法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="摊还分析法"><a href="#摊还分析法" class="headerlink" title="摊还分析法"></a>摊还分析法</h3><p>均摊时间复杂度，听起来跟平均时间复杂度有点儿像。对于初学者来说，这两个概念确实非常容易弄混。大部分情况下，我们并不需要区分最好、最坏、平均三种复杂度。平均复杂度只在某些特殊情况下才会用到，而<strong>均摊时间复杂度应用的场景比它更加特殊、更加有限。</strong></p>
+<p><strong>一个例子</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">// array 表示一个长度为 n 的数组</span><br><span class="line">// 代码中的 array.length 就等于 n</span><br><span class="line">int[] array = new int[n];</span><br><span class="line">int count = 0;</span><br><span class="line"></span><br><span class="line">void insert(int val) &#123;</span><br><span class="line">   if (count == array.length) &#123;</span><br><span class="line">      int sum = 0;</span><br><span class="line">      for (int i = 0; i &lt; array.length; ++i) &#123;</span><br><span class="line">         sum = sum + array[i];</span><br><span class="line">      &#125;</span><br><span class="line">      array[0] = sum;</span><br><span class="line">      count = 1;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   array[count] = val;</span><br><span class="line">   ++count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这段代码实现了一个往数组中插入数据的功能。当数组满了之后，也就是代码中的 count == array.length 时，我们用 for 循环遍历数组求和，并清空数组，将求和之后的 sum 值放到数组的第一个位置，然后再将新的数据插入。</p>
+</blockquote>
+<p>最理想的情况下，数组中有空闲空间，我们只需要将数据插入到数组下标为 count 的位置就可以了，所以最好情况时间复杂度为 O(1)。</p>
+<p>最坏的情况下，数组中没有空闲空间了，我们需要先做一次数组的遍历求和，然后再将数据插入，所以最坏情况时间复杂度为 O(n)。</p>
+<p>那平均时间复杂度是多少呢？答案是 O(1)。</p>
+<p><strong>用概率论的方法分析</strong></p>
+<blockquote>
+<p>假设数组的长度是 n，根据数据插入的位置的不同，我们可以分为 n 种情况，每种情况的时间复杂度是 O(1)。除此之外，还有一种“额外”的情况，就是在数组没有空闲空间时插入一个数据，这个时候的时间复杂度是 O(n)。而且，这 n+1 种情况发生的概率一样，都是 1/(n+1)。所以，根据加权平均的计算方法，我们求得的平均时间复杂度就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; 1*1/(n+1) + 1*1/(n+1) + ... + 1*1/(n+1) + n*1/(n+1) = O(1)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>引入均摊分析法</strong></p>
+<p>对于 insert() 函数来说，O(1) 时间复杂度的插入和 O(n) 时间复杂度的插入，出现的频率是非常有规律的，而且有一定的前后时序关系，一般都是一个 O(n) 插入之后，紧跟着 n-1 个 O(1) 的插入操作，循环往复。针对这种特殊的场景，我们引入了一种更加简单的分析方法<strong>：摊还分析法</strong>，<strong>通过摊还分析得到的时间复杂度我们起了一个名字，叫均摊时间复杂度</strong>。</p>
+<p><strong>均摊分析的大致思路</strong>：在数组中插入数据的这个例子。每一次 O(n) 的插入操作，都会跟着 n-1 次 O(1) 的插入操作，所以把耗时多的那次操作均摊到接下来的 n-1 次耗时少的操作上，均摊下来，这一组连续的操作的均摊时间复杂度就是 O(1)。</p>
+<p>均摊时间复杂度和摊还分析应用场景比较特殊，所以我们并不会经常用到。应用场景比较局限，一般对一个数据结构进行一组连续操作中，大部分情况下时间复杂度都很低，只有个别情况下时间复杂度比较高，而且这些操作之间存在前后连贯的时序关系，这个时候，我们就可以将这一组操作放在一块儿分析，看是否能将较高时间复杂度那次操作的耗时，平摊到其他那些时间复杂度比较低的操作上。<strong>在能够应用均摊时间复杂度分析的场合，一般均摊时间复杂度就等于最好情况时间复杂度。</strong></p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/算法/">算法</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-28T06:59:26.000Z"><a href="/2019/10/28/初识散列表/">2019-10-28</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/28/初识散列表/">初识散列表</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="初识散列表"><a href="#初识散列表" class="headerlink" title="初识散列表"></a>初识散列表</h3><h4 id="散列思想"><a href="#散列思想" class="headerlink" title="散列思想"></a>散列思想</h4><p>散列表用的是数组支持按照下标随机访问数据的特性，所以散列表是数组的一种扩展，由数组演化而来。时间复杂度是O(1)的特性。我们通过散列函数把元素的键值映射为下标，然后将数据存储在数组中对应下标的位置。当我们按照键值查询元素时，我们用同样的散列函数，将键值转化数组下标，从对应的数组下标的位置取数据。</p>
+<h4 id="散列函数"><a href="#散列函数" class="headerlink" title="散列函数"></a>散列函数</h4><p>散列函数，顾名思义，它是一个函数。我们可以把它定义成hash(key)，其中 key 表示元素的键值，hash(key) 的值表示经过散列函数计算得到的散列值。</p>
+<p><strong>如何构造散列函数呢？</strong></p>
+<p>三点散列函数设计的基本要求：</p>
+<ol>
+<li>散列函数计算得到的散列值是一个非负整数；</li>
+<li>如果 key1 = key2，那 hash(key1) == hash(key2)；</li>
+<li>如果 key1 ≠ key2，那 hash(key1) ≠ hash(key2)。</li>
+</ol>
+<p>所以我们几乎无法找到一个完美的无冲突的散列函数，即便能找到，付出的时间成本、计算成本也是很大的，所以针对散列冲突问题，我们需要通过其他途径来解决。</p>
+<h4 id="散列冲突"><a href="#散列冲突" class="headerlink" title="散列冲突"></a>散列冲突</h4><p>再好的散列函数也无法避免散列冲突。那究竟该如何解决散列冲突问题呢？我们常用的散列冲突解决方法有两类，<strong>开放寻址法（open addressing）和链表法（chaining）</strong>。</p>
+<h5 id="开放地址法"><a href="#开放地址法" class="headerlink" title="开放地址法"></a>开放地址法</h5><ol>
+<li><p><strong>线性探测法</strong></p>
+<p>当我们往散列表中插入数据时，如果某个数据经过散列函数散列之后，存储位置已经被占用了，我们就从当前位置开始，依次往后查找，看是否有空闲位置，直到找到为止。</p>
+<p>在<strong>散列表中查找元素</strong>：我们通过散列函数求出要查找元素的键值对应的散列值，然后比较数组中下标为散列值的元素和要查找的元素。如果相等，则说明就是我们要找的元素；否则就顺序往后依次查找。如果遍历到数组中的空闲位置，还没有找到，就说明要查找的元素并没有在散列表中。</p>
+<blockquote>
+<p>那么，散列表查找元素的时间复杂度是多少呢？</p>
+<p>答：O(1), 但这只是理想情况下的查找复杂度。因为在实际的应用中，想要散列表没有冲突是不可能的。这个时候，散列表的性能跟<strong>散列函数、冲突处理方法、散列表的装填因子</strong>有关。</p>
+</blockquote>
+<p>散列表跟数组一样支持<strong>删除操作</strong>。对于使用线性探测法解决冲突的散列表，删除操作、不能单纯地把要删除的元素设置为空。这是为什么呢？因为在查找的时候，一旦我们通过线性探测方法，找到一个空闲位置，我们就可以认定散列表中不存在这个数据。但是，如果这个空闲位置是我们后来删除的，就会导致原来的查找算法失效。本来存在的数据，会被认定为不存在。<strong>解决办法：我们可以将删除的元素，特殊标记为 deleted。当线性探测查找的时候，遇到标记为 deleted 的空间，并不是停下来，而是继续往下探测。</strong></p>
+</li>
+<li><p><strong>二次探测法</strong></p>
+<p>所谓二次探测，跟线性探测很像，线性探测每次探测的步长是 1，那它探测的下标序列就是 hash(key)+0，hash(key)+1，hash(key)+2……而二次探测探测的步长就变成了原来的“二次方”，也就是说，它探测的下标序列就是 hash(key)+0，hash(key)+1^2，hash(key)+2^2……</p>
+</li>
+<li><p><strong>双重散列法</strong></p>
+<p>所谓双重散列，意思就是不仅要使用一个散列函数。我们使用一组散列函数 hash1(key)，hash2(key)，hash3(key)……我们先用第一个散列函数，如果计算得到的存储位置已经被占用，再用第二个散列函数，依次类推，直到找到空闲的存储位置。</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>不管采用哪种探测方法，当散列表中空闲位置不多的时候，散列冲突的概率就会大大提高</strong>。为了尽可能保证散列表的操作效率，一般情况下，我们会尽可能保证散列表中有一定比例的空闲槽位。我们用装载因子（load factor）来表示空位的多少。</p>
+<p>装载因子的计算公式是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; 散列表的装载 因子=填入表中的元素个数/散列表的长度</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>装载因子越大，说明空闲位置越少，冲突越多，散列表的性能会下降 。</p>
+<p>我的理解：装载因子只是衡量当前散列表冲突概率的，而不代表某一散列函数的性能</p>
+</blockquote>
+<h5 id="链表法（更常用）"><a href="#链表法（更常用）" class="headerlink" title="链表法（更常用）"></a><strong>链表法</strong>（更常用）</h5><p>插入数据：当插入的时候，我们需要通过散列函数计算出对应的散列槽位，将其插入到对应的链表中即可，所以插入的时间复杂度为O(1)。<br>查找或删除数据：当查找、删除一个元素时，通过散列函数计算对应的槽，然后遍历链表查找或删除。对于散列比较均匀的散列函数，链表的节点个数k=n/m，其中n表示散列表中数据的个数，m表示散列表中槽的个数，所以是时间复杂度为O(k)。</p>
+<hr>
+<h3 id="如何打造一个工业级的散列表"><a href="#如何打造一个工业级的散列表" class="headerlink" title="如何打造一个工业级的散列表"></a>如何打造一个工业级的散列表</h3><h4 id="面试题目：如何设计一个工业级的散列函数？"><a href="#面试题目：如何设计一个工业级的散列函数？" class="headerlink" title="面试题目：如何设计一个工业级的散列函数？"></a><strong>面试题目：如何设计一个工业级的散列函数？</strong></h4><p>思路：何为一个工业级的散列表？工业级的散列表应该具有哪些特性？结合学过的知识，我觉的应该有这样的要求：</p>
+<ul>
+<li>支持快速的查询、插入、删除操作；</li>
+<li>内存占用合理，不能浪费过多空间；</li>
+<li>性能稳定，在极端情况下，散列表的性能也不会退化到无法接受的情况。</li>
+</ul>
+<p>方案：从3个方面来考虑设计思路：</p>
+<ul>
+<li>设计一个合适的散列函数；</li>
+<li>定义装载因子阈值，并且设计动态扩容策略；</li>
+<li>选择合适的散列冲突解决方法。</li>
+</ul>
+<p>知识总结：</p>
+<p><strong>一、如何设计散列函数？</strong></p>
+<ol>
+<li><p>要尽可能让散列后的值随机且均匀分布，这样会尽可能减少散列冲突，即便冲突之后，分配到每个槽内的数据</p>
+<p>也比较均匀。</p>
+</li>
+<li><p>除此之外，散列函数的设计也不能太复杂，太复杂就会太耗时间，也会影响到散列表的性能。</p>
+</li>
+<li><p>常见的散列函数设计方法：直接寻址法、平方取中法、折叠法、随机数法等。</p>
+</li>
+</ol>
+<p><strong>二、如何根据装载因子动态扩容？</strong></p>
+<ol>
+<li><p>如何设置装载因子阈值？</p>
+<p>①可以通过设置装载因子的阈值来控制是扩容还是缩容，支持动态扩容的散列表，插入数据的时间复杂度使用摊还分析法。</p>
+<p>② 装载因子的阈值设置需要权衡时间复杂度和空间复杂度。如何权衡？如果内存空间不紧张，对执行效率要求很高，可以降低装载因子的阈值；相反，如果内存空间紧张，对执行效率要求又不高，可以增加装载因子的阈值。</p>
+</li>
+<li><p>如何避免低效扩容？分批扩容<br>①分批扩容的插入操作：当有新数据要插入时，我们将数据插入新的散列表，并且从老的散列表中拿出一个数据放入新散列表。每次插入都重复上面的过程。这样插入操作就变得很快了。<br>②分批扩容的查询操作：先查新散列表，再查老散列表。<br>③通过分批扩容的方式，任何情况下，插入一个数据的时间复杂度都是O(1)。</p>
+</li>
+</ol>
+<p><strong>三、如何选择散列冲突解决方法？</strong></p>
+<p>​    ①常见的2中方法：开放寻址法和链表法。<br>​    ②大部分情况下，链表法更加普适。而且，我们还可以通过将链表法中的链表改造成其他动态查找数据结    构，比如红黑树、跳表，来避免散列表时间复杂度退化成O(n)，抵御散列冲突攻击。<br>​    ③但是，对于小规模数据、装载因子不高的散列表，比较适合用开放寻址法。</p>
+<p>附：</p>
+<blockquote>
+<p>常见的哈希面试问题</p>
+</blockquote>
+<ul>
+<li>找到数组中的对称队</li>
+<li>追踪遍历的完整路径</li>
+<li>查看一个数组是否为另一个数组的子集</li>
+<li>检查给定数组是否不想交</li>
+</ul>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/数据结构/">数据结构</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-27T01:07:17.000Z"><a href="/2019/10/27/LeetCode242有效的字母异位词/">2019-10-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/27/LeetCode242有效的字母异位词/">LeetCode242有效的字母异位词</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h4 id="242-有效的字母异位词"><a href="#242-有效的字母异位词" class="headerlink" title="242. 有效的字母异位词"></a><a href="https://leetcode-cn.com/problems/valid-anagram/" target="_blank" rel="noopener">242. 有效的字母异位词</a></h4><p>给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;anagram&quot;, t = &quot;nagaram&quot;</span><br><span class="line">输出: true</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;rat&quot;, t = &quot;car&quot;</span><br><span class="line">输出: false</span><br></pre></td></tr></table></figure>
+
+<p><strong>说明:</strong><br>你可以假设字符串只包含小写字母。</p>
+<p><strong>进阶:</strong><br>如果输入字符串包含 unicode 字符怎么办？你能否调整你的解法来应对这种情况？</p>
+<blockquote>
+<p>答：包含unicode字符，则可以使用map。不包含unicode的话可以使用vector模拟map。</p>
+</blockquote>
+<p><strong>解法一：直接排序</strong></p>
+<p>复杂度分析</p>
+<ul>
+<li>时间复杂度：O(nlogn)</li>
+<li>空间复杂度：O(logn)</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isAnagram</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">        sort(s.begin(), s.end());</span><br><span class="line">        sort(t.begin(), t.end());</span><br><span class="line">        <span class="keyword">return</span> s == t;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法二：哈希表（最优解）</strong></p>
+<p>复杂度分析：</p>
+<ul>
+<li><p>时间复杂度：O（n）</p>
+</li>
+<li><p>空间复杂度：O（1）</p>
+<p>注：map中最多存储26个元素，也就是空间大小不随数据数据的规模变化而变化。</p>
+</li>
+</ul>
+<p>代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isAnagram</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.size() != t.size()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; umap;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> ch : s) &#123;</span><br><span class="line">            ++umap[ch];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> ch : t) &#123;</span><br><span class="line">            <span class="keyword">if</span> (umap[ch] &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                --umap[ch];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>另一种写法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isAnagram</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.size() != t.size()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; umap;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.size(); ++i) &#123;</span><br><span class="line">            ++umap[s[i]];</span><br><span class="line">            --umap[t[i]];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> c : umap) &#123;</span><br><span class="line">            <span class="keyword">if</span> (c.second != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>vector模拟哈希</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isAnagram</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (s.size() != t.size()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; hash(<span class="number">26</span>);</span><br><span class="line">        <span class="keyword">int</span> size = s.size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; ++i) &#123;</span><br><span class="line">            ++hash[s[i] - <span class="string">'a'</span>];</span><br><span class="line">            --hash[t[i] - <span class="string">'a'</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> n : hash) &#123;</span><br><span class="line">            <span class="keyword">if</span> (n != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2019-10-23T01:24:38.000Z"><a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">2019-10-23</a></time>
       
       
@@ -507,20 +773,102 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/c++研发技术栈/">2019-10-02</a></time>
+        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C++ sort使用总结/">2019-10-02</a></time>
       
       
   
-    <h1 class="title"><a href="/2019/10/02/c++研发技术栈/">C++研发技术岗</a></h1>
+    <h1 class="title"><a href="/2019/10/02/C++ sort使用总结/">C++ sort使用总结</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>计算机网络：osi模型，三次握手，TCP状态转换图</p>
-<p>操作系统：死锁的条件与算法，进程的状态，进程和线程的区别，内存换页算法，同步与互斥</p>
-<p>数据库：SQL语句的基本写法，如Select，Gorupby having，数据库的范式，数据库的索引（实现是那种数据结构）和存储过程等</p>
-<p>数据结构与算法：各种排序算法的实现，时间与空间复杂度，稳定性等，二叉树的前中后序遍历的非递归与递归实现，树的基本概念，二分查找及其实现，图论算法 </p>
+        <h3 id="C-sort使用总结"><a href="#C-sort使用总结" class="headerlink" title="C++ sort使用总结"></a>C++ sort使用总结</h3><table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th align="center">功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">sort</td>
+<td align="center">对给定区间所有元素进行排序</td>
+</tr>
+<tr>
+<td align="center">stable_sort</td>
+<td align="center">对给定区间所有元素进行稳定排序</td>
+</tr>
+<tr>
+<td align="center">partial_sort</td>
+<td align="center">对给定区间所有元素部分排序</td>
+</tr>
+<tr>
+<td align="center">partial_sort_copy</td>
+<td align="center">对给定区间复制并排序</td>
+</tr>
+<tr>
+<td align="center">nth_element</td>
+<td align="center">找出给定区间的某个位置对应的元素</td>
+</tr>
+<tr>
+<td align="center">is_sorted</td>
+<td align="center">判断一个区间是否已经排好序</td>
+</tr>
+<tr>
+<td align="center">partition</td>
+<td align="center">使得符合某个条件的元素放在前面</td>
+</tr>
+<tr>
+<td align="center">stable_partition</td>
+<td align="center">相对稳定的使得符合某个条件的元素放在前面</td>
+</tr>
+</tbody></table>
+<p>需要头文件<algorithm></algorithm></p>
+<p>语法描述：sort（begin，end，cmp），cmp参数可以没有，如果没有默认非降序排序。</p>
+<p><strong>以int为例的基本数据类型的sort使用</strong></p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a[<span class="number">5</span>]=&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">5</span>&#125;;</span><br><span class="line">    sort(a,a+<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="string">' '</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为没有cmp参数，默认为非降序排序，结果为：</p>
+<p>1 2 3 4 5</p>
+<p>若设计为非升序排序，则cmp函数的编写：</p>
+<p>bool cmp（int a,int b）</p>
+<p>{</p>
+<p>　　return a&gt;b;</p>
+<p>}</p>
+<p>其实对于这么简单的任务（类型支持“&lt;”、“&gt;”等比较运算符），完全没必要自己写一个类出来。标准库里已经有现成的了，就在functional里，include进来就行了。functional提供了一堆基于模板的比较函数对象。它们是（看名字就知道意思了）：equal_to<type>、not_equal_to<type>、greater<type>、greater_equal<type>、less<type>、less_equal<type>。对于这个问题来说，greater和less就足够了，直接拿过来用：</type></type></type></type></type></type></p>
+<ul>
+<li><p>升序：sort(begin,end,less<data-type>());</data-type></p>
+</li>
+<li><p>降序：sort(begin,end,greater<data-type>()).</data-type></p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span>  <span class="title">main</span> <span class="params">( )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">      <span class="keyword">int</span> a[<span class="number">20</span>]=&#123;<span class="number">2</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">23</span>,<span class="number">5</span>,<span class="number">76</span>,<span class="number">0</span>,<span class="number">43</span>,<span class="number">24</span>,<span class="number">65</span>&#125;,i;</span><br><span class="line">      <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++)</span><br><span class="line">          <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      sort(a,a+<span class="number">20</span>,greater&lt;<span class="keyword">int</span>&gt;());</span><br><span class="line">      <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++)</span><br><span class="line">          <span class="built_in">cout</span>&lt;&lt;a[i]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>引用数据类型string的使用</strong></p>
+</li>
+<li><p><strong>一个字符串间的个字符排序：</strong></p>
+</li>
+<li><p>使用迭代器可以完成顺序排序</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    string str(&quot;hello world&quot;);</span><br><span class="line">    sort(str.begin(),str.end());</span><br><span class="line">    cout&lt;&lt;str;</span><br><span class="line">    return 0;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p>结果：空格dehllloorw</p>
+<p><strong>使用反向迭代器可以完成逆序排序</strong></p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">str</span><span class="params">(<span class="string">"hello world"</span>)</span></span>;</span><br><span class="line">    sort(str.rbegin(),str.rend());</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;str;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：wroolllhde空格</p>
+<p><strong>字符串间的比较排序</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;cstring &gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    string a[4];</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        getline(cin,a[i]);</span><br><span class="line">    sort(a,a+4);</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cout&lt;&lt;a[i]&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p><strong>以结构体为例的二级排序</strong></p>
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;cstring&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct link</span><br><span class="line">&#123;</span><br><span class="line">    int a,b;</span><br><span class="line">&#125;;</span><br><span class="line">bool cmp(link x,link y)</span><br><span class="line">&#123;</span><br><span class="line">    if(x.a==y.a)</span><br><span class="line">        return x.b&gt;y.b;</span><br><span class="line">    return x.a&gt;y.a;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    link x[4];</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cin&gt;&gt;x[i].a&gt;&gt;x[i].b;</span><br><span class="line">    sort(x,x+4,cmp);</span><br><span class="line">    for(int i=0;i&lt;4;i++)</span><br><span class="line">        cout&lt;&lt;x[i].a&lt;&lt;&apos; &apos;&lt;&lt;x[i].b&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);" target="_blank" rel="noopener"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
 
       
     </div>
@@ -535,312 +883,6 @@
   
   <div class="tags">
     <a href="/tags/C/">C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/C++基础语法笔记/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/C++基础语法笔记/">C++基础语法笔记</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>[TOC]</p>
-<h3 id="C-新特性"><a href="#C-新特性" class="headerlink" title="C++新特性"></a>C++新特性</h3><p>bool是C++中的新类型，C语言中使用if语句</p>
-<p>C++支持C语言的复制初始化，同时新增了直接初始化，如：int x（1024）</p>
-<p>C++ 的变量不用定义在函数体最前面，可以随用随定义</p>
-<p>C++输入输出</p>
-<p>输入8进制，10进制，16进制分别为</p>
-<p>cout &lt;&lt; oct &lt;&lt; x &lt;&lt; endl;</p>
-<p>cout &lt;&lt; dec &lt;&lt; x &lt;&lt; endl;</p>
-<p>cout &lt;&lt; hex &lt;&lt; x &lt;&lt; endl;</p>
-<p>命名空间namespace</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567057130429.png" alt="1567057130429"></p>
-<p>要使用命名空间内的变量或者函数，需要在使用前声明</p>
-<p>如要使用cout需要using namespace std 声明或者 std::cout；</p>
-<p><strong>防止类名冲突，可以在定义类时使用命名空间限制</strong></p>
-<h3 id="C-封装篇"><a href="#C-封装篇" class="headerlink" title="C++ 封装篇"></a>C++ 封装篇</h3><ul>
-<li><p>类（虚拟）和对象（实体）</p>
-</li>
-<li><p>数据成员和成员函数，构成完整的类</p>
-</li>
-<li><p>构造函数和虚构函数，描述对象的生生死死</p>
-</li>
-<li><p>对象复制与对象赋值</p>
-</li>
-<li><p>对象数组和对象指针，对象的应用形态</p>
-</li>
-<li><p>this指针</p>
-</li>
-</ul>
-<p>类的访问限定符：public、private、protect</p>
-<p>对象实例化：从栈实例化、从堆实例化</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059216028.png" alt="1567059216028"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059243958.png" alt="1567059243958"></p>
-<p>从栈中实例化的对象，对象生命周期结束后会自动回收</p>
-<p>从堆中实例化出的对象，需要手动释放内存。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Tv *p = <span class="keyword">new</span> TV();</span><br><span class="line">Tv *p = <span class="keyword">new</span> TV[<span class="number">20</span>];  </span><br><span class="line"><span class="keyword">delete</span> p;  <span class="comment">//释放对象内存</span></span><br><span class="line"><span class="keyword">delete</span> []p; <span class="comment">//释放对象数组内存</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="对象成员访问"><a href="#对象成员访问" class="headerlink" title="对象成员访问"></a>对象成员访问</h3><p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567059583881.png" alt="1567059583881"></p>
-<p>c++string</p>
-<p>字符数组char[]使用比较的复杂，而string被设计出来更加的方便</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060303688.png" alt="1567060303688"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060423517.png" alt="1567060423517"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060357425.png" alt="1567060357425"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060380451.png" alt="1567060380451"></p>
-<p>内联函数：inline关键字</p>
-<ul>
-<li>编译时省去步骤2和步骤4，速度更快，效率跟高</li>
-<li>但必须时短小，逻辑简单的函数。如果复杂函数使用了inline关键字，也会被编译器拒绝</li>
-</ul>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567060836710.png" alt="1567060836710"></p>
-<p>类内定义和内联函数</p>
-<ul>
-<li>类内定义即将成员函数的函数体写在类内</li>
-<li>类内定义的函数，编译器在编译时会优先编译为内联函数</li>
-</ul>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567061108861.png" alt="1567061108861"></p>
-<p>类外定义：同文件类外定义/分文件类外定义  </p>
-<p>c++构造函数</p>
-<p>思考：</p>
-<ul>
-<li><p>实例化的对象如何在内存中存储</p>
-</li>
-<li><p>类中的代码如何在内存中存储</p>
-</li>
-<li><p>代码和数据之间有怎样的关系</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">        内存分区</span><br><span class="line">栈区：<span class="keyword">int</span> = <span class="number">0</span>；<span class="keyword">int</span> *p = <span class="literal">NULL</span>;  <span class="comment">//内存分配和回收由系统进行</span></span><br><span class="line">堆区：<span class="keyword">int</span> *p = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">20</span>];   <span class="comment">//堆区内存需要手动回收</span></span><br><span class="line">全局区：存储全局变量及静态常量</span><br><span class="line">常量区：<span class="built_in">string</span> str = <span class="string">"hello"</span>;</span><br><span class="line">代码区：存储逻辑代码的二进制 ![<span class="number">1567062496284</span>](C:\Users\hhe97\AppData\Roaming\Typora\typora-user-images\<span class="number">1567062496284.</span>png)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567062521631.png" alt="1567062521631"></p>
-<p> 对象初始化</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567062779622.png" alt="1567062779622"></p>
-<p>构造函数的规则和特点（无参构造、有参构造、重载构造）</p>
-<ul>
-<li><p>构造函数在对象实例化时被自动调用</p>
-</li>
-<li><p>构造函数与类同名</p>
-</li>
-<li><p>构造函数没有返回值</p>
-</li>
-<li><p>构造函数可以有多个重载形式</p>
-</li>
-<li><p>实例化对象时仅用到一个构造函数</p>
-</li>
-<li><p>当用户没有定义构造函数时，编译器自动生成一个构造函数</p>
-</li>
-<li><p>默认构造函数：初始化对象时不需要传参的构造函数</p>
-</li>
-</ul>
-<h4 id="C-构造函数初始化列表"><a href="#C-构造函数初始化列表" class="headerlink" title="C++构造函数初始化列表"></a>C++构造函数初始化列表</h4><p>与其他函数不同，构造函数除了有名字，参数列表和函数体之外，还可以有初始化列表，初始化列表以冒号开头，后跟一系列以逗号分隔的初始化字段。<br>从概念上来讲，构造函数的执行可以分成两个阶段，初始化阶段和计算阶段，初始化阶段先于计算阶段.</p>
-<p>初始化阶段 ：所有类类型（class type）的成员都会在初始化阶段初始化，即使该成员没有出现在构造函数的初始化列表中。</p>
-<p>计算阶段 ：一般用于执行构造函数体内的赋值操作。</p>
-<ul>
-<li>初始化列表先于构造函数执行</li>
-<li>初始化列表只能用于构造函数</li>
-<li>初始化列表同时初始化多个数据成员</li>
-</ul>
-<p><strong>思考：c++为什么需要初始化列表，作用是什么</strong></p>
-<p><em>tips：搞清初始化和赋值的区别是非常重要的一点</em></p>
-<p>使用初始化列表的原因<br>初始化类的成员有两种方式，一是使用初始化列表，二是在构造函数体内进行赋值操作。 主要是性能问题，对于内置类型，如int, float等，使用初始化类表和在构造函数体内初始化差别不是很大，但是对于类类型来说，最好使用初始化列表，为什么呢？由下面的测试可知，使用初始化列表少了一次调用默认构造函数的过程，这对于数据密集型的类来说，是非常高效的。<br><strong><em>一个好的原则是，能使用初始化列表的时候尽量使用初始化列表.</em></strong></p>
-<p>必须使用初始化列表的时候<br>除了性能问题之外，有些时候合初始化列表是不可或缺的，以下几种情况时必须使用初始化列表 </p>
-<ul>
-<li><p>常量成员，因为<strong>常量只能初始化不能赋值</strong>，所以必须放在初始化列表里面</p>
-</li>
-<li><p>引用类型，<strong>引用必须在定义的时候初始化，并且不能重新赋值</strong>，所以也要写在初始化列表里面 </p>
-</li>
-<li><p>没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化，而是直接调用拷贝构造函数初始化</p>
-</li>
-<li><p>如果类存在继承关系，派生类必须在其初始化列表中调用基类的构造函数</p>
-</li>
-</ul>
-<p><strong>成员变量的顺序是按照他们在类中出现的顺序进行初始化的，而不是按照他们在初始化列表出现的顺序初始化的</strong></p>
-<h4 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h4><p>定义格式：类名（const 类名&amp; 变量名）如: Student（const Student&amp; stu）</p>
-<ul>
-<li>如果没有自定义的拷贝构造函数则系统自动生成一个默认的拷贝构造函数</li>
-<li>当采用直接初始化或者复制初始化实例化对象时系统自动调用拷贝构造函数</li>
-</ul>
-<h4 id="构造函数总结"><a href="#构造函数总结" class="headerlink" title="构造函数总结"></a>构造函数总结</h4><p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567066730363.png" alt="1567066730363"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567066786810.png" alt="1567066786810"></p>
-<p>c++析构函数</p>
-<ul>
-<li>如果没有自定义的析构函数则系统自动生成</li>
-<li>析构函数在对象销毁时自动调用</li>
-<li>析构函数没有返回值、没有参数也不能重载</li>
-</ul>
-<p>对象的生命历程</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567130868427.png" alt="1567130868427"></p>
-<p>对象数组</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567133398112.png" alt="1567133398112"></p>
-<p>对象成员</p>
-<p><strong>当一个类的成员是另一个类的对象时，这个对象就叫成员对象。概括的说，就是一个类的成员是一个对象，即成员对象。</strong></p>
-<ul>
-<li><p>出现成员对象时，该类的构造函数要包括对成员的初始化。如果构造函数的成员初始化列表没有对成员对象初始化，则使用成员对象的缺省构造函数。   构造函数对成员对象初始化列表的格式为：</p>
-<p>&lt;类名&gt;::&lt;类名&gt;(&lt;总参数表&gt;):&lt;成员对象1&gt;(&lt;形参表1&gt;), &lt;成员对象2&gt;(&lt;形参表2&gt;)，……</p>
-<p>{ //函数体 }   </p>
-</li>
-<li><p>建立一个类的对象时，应先调用其构造函数。但是如果这个类有成员对象，则要先执行成员对象自己所属类的构造函数，当全部成员对象都执行了自身类的构造函数后，再执行当前类的构造函数。析构函数的调用次序正好相反。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Coordinate</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    Coordinate(<span class="keyword">int</span> x,<span class="keyword">int</span> y);</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> m_iX;</span><br><span class="line">    <span class="keyword">int</span> m_iY;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Line</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    line(<span class="keyword">int</span> x1,<span class="keyword">int</span> y1,<span class="keyword">int</span> x2,<span class="keyword">int</span> y2);</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    Coordinate m_coorA;</span><br><span class="line">    Coordinare m_coorB;</span><br><span class="line">&#125;</span><br><span class="line">Line::Line(<span class="keyword">int</span> x1,<span class="keyword">int</span> y1,<span class="keyword">int</span> x2,<span class="keyword">int</span> y2):</span><br><span class="line">m_coorA(x1,y1),m_coorB(x2,y2)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"line"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    Line *p = <span class="keyword">new</span> Line(<span class="number">2</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">delete</span> p;</span><br><span class="line">    p = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-<h3 id="浅拷贝和深拷贝"><a href="#浅拷贝和深拷贝" class="headerlink" title="浅拷贝和深拷贝"></a>浅拷贝和深拷贝</h3><p> 一、浅赋值问题<br>（1）如果类中叧包含简单数据成员，没有指向堆的指针， 可以使用编译器提供的默认复制构造函数</p>
-<p>（2）如果类中包含指向堆中数据的指针，浅复制将出现 严重问题</p>
-<p><img src="https://img-blog.csdn.net/20180725172907718?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhb2Fvd2VpdHQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
-<p>①浅复制直接复制两个对象间的指针成员，导致两个指针 指向堆中同一坑内存区域</p>
-<p>② 一个对象的修改将导致另一个对象的修改</p>
-<p>③ 一个对象超出作用域，将导致内存释放，使得另一个对 象的指针无效，对其访问将导致程序异常。</p>
-<p>二、编写自己的赋值构造函数（完成深复制的内容）：实现了资源的重新分配<br>（1）含有指针成员的类，通常需要编写构造函数和复制 构造函数，同时需要实现相应的复制构造函数，以 及运算符重载</p>
-<p>（2）实现“深复制”，创建对象备仹时，为新对象在堆 中分配自己的内存，并将现有值复制到新内存中。</p>
-<p><img src="https://img-blog.csdn.net/20180725173146940?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhb2Fvd2VpdHQ=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
-<p>对象成员和对象成员指针</p>
-<p>this指针（解决参数和数据成员同名冲突）</p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567151506007.png" alt="1567151506007"></p>
-<p><img src="//yoursite.com/2019/10/02/C++基础语法笔记/C:%5CUsers%5Chhe97%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1567151549356.png" alt="1567151549356"></p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C/">C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/CC++ 多组控制多组输入数据/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/CC++ 多组控制多组输入数据/">C/C++ 多组控制多组输入数据</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h3 id="C-C-多组控制多组输入数据"><a href="#C-C-多组控制多组输入数据" class="headerlink" title="C/C++ 多组控制多组输入数据"></a>C/C++ 多组控制多组输入数据</h3><blockquote>
-<p><strong>c++实现</strong></p>
-</blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> namespce <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">cin</span> &lt;&lt; a &lt;&lt;b)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; a+b &lt;&lt; end;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>cin是C++的<a href="https://www.baidu.com/s?wd=%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E6%B5%81&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">标准输入流</a>，其本身是一个对象，并不存在返回值的概念。<br>不过经常会有类似于<br>while(cin&gt;&gt;a)<br>的调用，这里并不是cin的返回值，而是&gt;&gt;操作重载函数<br>istream&amp; operator&gt;&gt;(istream&amp;, T &amp;);的返回值，其中第二个参数由cin&gt;&gt;后续参数类型决定。<br>其返回值类型为istream&amp;类型，大多数情况下其返回值为cin本身（非0值），只有当遇到EOF输入时，返回值为0。<br>输入EOF的方法，windows下输入ctrl+z, Linux下输入ctrl+d。<br>于是，当输入所有数据后，通过输入EOF的方法，可以退出while(cin&gt;&gt;a)这样的循环。</p>
-<hr>
-<blockquote>
-<p><strong>c实现</strong></p>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d,%d"</span>, &amp;a,&amp;b) != EOF)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d"</span>,a+b);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>scanf函数返回成功读入的数据项数，读入数据时遇到了“文件结束”则返回<a href="https://www.baidu.com/s?wd=EOF&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">EOF</a>。</p>
-<p>如：scanf(“%d %d”,&amp;a,&amp;b);</p>
-<p>函数返回值为int型。如果a和b都被成功读入，那么scanf的返回值就是2；</p>
-<p>如果只有a被成功读入，返回值为1；</p>
-<p>如果a和b都未被成功读入，返回值为0；</p>
-<p>如果遇到错误或遇到end of file，返回值为<a href="https://www.baidu.com/s?wd=EOF&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao" target="_blank" rel="noopener">EOF</a>。end of file为Ctrl+z 或者Ctrl+d。</p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C-C/">C/C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-02T01:58:04.000Z"><a href="/2019/10/02/日期类问题/">2019-10-02</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/02/日期类问题/">日期类问题</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h3 id="日期类问题"><a href="#日期类问题" class="headerlink" title="日期类问题"></a>日期类问题</h3><p>日期类问题中最基本的问题——求两个日期间的天数差</p>
-<p>解决方法：把原区间问题统一到起点确定的区间问题上去。</p>
-<blockquote>
-<p>分析：在该例中，不妨把问题统一到 </p>
-</blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;isotream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ISYEAP(x) x%100!=0 &amp;&amp; x%4==0 || x%400==0?1:0  <span class="comment">//标识符与参数表之间不能有空格</span></span></span><br><span class="line"><span class="comment">//定义宏判断是否为闰年，方便计算每月天数</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dayOfMonth[<span class="number">13</span>][<span class="number">2</span>]=&#123;  <span class="comment">//预存闰年和非闰年每月的天数，注意二月配合宏定义做特殊处理</span></span><br><span class="line">    <span class="number">0</span>,<span class="number">0</span>,                </span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">28</span>,<span class="number">29</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span>,</span><br><span class="line">    <span class="number">30</span>,<span class="number">30</span>,</span><br><span class="line">    <span class="number">31</span>,<span class="number">31</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Date</span>&#123;</span>           <span class="comment">//日期类，方便日期的推移</span></span><br><span class="line">    <span class="keyword">int</span> Day;</span><br><span class="line">    <span class="keyword">int</span> Month;</span><br><span class="line">    <span class="keyword">int</span> Year;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">nextDay</span><span class="params">()</span></span>&#123;    <span class="comment">//计算下一天的天数</span></span><br><span class="line">        Day++;</span><br><span class="line">        <span class="keyword">if</span>(Day&gt;dayofMonth[Month][ISYEAP(year)])&#123;</span><br><span class="line">            Day = <span class="number">1</span>;</span><br><span class="line">            Month++;</span><br><span class="line">            <span class="keyword">if</span>(Month &gt; <span class="number">12</span>)&#123;</span><br><span class="line">                Month = <span class="number">1</span>;</span><br><span class="line">                Year++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> buf[<span class="number">5001</span>][<span class="number">13</span>][<span class="number">32</span>];     <span class="comment">//保存预处理的天数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Abs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;            <span class="comment">//求绝对值</span></span><br><span class="line">    <span class="keyword">return</span> x&lt;<span class="number">0</span>?-x:x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Date tmp;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;      <span class="comment">//天数计数</span></span><br><span class="line">    tmp.Day = <span class="number">1</span>;</span><br><span class="line">    tmp.Month = <span class="number">0</span>;</span><br><span class="line">    tmp.Year = <span class="number">0</span>;      <span class="comment">//初始化日期类对象为0年1月1日</span></span><br><span class="line">    <span class="keyword">while</span>(tmp.Year!=<span class="number">5001</span>)&#123;   <span class="comment">//日期不超过5000年</span></span><br><span class="line">        buf[tmp.Year][tmp.Month][tmp.Day] = cnt;</span><br><span class="line">                       <span class="comment">//将该日与0年1月1日的天数差保存起来</span></span><br><span class="line">        tmp.nextDay();  <span class="comment">//计算下一天的日期</span></span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> d1,m1,y1;</span><br><span class="line">    <span class="keyword">int</span> d2,m2,y2;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%4d%2d%2d"</span>, &amp;y1,&amp;m1,&amp;d1)!=EOF)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%4d%2d%2d"</span>,&amp;y2,&amp;m2,&amp;d2);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,Abs(buf[y2][m2][d2]-buf[y1][m1][d1])+<span class="number">1</span>);</span><br><span class="line">    &#125;              </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/算法/">算法</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -878,23 +920,23 @@
   <ul class="entry">
     
       <li>
+        <a href="/2019/10/28/均摊分析法/">均摊分析法</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/28/初识散列表/">初识散列表</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/27/LeetCode242有效的字母异位词/">LeetCode242有效的字母异位词</a>
+      </li>
+    
+      <li>
         <a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">LeetCode235二叉树的最近公共祖先</a>
       </li>
     
       <li>
         <a href="/2019/10/23/LeetCode102二叉树的层次遍历/">LeetCode102二叉树的层次遍历</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/21/二叉树的遍历/">LeetCode二叉树的遍历</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/13/C-prime9-51-日期处理程序/">C++prime9.51:日期处理程序</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/12/C++字符串中对汉字的处理/">C++字符串中对汉字的处理</a>
       </li>
     
   </ul>
@@ -914,13 +956,15 @@
   
     <li><a href="/tags/C-C-、计算机基础/">C/C++、计算机基础</a><small>1</small></li>
   
-    <li><a href="/tags/LeetCode/">LeetCode</a><small>3</small></li>
+    <li><a href="/tags/LeetCode/">LeetCode</a><small>4</small></li>
+  
+    <li><a href="/tags/LeetCode、数据结构/">LeetCode、数据结构</a><small>0</small></li>
   
     <li><a href="/tags/blog/">blog</a><small>1</small></li>
   
-    <li><a href="/tags/数据结构/">数据结构</a><small>3</small></li>
+    <li><a href="/tags/数据结构/">数据结构</a><small>5</small></li>
   
-    <li><a href="/tags/算法/">算法</a><small>2</small></li>
+    <li><a href="/tags/算法/">算法</a><small>3</small></li>
   
   </ul>
 </div>
@@ -930,7 +974,7 @@
 <div class="widget tagcloud">
   <h3 class="title">Tag Cloud</h3>
   <div class="entry">
-    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 17.5px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 15px;">数据结构</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a>
+    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 17.5px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 15px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 17.5px;">数据结构</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a>
   </div>
 </div>
 
