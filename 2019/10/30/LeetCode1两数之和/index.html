@@ -1,0 +1,238 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>LeetCode1两数之和 | Hexo</title>
+  <meta name="author" content="John Doe">
+
+  
+  <meta name="description" content="1. 两数之和给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
+你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。
+示例:
+1234给定 nums = [2, 7, 11, 15], target">
+  
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="LeetCode1两数之和">
+  <meta property="og:site_name" content="Hexo">
+
+  
+  
+
+  
+    <meta property="og:image" content>
+  
+
+  
+  <link href="/css/images/favicon.ico" rel="icon">
+  
+
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+
+</head>
+</html>
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-30T13:46:24.000Z"><a href="/2019/10/30/LeetCode1两数之和/">2019-10-30</a></time>
+      
+      
+  
+    <h1 class="title">LeetCode1两数之和</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h4 id="1-两数之和"><a href="#1-两数之和" class="headerlink" title="1. 两数之和"></a><a href="https://leetcode-cn.com/problems/two-sum/" target="_blank" rel="noopener">1. 两数之和</a></h4><p>给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</p>
+<p>你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。</p>
+<p>示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">给定 nums = [2, 7, 11, 15], target = 9</span><br><span class="line"></span><br><span class="line">因为 nums[0] + nums[1] = 2 + 7 = 9</span><br><span class="line">所以返回 [0, 1]</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法一：暴力法</strong></p>
+<p>复杂度分析：</p>
+<ul>
+<li>时间复杂度：O(n^2)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; twoSum(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">int</span> size = nums.size();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i = <span class="number">0</span>; i&lt;size; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = target - nums[i];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> j = i+<span class="number">1</span>; j&lt;size; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[j] == temp)</span><br><span class="line">                    <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;i,j&#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法二：两次哈希表</strong></p>
+<p>复杂度分析：</p>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; twoSum(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">int</span> size = nums.size();</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; m;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i=<span class="number">0</span>; i&lt;size; i++) &#123;</span><br><span class="line">            m[nums[i]] = i;         <span class="comment">//map中存入下标和数值的映射</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i = <span class="number">0</span>; i&lt;size; i++) &#123;      <span class="comment">//遍历整个数组</span></span><br><span class="line">            <span class="keyword">int</span> temp = target - nums[i];    <span class="comment">//目标值</span></span><br><span class="line">            <span class="keyword">if</span>(m.find(temp) != m.end() &amp;&amp; m[temp] !=i)     <span class="comment">//在map中查找</span></span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;i,m[temp]&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;<span class="number">1</span>,<span class="number">1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法二：一次哈希表</strong></p>
+<p>复杂度分析：</p>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n)  取决于哈希表中存的元素数量，最多存N个</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; twoSum(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">int</span> size = nums.size();</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; m;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i = <span class="number">0</span>; i&lt;size; i++) &#123;      <span class="comment">//遍历整个数组</span></span><br><span class="line">            <span class="keyword">int</span> temp = target - nums[i];    <span class="comment">//目标值</span></span><br><span class="line">            <span class="keyword">if</span>(m.find(temp) != m.end())     <span class="comment">//在map中查找</span></span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;i,m[temp]&#125;;</span><br><span class="line">            <span class="keyword">else</span> m[nums[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2019/10/30/字符编码笔记/">字符编码笔记</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/30/LeetCode1两数之和/">LeetCode1两数之和</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/28/LeetCode49字母异位词分组/">LeetCode49字母异位词分组</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/28/均摊分析法/">均摊分析法</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/28/初识散列表/">初识散列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/C/">C++</a><small>6</small></li>
+  
+    <li><a href="/tags/C-prime/">C++ prime</a><small>1</small></li>
+  
+    <li><a href="/tags/C-C/">C/C++</a><small>5</small></li>
+  
+    <li><a href="/tags/C-C-、计算机基础/">C/C++、计算机基础</a><small>1</small></li>
+  
+    <li><a href="/tags/LeetCode/">LeetCode</a><small>6</small></li>
+  
+    <li><a href="/tags/blog/">blog</a><small>1</small></li>
+  
+    <li><a href="/tags/字符编码/">字符编码</a><small>1</small></li>
+  
+    <li><a href="/tags/数据结构/">数据结构</a><small>7</small></li>
+  
+    <li><a href="/tags/算法/">算法</a><small>3</small></li>
+  
+    <li><a href="/tags/计算机基础/">计算机基础</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/C/" style="font-size: 17.5px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 15px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 17.5px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/字符编码/" style="font-size: 10px;">字符编码</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/计算机基础/" style="font-size: 10px;">计算机基础</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  <p>
+  
+  &copy; 2019 John Doe
+  
+  All rights reserved.</p>
+  <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</div>
+<div class="clearfix"></div>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id='bg'></div>
+</body>
+</html>

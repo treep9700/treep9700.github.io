@@ -62,6 +62,175 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2019-10-30T13:49:12.000Z"><a href="/2019/10/30/字符编码笔记/">2019-10-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/30/字符编码笔记/">字符编码笔记</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h3 id="字符编码笔记"><a href="#字符编码笔记" class="headerlink" title="字符编码笔记"></a>字符编码笔记</h3><p>参考博文：<a href="https://blog.csdn.net/qq_42068856/article/details/83792174" target="_blank" rel="noopener">https://blog.csdn.net/qq_42068856/article/details/83792174</a></p>
+<p>​        <a href="https://www.cnblogs.com/crazylqy/p/10184291.html" target="_blank" rel="noopener">https://www.cnblogs.com/crazylqy/p/10184291.html</a></p>
+<p>这两篇写的非常好。</p>
+<blockquote>
+<p>先来看几个名词解释</p>
+</blockquote>
+<h4 id="字节"><a href="#字节" class="headerlink" title="字节"></a>字节</h4><p>这个是最基本的概念了，<strong>字节</strong>是计算存储容量的一种计量单位。我们知道计算机只能识别1和0组成的二进制位。一个数就是1位（bit），为了方便计算，我们规定8位就是一个<strong>字节</strong>。</p>
+<p>例如 ：<code>00001111</code> 这个8位二进制数就占了一个<strong>字节</strong>的存储容量。</p>
+<h4 id="字符"><a href="#字符" class="headerlink" title="字符"></a>字符</h4><p><strong>字符</strong>和字节不太一样，任何一个文字或符号都是一个字符，但所占字节不一定，不同的编码导致一个<strong>字符</strong>所占的内存不同。</p>
+<p>例如：标点符号<code>+</code>是一个<strong>字符</strong>，汉字<code>我们</code>是两个<strong>字符</strong>，在GBK编码中一个汉字占2个字节，在UTF-8编码中一个汉字占3个字节。</p>
+<h4 id="标准编码格式"><a href="#标准编码格式" class="headerlink" title="标准编码格式"></a>标准编码格式</h4><p>也就是编码规范。下面摘自百度百科：</p>
+<p><a href="https://baike.baidu.com/item/%E7%BC%96%E7%A0%81/80092" target="_blank" rel="noopener">编码</a>是用预先规定的方法将文字、数字或其它对象编成数码，或将信息、数据转换成规定的电脉冲信号。为保证编码的正确性，编码要规范化、标准化，即需有标准的编码格式。常见的编码格式（规范）有<a href="https://baike.baidu.com/item/ASCII" target="_blank" rel="noopener">ASCII</a>、<a href="https://baike.baidu.com/item/ANSI/10401940" target="_blank" rel="noopener">ANSI</a>、<a href="https://baike.baidu.com/item/GBK" target="_blank" rel="noopener">GBK</a>、<a href="https://baike.baidu.com/item/GB2312" target="_blank" rel="noopener">GB2312</a>、<a href="https://baike.baidu.com/item/UTF-8" target="_blank" rel="noopener">UTF-8</a>、<a href="https://baike.baidu.com/item/GB18030" target="_blank" rel="noopener">GB18030</a>和<a href="https://baike.baidu.com/item/UNICODE" target="_blank" rel="noopener">UNICODE</a>等。</p>
+<blockquote>
+<p>介绍几个编码规范的子概念</p>
+</blockquote>
+<h5 id="1-字库表"><a href="#1-字库表" class="headerlink" title="1. 字库表"></a>1. 字库表</h5><p>一套编码规范不一定包含世界上所有的字符，每套编码规范都有自己的使用场景。而字库表就存储了编码规范中能显示的所有字符，计算机就是根据二进制数从字库表中找到字符然后显示给用户滴，相当于一个存储字符的数据库。</p>
+<p>例如：几乎所有汉字都保存在GBK 编码规范的字库表中。所以可以显示汉字，但法语，俄语并不在其字库表中，所以GBK不能显示法语，俄语等不包含在其中的字符。而Unicode符号集中存储了世界上所有的符号集。</p>
+<h5 id="2-字符集"><a href="#2-字符集" class="headerlink" title="2.字符集"></a>2.字符集</h5><p>在一个字库表中，每一个字符都有一个对应的二进制地址，而<strong>编码字符集</strong>就是这些地址的集合。</p>
+<h5 id="3-编码方式"><a href="#3-编码方式" class="headerlink" title="3. 编码方式"></a>3. 编码方式</h5><p>要区别编码规范与编码方式。Unicode是一种编码规范，而<strong>UTF-8不是编码规范，而是编码方式</strong>，实现Unicode编码规范的一种方式。</p>
+<blockquote>
+<p>接下来在说说常见的编码规范</p>
+</blockquote>
+<h4 id="1-ASCII码"><a href="#1-ASCII码" class="headerlink" title="1.ASCII码"></a>1.ASCII码</h4><p>ASCII码，是最早产生的编码规范，一共包含00000000~01111111共128个字符，可以表示阿拉伯数字和大小写英文字母，以及一些简单的符号。可以看出ASCII码只需要1个字节的存储空间，最高位为0。后被称为（American Standard Code for Information Interchange，美国信息交换标准代码）。它没有特定的编码方式，直接使用地址对应的二进制数来表示，非要说那就叫他ASCII 编码方式。</p>
+<h4 id="2-GBK"><a href="#2-GBK" class="headerlink" title="2.GBK"></a>2.GBK</h4><p>GBK全称《汉字内码扩展规范》，支持国际标准ISO/IEC10646-1和国家标准GB13000-1中的全部中日韩汉字。GBK字符集中所有字符占2个字节，不论中文英文都是2个字节。 没有特殊的编码方式，习惯称呼GBK 编码。一般在国内，汉字较多时使用。</p>
+<h4 id="3-ISO-8859-1"><a href="#3-ISO-8859-1" class="headerlink" title="3.ISO-8859-1"></a>3.ISO-8859-1</h4><p>ISO-8859-1收录的字符除ASCII收录的字符外，还包括西欧语言、希腊语、泰语、阿拉伯语、希伯来语对应的文字符号。因为ISO-8859-1编码范围使用了单字节内的所有空间，在支持ISO-8859-1的系统中传输和存储其他任何编码的字节流都不会被抛弃。换言之，把其他任何编码的字节流当作ISO-8859-1编码看待都没有问题。这是个很重要的特性，MySQL数据库默认编码是Latin1就是利用了这个特性。ASCII编码是一个7位的容器，ISO-8859-1编码是一个8位的容器。<br>由此可见，ISO-8859-1只占1个字节，且MySQL数据库默认编码就是ISO-8859-1，有时，tomcat服务器默认也是使用ISO-8859-1编码，然而ISO-8859-1是不支持中文的，有时这就是在浏览器上显示乱码的原因。</p>
+<h4 id="4-Unicode"><a href="#4-Unicode" class="headerlink" title="4.Unicode"></a>4.Unicode</h4><p>从以上几种编码规范可以看出，各种编码规范互不兼容，且只能表示自己需要的字符，于是，国际标准化组织（ISO）决定制定一套全世界通用的编码规范，这就是Unicode。<br>Unicode包含了全世界所有的字符。Unicode最多可以保存4个字节容量的字符。也就是说，要区分每个字符，每个字符的地址需要4个字节。这是十分浪费存储空间的，于是，程序员就设计了几种字符编码方式，比如：UTF-8,UTF-16,UTF-32。<br>最广为程序员使用的就是UTF-8，UTF-8是一种变长字符编码，注意：UTF-8不是编码规范，而是编码方式。我为大家介绍一下UTF-8的编码规则。</p>
+<p>编码规则表</p>
+<table>
+<thead>
+<tr>
+<th>Unicode十六进制码点范围</th>
+<th>UTF-8 二进制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0000 0000-0000 007F</td>
+<td>0xxxxxxx</td>
+</tr>
+<tr>
+<td>0000 0080-0000 07FF</td>
+<td>110xxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0000 0800-0000 FFFF</td>
+<td>1110xxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td>0001 0000-0010 FFFF</td>
+<td>11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+</tbody></table>
+<p>如上表所示，对于只需要1个字节的字符，UTF-8采用ASCII码的编码方式，最高位补0来表示。</p>
+<p>例如：01000001我们就是用01000001来表示，对于一个字节的字符，其实就是直接使用地址表示。</p>
+<p>而对于n个字节的字符（n&gt;1），即大于一个字节的字符，采用第一个字节前n位补1。第n+1位填0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的unicode码。</p>
+<p>例如：汉字严的Unicode码是4E25转换成二进制就是01001110 00100101共15位，根据上表可知使用UTF-8字符编码后占3个字节，因此前3位是1，第4位（n+1位）是0，后面两个字节中每个字节的前两位都是10,即1110 xxxx 10 xxxxxx 10xxxxxx。填充进去后就变成了1110 0100 10 111000 10 100101共计24位占3个字节。</p>
+<p>由此可见，英文在UTF-8字符编码后只占1个字节，中文占了3个字节。<br>虽然UTF-8编码没有GBK编码占的空间小，但他胜在面向全世界，至于使用哪一种编码还是取决于具体的使用环境。</p>
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/计算机基础/">计算机基础</a>, <a href="/tags/字符编码/">字符编码</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2019-10-30T13:46:24.000Z"><a href="/2019/10/30/LeetCode1两数之和/">2019-10-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2019/10/30/LeetCode1两数之和/">LeetCode1两数之和</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h4 id="1-两数之和"><a href="#1-两数之和" class="headerlink" title="1. 两数之和"></a><a href="https://leetcode-cn.com/problems/two-sum/" target="_blank" rel="noopener">1. 两数之和</a></h4><p>给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</p>
+<p>你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。</p>
+<p>示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">给定 nums = [2, 7, 11, 15], target = 9</span><br><span class="line"></span><br><span class="line">因为 nums[0] + nums[1] = 2 + 7 = 9</span><br><span class="line">所以返回 [0, 1]</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法一：暴力法</strong></p>
+<p>复杂度分析：</p>
+<ul>
+<li>时间复杂度：O(n^2)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; twoSum(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">int</span> size = nums.size();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i = <span class="number">0</span>; i&lt;size; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = target - nums[i];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> j = i+<span class="number">1</span>; j&lt;size; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[j] == temp)</span><br><span class="line">                    <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;i,j&#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法二：两次哈希表</strong></p>
+<p>复杂度分析：</p>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n)</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; twoSum(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">int</span> size = nums.size();</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; m;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i=<span class="number">0</span>; i&lt;size; i++) &#123;</span><br><span class="line">            m[nums[i]] = i;         <span class="comment">//map中存入下标和数值的映射</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i = <span class="number">0</span>; i&lt;size; i++) &#123;      <span class="comment">//遍历整个数组</span></span><br><span class="line">            <span class="keyword">int</span> temp = target - nums[i];    <span class="comment">//目标值</span></span><br><span class="line">            <span class="keyword">if</span>(m.find(temp) != m.end() &amp;&amp; m[temp] !=i)     <span class="comment">//在map中查找</span></span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;i,m[temp]&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;<span class="number">1</span>,<span class="number">1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法二：一次哈希表</strong></p>
+<p>复杂度分析：</p>
+<ul>
+<li>时间复杂度：O(n)</li>
+<li>空间复杂度：O(n)  取决于哈希表中存的元素数量，最多存N个</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; twoSum(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">int</span> size = nums.size();</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; m;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i = <span class="number">0</span>; i&lt;size; i++) &#123;      <span class="comment">//遍历整个数组</span></span><br><span class="line">            <span class="keyword">int</span> temp = target - nums[i];    <span class="comment">//目标值</span></span><br><span class="line">            <span class="keyword">if</span>(m.find(temp) != m.end())     <span class="comment">//在map中查找</span></span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;i,m[temp]&#125;;</span><br><span class="line">            <span class="keyword">else</span> m[nums[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    <footer>
+        <div class="alignright">
+          
+          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
+        </div>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
+  </div>
+
+        <!-- partial('post/share') -->
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2019-10-28T07:52:43.000Z"><a href="/2019/10/28/LeetCode49字母异位词分组/">2019-10-28</a></time>
       
       
@@ -123,7 +292,7 @@
         
   
   <div class="tags">
-    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
+    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -389,7 +558,7 @@
         
   
   <div class="tags">
-    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
+    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -462,7 +631,7 @@
         
   
   <div class="tags">
-    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
+    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -547,7 +716,7 @@
         
   
   <div class="tags">
-    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
+    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -642,7 +811,7 @@
         
   
   <div class="tags">
-    <a href="/tags/数据结构/">数据结构</a>, <a href="/tags/LeetCode/">LeetCode</a>
+    <a href="/tags/LeetCode/">LeetCode</a>, <a href="/tags/数据结构/">数据结构</a>
   </div>
 
         <!-- partial('post/share') -->
@@ -726,127 +895,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-12T11:27:37.000Z"><a href="/2019/10/12/C++字符串中对汉字的处理/">2019-10-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/12/C++字符串中对汉字的处理/">C++字符串中对汉字的处理</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h4 id="刷C-prime顺序容器那一章的时候，习题9-51需要涉及对字符串中汉字的处理，网上大概查了一下，"><a href="#刷C-prime顺序容器那一章的时候，习题9-51需要涉及对字符串中汉字的处理，网上大概查了一下，" class="headerlink" title="刷C++prime顺序容器那一章的时候，习题9.51需要涉及对字符串中汉字的处理，网上大概查了一下，"></a>刷C++prime顺序容器那一章的时候，习题9.51需要涉及对字符串中汉字的处理，网上大概查了一下，</h4><p><strong>需要注意的事项大概就三个方面：</strong></p>
-<ul>
-<li><strong>汉字字符在字符串或者字符数组中是如何存储的</strong></li>
-<li><strong>如何判断该字符是汉字(全角字符)还是其他字符(非全角字符)</strong></li>
-<li><strong>对汉字字符进行读取</strong></li>
-</ul>
-<h3 id="汉字字符在string类中的存储"><a href="#汉字字符在string类中的存储" class="headerlink" title="汉字字符在string类中的存储"></a>汉字字符在string<strong>类中的存储</strong></h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">string</span> s = <span class="string">"2004年4月29号"</span>;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">size_t</span> q;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(; p &lt; s.size(); p++) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; p &lt;&lt; <span class="string">": "</span> &lt;&lt; s[p] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="//yoursite.com/2019/10/12/C++字符串中对汉字的处理/C:C++%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%AF%B9%E6%B1%89%E5%AD%97%E7%9A%84%E5%A4%84%E7%90%86%5C1.png" alt="1570881007754"></p>
-<p><strong>我看网上的说法都是汉字在字符数组中为一个汉字占据两个字节，但是在实现9.51的时候，我用的是string类，按照两个字节实现出现了错误。于是亲自实现了一下，从输出结果来看，一个汉字是按照三个字节位存储的，有图有真相。”<em>2004年4月29号</em>“利用<em>length（）</em>函数输出的长度是16。</strong></p>
-<h4 id="C-中汉字字符的输出"><a href="#C-中汉字字符的输出" class="headerlink" title="C++中汉字字符的输出"></a>C++中汉字字符的输出</h4><p><strong>看了下网上的主流做法，都是用C语言中的字符数组来存储汉字的，每个汉字占两个字节</strong></p>
-<p><strong>判断该字符是不是汉字字符</strong></p>
-<ul>
-<li><strong>str[n] &amp; 0x80)!=0</strong></li>
-<li><strong>str[n] &lt; 0 || str[n] &gt; 127</strong></li>
-</ul>
-<p><strong>下面的代码提供了输出汉字字符的写法：</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span> str[<span class="number">20</span>] = <span class="string">"2015年5月4日"</span>;</span><br><span class="line">    <span class="comment">//std::cin &gt;&gt; str;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> cstr[<span class="number">20</span>];</span><br><span class="line">    <span class="keyword">int</span> n, cn;</span><br><span class="line">    n = <span class="number">0</span>; cn = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (str[n] != <span class="string">'\0'</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((str[n] &amp; <span class="number">0x80</span>)!=<span class="number">0</span>) &#123;         <span class="comment">//如果是全角字符</span></span><br><span class="line">        <span class="comment">//if (str[n] &lt; 0 || str[n] &gt; 127) &#123;    另一种写法</span></span><br><span class="line">            cstr[cn] = str[n];</span><br><span class="line">            cstr[cn + <span class="number">1</span>] = str[n + <span class="number">1</span>];</span><br><span class="line">            cn += <span class="number">2</span>; n += <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            n++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cstr[cn] = <span class="string">'\0'</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; cstr &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cin</span>.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="//yoursite.com/2019/10/12/C++字符串中对汉字的处理/C++%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%AF%B9%E6%B1%89%E5%AD%97%E7%9A%84%E5%A4%84%E7%90%86%5C2.png" alt="1570879560578"></p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C-C/">C/C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2019-10-04T11:47:56.000Z"><a href="/2019/10/04/vector迭代器失效解决方法及其其内存原理/">2019-10-04</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2019/10/04/vector迭代器失效解决方法及其其内存原理/">C++vector迭代器失效解决方法及其其内存原理</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h3 id="迭代器失效-有两个层面的意思"><a href="#迭代器失效-有两个层面的意思" class="headerlink" title="迭代器失效,有两个层面的意思:"></a>迭代器失效,有两个层面的意思:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. 无法通过迭代器++,--操作遍历整个stl容器。记作: 第一层失效。</span><br><span class="line">2. 无法通过迭代器存取迭代器所指向的内存。  记作: 第二层失效。</span><br></pre></td></tr></table></figure>
-
-<p><strong><em>是不是就是会跳过元素呢？    好像就是。。。。。。</em></strong></p>
-<h2 id="1-erase操作"><a href="#1-erase操作" class="headerlink" title="1. erase操作"></a>1. erase操作</h2><h4 id="内存分析："><a href="#内存分析：" class="headerlink" title="内存分析："></a>内存分析：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">当删除第3个元素以后我们发现第四个元素是紧邻第二个元素的（刚好差一个int的内存）</span><br><span class="line"></span><br><span class="line">也就是说vector执行erase（i）后会将迭代器i之后的元素**逐个向前移动一个type单位**</span><br><span class="line"></span><br><span class="line">这也就是i及i之后所有迭代器失效的原因…</span><br></pre></td></tr></table></figure>
-
-<p><em>参见博客: <a href="https://blog.csdn.net/AXuan_K/article/details/52588441" target="_blank" rel="noopener">https://blog.csdn.net/AXuan_K/article/details/52588441</a></em>   上面有的部分有待商榷</p>
-<p>如图所示：<img src="//yoursite.com/2019/10/04/vector迭代器失效解决方法及其其内存原理/%C2%96vector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E5%85%B6%E5%86%85%E5%AD%98%E5%8E%9F%E7%90%86%5C%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88_1.png" alt="迭代器失效_1"></p>
-<h4 id="用一道题目来说明一下："><a href="#用一道题目来说明一下：" class="headerlink" title="用一道题目来说明一下："></a>用一道题目来说明一下：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C++ prime 第六版 9.26 </span><br><span class="line">题目描述：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::begin;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::end;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">list</span>;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ia[]=&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">8</span>,<span class="number">13</span>,<span class="number">21</span>,<span class="number">55</span>,<span class="number">89</span>&#125;;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec(begin(ia), end(ia));</span><br><span class="line">	<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; lis(begin(ia), end(ia));</span><br><span class="line">	<span class="keyword">auto</span> it=vec.begin();</span><br><span class="line">	<span class="keyword">while</span>(it!=vec.end())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(!(*it%<span class="number">2</span>))&#123;          <span class="comment">/*** 写法错误，造成迭代器失效  **/</span></span><br><span class="line">			vec.erase(it);     <span class="comment">//这种写法只会造成vector容器的失效</span></span><br><span class="line">			++it;</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">auto</span> ir=lis.begin();</span><br><span class="line">	<span class="keyword">while</span>(ir!=lis.end())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(*ir%<span class="number">2</span>)</span><br><span class="line">			ir=lis.erase(ir);</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			++ir;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span> i: vec)</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">auto</span> i: lis)</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;i&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*** 正确的写法 ***/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(it!=vec.end())</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(!(*it%<span class="number">2</span>))</span><br><span class="line">			it=vec.erase(it);    <span class="comment">// *</span></span><br><span class="line">            <span class="comment">//vec.erase(it)      // **</span></span><br><span class="line">            <span class="comment">// *和**两种写法都可以，**后it依然指向本来的内存位置，存储的元素为删除之前的下一个元素</span></span><br><span class="line">            <span class="comment">// 所以主要的问题是删除操作与 *** 直接的逻辑关系</span></span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			++it;                <span class="comment">// ***</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="对-it-vec-erase-it-和-ec-erase-it-进行测试："><a href="#对-it-vec-erase-it-和-ec-erase-it-进行测试：" class="headerlink" title="对 it=vec.erase(it) 和 ec.erase(it)  进行测试："></a>对 it=vec.erase(it) 和 ec.erase(it)  进行测试：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; l;</span><br><span class="line">	<span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; d;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">int</span> ia[] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>&#125;;</span><br><span class="line">	v.assign(ia, ia+<span class="number">11</span>);</span><br><span class="line">	</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator vi = v .begin();</span><br><span class="line">	<span class="keyword">while</span>(vi != v.end())&#123;     </span><br><span class="line">	 </span><br><span class="line">	 <span class="keyword">if</span> ( <span class="number">0</span> == *vi % <span class="number">2</span>)&#123;</span><br><span class="line">	 	 <span class="built_in">cout</span> &lt;&lt; *vi &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">	 	 <span class="built_in">cout</span> &lt;&lt; *v.erase(vi) &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">         <span class="built_in">cout</span> &lt;&lt; *vi &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	 &#125;</span><br><span class="line"></span><br><span class="line">      ++vi;</span><br><span class="line">	&#125;	</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="//yoursite.com/2019/10/04/vector迭代器失效解决方法及其其内存原理/%C2%96vector%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E5%85%B6%E5%86%85%E5%AD%98%E5%8E%9F%E7%90%86%5C%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%AE%9E%E7%8E%B0_2.png" alt></p>
-<p>发现当执行 v.erase(vi)操作后，vi 和 v.erase(vi)指向同一块内存，所以两者等价，但为什么书上的写法都是 vi = v.erase(vi)之类，还是自己现在想的不对。。。。。。。。</p>
-<h2 id="2-insert操作"><a href="#2-insert操作" class="headerlink" title="2. insert操作"></a>2. insert操作</h2><p>insert函数接受一个迭代器作为其第一个参数。它可以指向容器中任意一个位置，包括尾部之后的下一个元素。由于迭代器可能指向容器尾部之后不存在的元素的位置，而且在容器开始位置插入元素是很有用的功能，所以insert函数将元素插入到所指定的位置之前。 insert返回的迭代器指向插入的新元素。</p>
-<p>踩坑参见： <a href="https://blog.csdn.net/AXuan_K/article/details/52588441" target="_blank" rel="noopener">https://blog.csdn.net/AXuan_K/article/details/52588441</a></p>
-
-      
-    </div>
-    
-    <footer>
-        <div class="alignright">
-          
-          <a href='javascript:void(0)' class="share-link bdsharebuttonbox" data-cmd="more">分享</a>
-        </div>
-        
-        
-  
-  <div class="tags">
-    <a href="/tags/C/">C++</a>
-  </div>
-
-        <!-- partial('post/share') -->
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
 
 <nav id="pagination">
   
@@ -872,6 +920,14 @@
   <ul class="entry">
     
       <li>
+        <a href="/2019/10/30/字符编码笔记/">字符编码笔记</a>
+      </li>
+    
+      <li>
+        <a href="/2019/10/30/LeetCode1两数之和/">LeetCode1两数之和</a>
+      </li>
+    
+      <li>
         <a href="/2019/10/28/LeetCode49字母异位词分组/">LeetCode49字母异位词分组</a>
       </li>
     
@@ -881,14 +937,6 @@
     
       <li>
         <a href="/2019/10/28/初识散列表/">初识散列表</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/27/LeetCode242有效的字母异位词/">LeetCode242有效的字母异位词</a>
-      </li>
-    
-      <li>
-        <a href="/2019/10/23/LeetCode235二叉树的最近公共祖先/">LeetCode235二叉树的最近公共祖先</a>
       </li>
     
   </ul>
@@ -908,13 +956,17 @@
   
     <li><a href="/tags/C-C-、计算机基础/">C/C++、计算机基础</a><small>1</small></li>
   
-    <li><a href="/tags/LeetCode/">LeetCode</a><small>5</small></li>
+    <li><a href="/tags/LeetCode/">LeetCode</a><small>6</small></li>
   
     <li><a href="/tags/blog/">blog</a><small>1</small></li>
   
-    <li><a href="/tags/数据结构/">数据结构</a><small>6</small></li>
+    <li><a href="/tags/字符编码/">字符编码</a><small>1</small></li>
+  
+    <li><a href="/tags/数据结构/">数据结构</a><small>7</small></li>
   
     <li><a href="/tags/算法/">算法</a><small>3</small></li>
+  
+    <li><a href="/tags/计算机基础/">计算机基础</a><small>1</small></li>
   
   </ul>
 </div>
@@ -924,7 +976,7 @@
 <div class="widget tagcloud">
   <h3 class="title">Tag Cloud</h3>
   <div class="entry">
-    <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 16.67px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 16.67px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
+    <a href="/tags/C/" style="font-size: 17.5px;">C++</a> <a href="/tags/C-prime/" style="font-size: 10px;">C++ prime</a> <a href="/tags/C-C/" style="font-size: 15px;">C/C++</a> <a href="/tags/C-C-、计算机基础/" style="font-size: 10px;">C/C++、计算机基础</a> <a href="/tags/LeetCode/" style="font-size: 17.5px;">LeetCode</a> <a href="/tags/blog/" style="font-size: 10px;">blog</a> <a href="/tags/字符编码/" style="font-size: 10px;">字符编码</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/计算机基础/" style="font-size: 10px;">计算机基础</a>
   </div>
 </div>
 
